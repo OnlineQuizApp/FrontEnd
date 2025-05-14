@@ -52,3 +52,22 @@ export async function createQuestions(newQuestions){
         return { data: [], totalPage: 0 };
     }
 }
+export async function createQuestionsOnFileExcel(file){
+
+    try {
+        const response = await axios.post(`http://localhost:8080/api/questions/upload-file-excel`,file,authHeader);
+        console.log("delete:"+response.data);
+    }catch (e) {
+        console.log("Lỗi: "+e);
+        return { data: [], totalPage: 0 };
+    }
+}
+export async function createQuestionsOnImg(file,categoryId,answers){
+    try {
+        const response = await axios.post(`http://localhost:8080/api/questions/upload-file-img`,file,categoryId,answers,authHeader);
+        console.log("delete:"+response.data);
+    }catch (e) {
+        console.log("Lỗi: "+e);
+        return { data: [], totalPage: 0 };
+    }
+}
