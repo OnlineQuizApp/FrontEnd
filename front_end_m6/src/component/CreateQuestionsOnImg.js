@@ -1,9 +1,11 @@
 import {useEffect, useState} from "react";
 import {createQuestionsOnFileExcel, createQuestionsOnImg} from "../service/QuestionService";
 import {getAllCategory} from "../service/CategoryService";
+import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 const CreateQuestionsOnImg = ()=>{
-    const [img, setImg] = useState(null);
+    const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
     const [categories, setCategories] = useState([]);
     const [categoryId, setCategoryId] = useState(null);
@@ -21,29 +23,36 @@ const CreateQuestionsOnImg = ()=>{
         { content: '', correct: false }
     ]);
     const handleImageChange = (e) => {                 // Hàm xử lý việc chọn file
-        setImg(e.target.files[0]);                        // lấy file đầu tiên trong danh sách
+        setFile(e.target.files[0]);                        // lấy file đầu tiên trong danh sách
     };
     const handleAnswerChange = (index, field, value) => {
-        const updatedAnswers = [...answers];
+        const updatedAnswers = [...answers];  // hàm xử lý checkbox chọn đáp án đúng
         updatedAnswers[index][field] = value;
         setAnswers(updatedAnswers);
     };
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!img || !categoryId) {
+        if (!file || !categoryId) {
             setMessage("❌ Vui lòng chọn một hình ảnh và danh mục.");
             return;
         }
 
         // Chuẩn bị dữ liệu gửi lên (ví dụ: gửi qua FormData nếu có ảnh)
         const formData = new FormData();
-        formData.append("image", img);
-        formData.append("answers", JSON.stringify(answers));
+        formData.append("file", file);
         formData.append("categoryId", categoryId);
+        formData.append("answers", JSON.stringify(answers));
 
+        for (let pair of formData.entries()) {
+            console.log(pair[0]+ ': ' + pair[1]);
+        }
+        console.log("answers:", JSON.stringify(answers));
         try {
-            await createQuestionsOnImg(formData)
+            await createQuestionsOnImg(formData);
+            navigate('/questions');
+            toast.success("Câu hỏi đã được thêm thành công! ")
             setMessage("✅ Câu hỏi đã được thêm thành công!");
         } catch (error) {
             setMessage("❌ Lỗi khi thêm câu hỏi. Vui lòng thử lại!");
@@ -63,7 +72,7 @@ const CreateQuestionsOnImg = ()=>{
                     <div className="mb-3">
                         <label className="form-label">Chọn danh mục (Category ID):</label>
                         <select value={categoryId}
-                                onChange={(e) => setCategoryId(e.target.value)}
+                                onChange={(e) => setCategoryId(Number(e.target.value))}
                                 className="form-select">
                             <option value="">-- Chọn danh mục --</option>
                             {categories && categories.map((c) => (
@@ -103,3 +112,4 @@ const CreateQuestionsOnImg = ()=>{
     );
 
 }
+export default CreateQuestionsOnImg;

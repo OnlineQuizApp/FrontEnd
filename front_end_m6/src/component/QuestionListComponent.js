@@ -22,7 +22,7 @@ const QuestionService = () => {
             setQuestions(data);
             setTotalPage(totalPage);
         }
-        fetchData()
+        fetchData();
     }, [loading,page,categorySearch]);
     const handleNextPage=()=>{
         if (page<totalPage){
@@ -62,12 +62,14 @@ const QuestionService = () => {
 
     return (
         <>
-            <Link to={'/questions/create'}>Thêm Mới Câu Hỏi</Link>
+            <Link to={'/questions/create'} className={'btn btn-sm btn-outline-primary'}>Thêm Mới Câu Hỏi</Link>
+            <Link to={'/questions/upload-file-excel'} className={'btn btn-sm btn-outline-primary'}>Thêm mới câu hỏi  bằng file excel</Link>
+            <Link to={'/questions/upload-file-img'} className={'btn btn-sm btn-outline-primary'}>Thêm mới câu hỏi  bằng hình ảnh</Link>
             <Formik initialValues={{
                 category: ''
             }} onSubmit={handleSearch}>
                 <Form>
-                    <label>Nhập Loại Đề Cần Tìm</label>
+                    <label>Nhập Loại Câu Hỏi Cần Tìm</label>
                     <Field name={'category'} type={'text'}/>
                     <ErrorMessage style={{color: 'red'}} name={'category'} component={'div'}/>
                     <button className={'btn btn-sm btn-outline-primary'} type={'submit'}>Tìm Kiếm</button>
@@ -81,6 +83,7 @@ const QuestionService = () => {
                         <th>ID</th>
                         <th>Nội Dung Câu Hỏi</th>
                         <th>Loại Câu Hỏi</th>
+                        <th>Hình ảnh</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -88,7 +91,8 @@ const QuestionService = () => {
                         <tr key={q.id}>
                             <td>{q.id}</td>
                             <td>{q.content}</td>
-                            <td>{q.category.name}</td>
+                            <td>{q?.category?.name}</td>
+                            <td>{q.img ? q.img :'không có hình ảnh' }</td>
                             <td>
                                 <Link className={'btn btn-sm btn-outline-success btn-hover'}
                                       to={'/questions/detail/' + q.id}>
@@ -96,9 +100,8 @@ const QuestionService = () => {
                                 </Link>
                             </td>
                             <td>
-                                <button onClick={()=>{
-                                    handleShowModal(q.id,q.content)
-                                }}>
+                                <button className={'btn btn-sm btn-outline-success btn-hover'} onClick={()=>{
+                                    handleShowModal(q.id,q.content)}}>
                                     Xoá
                                 </button>
                             </td>
@@ -108,10 +111,10 @@ const QuestionService = () => {
                 </table>
                 <Modal show={isShowModal} onHide={closeModal}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Xác Nhận Công Khai</Modal.Title>
+                        <Modal.Title>Xác nhận xoá</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>Bạn Có Câu Hỏi "{questionsContent}" không?</p>
+                        <p>Bạn có muốn xoá  câu hỏi "{questionsContent}" này không?</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={closeModal}> Huỷ</Button>
