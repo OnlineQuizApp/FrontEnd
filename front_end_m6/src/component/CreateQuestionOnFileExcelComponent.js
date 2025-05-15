@@ -1,10 +1,12 @@
 import {Form, Formik} from "formik";
 import {useState} from "react";
 import {createQuestionsOnFileExcel} from "../service/QuestionService";
+import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 const CreateQuestionOnFileExcelComponent = ()=>{
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
-
+    const navigate= useNavigate();
     const handleFileChange = (e) => {                 // Hàm xử lý việc chọn file
         setFile(e.target.files[0]);                        // lấy file đầu tiên trong danh sách
     };
@@ -18,7 +20,9 @@ const CreateQuestionOnFileExcelComponent = ()=>{
         const formData = new FormData();        // tạo một form data để gửi file lên server
         formData.append('file', file);             // đính kèm file đã chọn vào form với key là file
         try {
-            await createQuestionsOnFileExcel(formData) 
+            await createQuestionsOnFileExcel(formData) ;
+            navigate('/questions');
+            toast.success("Dữ liệu đã được tải lên thành công!")
             setMessage('✅ Dữ liệu đã được tải lên thành công!');
         } catch (error) {
             setMessage('❌ Lỗi khi tải lên file Excel. Vui lòng thử lại!');

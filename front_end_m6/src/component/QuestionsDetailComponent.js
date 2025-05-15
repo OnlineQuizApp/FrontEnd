@@ -1,45 +1,133 @@
-import {useEffect, useState} from "react";
-import {detailQuestions} from "../service/QuestionService";
-import {useNavigate, useParams} from "react-router-dom";
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import { useEffect, useState } from "react";
+import { detailQuestions,updateQuestions  } from "../service/QuestionService";
+import {getAllCategory} from "../service/CategoryService";
+import { useNavigate, useParams } from "react-router-dom";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 
-const QuestionsDetailComponent = ()=>{
-    const [questionsDetail,setQuestionsDetail] = useState(null);
-    const {id}=useParams();
+const QuestionsDetailComponent = () => {
+    const [category, setCategory] = useState([]);
+    const [answers, setAnswers] = useState([
+        { content: '', correct: false },
+        { content: '', correct: false },
+        { content: '', correct: false },
+        { content: '', correct: false }
+    ]);
+    const [questionDetail, setQuestionDetail] = useState(null);
+    const { id } = useParams();
     const navigate = useNavigate();
+
+    // Lấy thông tin câu hỏi theo ID
     useEffect(() => {
-        const fetchData = async ()=>{
-            const data = await detailQuestions(id)
-            setQuestionsDetail(data);
-        }
+        const fetchData = async () => {
+            const data = await detailQuestions(id);
+            console.log("data"+data);
+            setQuestionDetail(data);
+            // Cập nhật câu hỏi và đáp án vào form
+            if (data) {
+                setAnswers(data.answers);
+            }
+        };
         fetchData();
+    }, [id]);
+
+    useEffect(() => {
+        const fetchCategory = async () => {
+            const data = await getAllCategory();
+            setCategory(data);
+
+        };
+        fetchCategory();
     }, []);
-    if (!questionsDetail) return <h1>Loading....</h1>
 
-    return(
+    if (!questionDetail) return <h1>Loading....</h1>;
+
+    const handleAnswerChange = (index, field, value) => {
+        const updatedAnswers = [...answers];
+        updatedAnswers[index][field] = value;
+        setAnswers(updatedAnswers);
+    };
+
+    const handleEditQuestions = async (values) => {
+        const updatedQuestion = {
+            content: values.content, // Nội dung câu hỏi
+            category: values.category, // ID danh mục
+            answers: answers // Mảng các đáp án
+        };
+
+        try {
+            await updateQuestions(id, updatedQuestion); // Gửi yêu cầu cập nhật câu hỏi
+            navigate('/questions'); // Chuyển hướng về danh sách câu hỏi
+            toast.success('Cập nhật câu hỏi thành công!');
+        } catch (error) {
+            toast.error('Lỗi khi cập nhật câu hỏi!');
+        }
+    };
+
+    return (
         <>
-            {/*<h1>Trang Chi Tiết</h1>*/}
-            {/*<p><strong>ID Câu Hỏi: </strong>{questionsDetail&&questionsDetail.id}</p>*/}
-            {/*<p><strong>Thuộc Danh Mục: </strong>{questionsDetail&&questionsDetail.category?.name}</p>*/}
-            {/*<p><strong>Câu Hỏi: </strong>{questionsDetail&&questionsDetail.content}</p>*/}
-            {/*<ul>*/}
-            {/*    {questionsDetail.answers.map(answer => (*/}
-            {/*        <li key={answer.id}>*/}
-            {/*            <strong>{answer.content}</strong> — {answer.correct ? "✔️ Đúng" : "❌ Sai"}*/}
-            {/*        </li>*/}
-            {/*    ))}*/}
-            {/*</ul>*/}
-            {/*<Formik initialValues={{*/}
-            {/*    id:'',*/}
+            <h1>Chỉnh Sửa Câu Hỏi</h1>
+            <Formik
+                initialValues={{
+                    content: questionDetail?.content,
+                    category: questionDetail?.category?.id,
+                    answers:   questionDetail?.answers
+                }}
+                onSubmit={handleEditQuestions}
+            >
+                <Form>
+                    <div>
+                        <label>Nhập nội dung câu hỏi:</label>
+                        <Field
+                            name="content"
+                            as="textarea"
+                            placeholder="Nhập câu hỏi"
+                            className="form-control"
+                        />
+                        <ErrorMessage name="content" component="div" className="text-danger" />
+                    </div>
 
-            {/*}} onSubmit={}>*/}
-            {/*    <Form>*/}
-            {/*        <label>Nội dung câu hỏi</label>*/}
-            {/*        <Field name={'content'} value={questionsDetail.content}></Field>*/}
-            {/*        <ErrorMessage name={'content'} component={'div'}></ErrorMessage>*/}
-            {/*    </Form>*/}
-            {/*</Formik>*/}
+                    <div>
+                        <label>Chọn danh mục:</label>
+                        <Field as="select" name="category" className="form-control">
+                            <option value="">-- Chọn Danh Mục Câu Hỏi --</option>
+                            {category && category.map((c) => (
+                                <option key={c.id} value={c.id}>{c.name}</option>
+                            ))}
+                        </Field>
+                        <ErrorMessage name="category" component="div" className="text-danger" />
+                    </div>
+
+                    {answers&&answers.map((answer, index) => (
+                        <div className="mb-3" key={index}>
+                            <label className="form-label">Đáp án {index + 1}:</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={answer.content}
+                                onChange={(e) => handleAnswerChange(index, 'content', e.target.value)}
+                                required
+                            />
+                            <div className="form-check mt-1">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    checked={answer.correct}
+                                    onChange={(e) => handleAnswerChange(index, 'correct', e.target.checked)}
+                                />
+                                <label className="form-check-label">Là đáp án đúng</label>
+                            </div>
+                        </div>
+                    ))}
+
+                    <Button type="submit" variant="primary">
+                        Cập nhật
+                    </Button>
+                </Form>
+            </Formik>
         </>
     );
-}
+};
+
 export default QuestionsDetailComponent;
