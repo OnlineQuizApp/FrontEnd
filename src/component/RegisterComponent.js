@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/RegisterComponent.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterComponent = () => {
     const [form, setForm] = useState({
@@ -18,7 +20,7 @@ const RegisterComponent = () => {
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
-        setErrors({ ...errors, [e.target.name]: "" }); // Xoá lỗi khi người dùng chỉnh sửa
+        setErrors({ ...errors, [e.target.name]: "" });
     };
 
     const handleRegister = async (e) => {
@@ -39,15 +41,16 @@ const RegisterComponent = () => {
                 role: "USER"
             });
 
-            alert("Đăng ký thành công!");
-            navigate("/login");
+            toast.success("🎉 Đăng ký thành công!", {
+                position: "top-center",
+                autoClose: 1000,
+                onClose: () => navigate("/login")
+            });
         } catch (err) {
             if (err.response) {
                 if (err.response.status === 400) {
-                    // Lỗi validation
                     setErrors(err.response.data);
                 } else if (err.response.status === 409) {
-                    // Lỗi xung đột (username/email tồn tại)
                     setError(err.response.data);
                 } else {
                     setError("Đã xảy ra lỗi không xác định");
@@ -119,6 +122,7 @@ const RegisterComponent = () => {
                 </form>
                 {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
             </div>
+            <ToastContainer />
         </div>
     );
 };
