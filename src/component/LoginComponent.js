@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/LoginComponent.css";
+import {toast} from "react-toastify";
 
 const LoginComponent = () => {
     const [form, setForm] = useState({ username: "", password: "" });
@@ -17,7 +18,11 @@ const LoginComponent = () => {
         try {
             const response = await axios.post("http://localhost:8080/api/account/login", form);
             localStorage.setItem("token", response.data.token);
-            navigate("/");
+            toast.success("🎉 Đăng nhập thành công!", {
+                position: "top-center",
+                autoClose: 1000,
+                onClose: () => navigate("/")
+            });
         } catch (err) {
             console.error(err);
             setError("Tài khoản hoặc mật khẩu không đúng");

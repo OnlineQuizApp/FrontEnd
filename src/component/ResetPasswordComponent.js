@@ -3,6 +3,7 @@ import { useState } from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import "../css/ResetPasswordComponent.css";
+import {toast} from "react-toastify";
 
 export default function ResetPasswordComponent() {
     const [newPassword, setNewPassword] = useState("");
@@ -26,7 +27,11 @@ export default function ResetPasswordComponent() {
                 newPassword,
             });
 
-            setMessage("Password reset successful.");
+            toast.success("🎉 Cập nhật thành công!", {
+                position: "top-center",
+                autoClose: 1000,
+                onClose: () => navigate("/")
+            });
             setTimeout(() => {
                 navigate("/login");
             }, 2000);
