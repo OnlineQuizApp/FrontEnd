@@ -1,0 +1,81 @@
+/* Căn giữa toàn bộ giao diện đăng ký */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f0f2f5;
+    padding: 20px;
+}
+
+/* Khung đăng ký */
+.register-box {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Tiêu đề */
+.register-box h2 {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+/* Input chung */
+.register-box input {
+    width: 100%;
+    padding: 10px 14px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* Hiển thị lỗi */
+.register-box p {
+    margin: 4px 0 10px;
+    font-size: 14px;
+}
+
+/* Nút đăng ký */
+.register-box button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 12px;
+    background-color: #52c41a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-box button[type="submit"]:hover {
+    background-color: #73d13d;
+}
+
+/* Nút phụ */
+.register-box button[type="button"] {
+    background-color: transparent;
+    color: #1890ff;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+.register-box button[type="button"]:hover {
+    text-decoration: underline;
+}
+
+/* Responsive cho thiết bị nhỏ */
+@media (max-width: 480px) {
+    .register-box {
+        padding: 20px;
+    }
+}
