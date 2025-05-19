@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/ProfileComponent.css"
+import {toast} from "react-toastify";
 
 const ProfileComponent = () => {
     const [user, setUser] = useState(null);
@@ -39,6 +40,11 @@ const ProfileComponent = () => {
             .put("http://localhost:8080/api/user/update", user, authHeader)
             .then((res) => {
                 setMessage("Cập nhật thành công!");
+                toast.success("🎉 Cập nhật thành công!", {
+                    position: "top-center",
+                    autoClose: 1000,
+                    onClose: () => navigate("/")
+                });
             })
             .catch((err) => {
                 console.error(err);

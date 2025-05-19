@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../css/ChangePasswordComponent.css"
+import {toast} from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ChangePasswordComponent = ({ token }) => {
+    const navigate = useNavigate();
     const [passwordData, setPasswordData] = useState({
         oldPassword: "",
         newPassword: "",
@@ -44,12 +47,19 @@ const ChangePasswordComponent = ({ token }) => {
                 }
             )
             .then(() => {
-                setMessage("Đổi mật khẩu thành công!");
+                // setMessage("Đổi mật khẩu thành công!");
+                toast.success("🎉 Đổi mật khẩu thành công!", {
+                    position: "top-center",
+                    autoClose: 1000,
+                    onClose: () => navigate("/")
+                });
                 setPasswordData({
                     oldPassword: "",
                     newPassword: "",
                     confirmPassword: "",
+
                 });
+
             })
             .catch((err) => {
                 console.error(err);
