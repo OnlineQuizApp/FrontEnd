@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import React from "react";
 import {getAllExams} from "../service/ExamsService";
-
+import "../css/admin-layout.css"
 const ExamsListComponent = () => {
     const [exams, setExams] = useState([]);
     const [page, setPage] = useState(0);
@@ -26,7 +26,7 @@ const ExamsListComponent = () => {
             <div className="container">
                 <div className="question-service-wrapper">
                     <div className="container mt-5">
-                        <table>
+                        <table className="table table-bordered mt-4">
                             <thead>
                             <tr>
                                 <th>Id</th>
@@ -47,10 +47,10 @@ const ExamsListComponent = () => {
                                     <td>{e.numberOfQuestions}</td>
                                     <td>{e.testTime}</td>
                                     <td>
-                                        <button>Chi tiết</button>
+                                        <button className={'btn btn-sm btn-outline-success btn-hover'}>Chi tiết</button>
                                     </td>
                                     <td>
-                                        <button>Xoá</button>
+                                        <button className={'btn btn-sm btn-outline-success btn-hover'}>Xoá</button>
                                     </td>
                                 </tr>
                             ))}
