@@ -1,6 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "../css/HomePage.css";
 
 
 const HomePage = () => {
@@ -32,10 +33,12 @@ const HomePage = () => {
     };
 
     return (
-        <div>
+        <div className="homepage-container">
             <h1>Welcome, {username}!</h1>
-            <button onClick={() => navigate("/profile")}>Hồ sơ cá nhân</button>
-            <button onClick={handleLogout}>Logout</button>
+            <div className="button-group">
+                <button onClick={() => navigate("/profile")}>Hồ sơ cá nhân</button>
+                <button onClick={handleLogout}>Logout</button>
+            </div>
         </div>
     );
 };

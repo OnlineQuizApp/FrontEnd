@@ -2,6 +2,7 @@
 import { useState } from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
+import "../css/ResetPasswordComponent.css";
 
 export default function ResetPasswordComponent() {
     const [newPassword, setNewPassword] = useState("");
@@ -35,24 +36,26 @@ export default function ResetPasswordComponent() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Reset Password</h2>
-            <input
-                type="password"
-                placeholder="New password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                required
-            />
-            <input
-                type="password"
-                placeholder="Confirm password"
-                value={confirm}
-                onChange={(e) => setConfirm(e.target.value)}
-                required
-            />
-            <button type="submit">Reset Password</button>
-            <p>{message}</p>
-        </form>
+        <div className="reset-password-container">
+            <form onSubmit={handleSubmit} className="reset-password-box">
+                <h2>Reset Password</h2>
+                <input
+                    type="password"
+                    placeholder="New password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                />
+                <input
+                    type="password"
+                    placeholder="Confirm password"
+                    value={confirm}
+                    onChange={(e) => setConfirm(e.target.value)}
+                    required
+                />
+                <button type="submit">Reset Password</button>
+                {message && <p>{message}</p>}
+            </form>
+        </div>
     );
 }

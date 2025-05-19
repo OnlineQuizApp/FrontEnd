@@ -1,6 +1,7 @@
 // ForgotPassword.jsx
 import { useState } from "react";
 import axios from "axios";
+import "../css/ForgotComponent.css";
 
 export default function ForgotPasswordComponent() {
     const [email, setEmail] = useState("");
@@ -17,17 +18,21 @@ export default function ForgotPasswordComponent() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Forgot Password</h2>
-            <input
-                type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
-            <button type="submit">Send Reset Link</button>
-            <p>{message}</p>
-        </form>
+        <div className="forgot-password-container">
+            <div className="forgot-password-box">
+                <form onSubmit={handleSubmit}>
+                    <h2>Quên Mật khẩu</h2>
+                    <input
+                        type="email"
+                        placeholder="Your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <button type="submit">Gửi link</button>
+                    <p>{message}</p>
+                </form>
+            </div>
+        </div>
     );
 }
