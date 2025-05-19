@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../css/ProfileComponent.css"
 
 const ProfileComponent = () => {
     const [user, setUser] = useState(null);
@@ -48,28 +49,31 @@ const ProfileComponent = () => {
     if (!user) return <p>Đang tải...</p>;
 
     return (
-        <div>
-            <h2>Thông tin cá nhân</h2>
-            <form onSubmit={handleUpdate}>
-                <input
-                    name="name"
-                    value={user.name}
-                    onChange={handleChange}
-                    placeholder="Họ tên"
-                />
-                <br />
-                <input
-                    name="email"
-                    value={user.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                />
-                <br />
-                {/* Có thể thêm input cho password nếu muốn đổi mật khẩu */}
-                <button type="submit">Cập nhật</button>
-            </form>
-            <button type="button" onClick={() => navigate("/change-Password")}>Đổi mật khẩu</button>
-            {message && <p>{message}</p>}
+        <div className="profile-container">
+            <div className="profile-box">
+                <h2>Thông tin cá nhân</h2>
+                <form onSubmit={handleUpdate}>
+                    <input
+                        name="name"
+                        value={user.name}
+                        onChange={handleChange}
+                        placeholder="Họ tên"
+                    />
+                    <br />
+                    <input
+                        name="email"
+                        value={user.email}
+                        onChange={handleChange}
+                        placeholder="Email"
+                    />
+                    <br />
+                    <button type="submit">Cập nhật</button>
+                </form>
+                <button type="button" onClick={() => navigate("/change-Password")}>
+                    Đổi mật khẩu
+                </button>
+                {message && <p>{message}</p>}
+            </div>
         </div>
     );
 };

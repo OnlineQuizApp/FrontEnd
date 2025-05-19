@@ -1,0 +1,56 @@
+/* Căn giữa nội dung */
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+    padding: 20px;
+}
+
+/* Tiêu đề chào mừng */
+.homepage-container h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Nhóm nút điều hướng */
+.homepage-container .button-group {
+    display: flex;
+    gap: 16px;
+}
+
+/* Nút */
+.homepage-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #1890ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.homepage-container button:hover {
+    background-color: #40a9ff;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .homepage-container h1 {
+        font-size: 22px;
+    }
+
+    .homepage-container .button-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .homepage-container button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

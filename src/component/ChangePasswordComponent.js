@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../css/ChangePasswordComponent.css"
 
 const ChangePasswordComponent = ({ token }) => {
     const [passwordData, setPasswordData] = useState({
@@ -57,39 +58,38 @@ const ChangePasswordComponent = ({ token }) => {
     };
 
     return (
-        <div>
-            <h3>Đổi mật khẩu</h3>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="password"
-                    name="oldPassword"
-                    placeholder="Mật khẩu cũ"
-                    value={passwordData.oldPassword}
-                    onChange={handleChange}
-                    required
-                />
-                <br />
-                <input
-                    type="password"
-                    name="newPassword"
-                    placeholder="Mật khẩu mới"
-                    value={passwordData.newPassword}
-                    onChange={handleChange}
-                    required
-                />
-                <br />
-                <input
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Xác nhận mật khẩu"
-                    value={passwordData.confirmPassword}
-                    onChange={handleChange}
-                    required
-                />
-                <br />
-                <button type="submit">Xác nhận đổi mật khẩu</button>
-            </form>
-            {message && <p>{message}</p>}
+        <div className="change-password-container">
+            <div className="change-password-box">
+                <h3>Đổi mật khẩu</h3>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="password"
+                        name="oldPassword"
+                        placeholder="Mật khẩu cũ"
+                        value={passwordData.oldPassword}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="newPassword"
+                        placeholder="Mật khẩu mới"
+                        value={passwordData.newPassword}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Xác nhận mật khẩu"
+                        value={passwordData.confirmPassword}
+                        onChange={handleChange}
+                        required
+                    />
+                    <button type="submit">Xác nhận đổi mật khẩu</button>
+                </form>
+                {message && <p>{message}</p>}
+            </div>
         </div>
     );
 };

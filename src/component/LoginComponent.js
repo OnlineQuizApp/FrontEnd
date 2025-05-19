@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../css/LoginComponent.css";
 
 const LoginComponent = () => {
     const [form, setForm] = useState({ username: "", password: "" });
@@ -24,24 +25,36 @@ const LoginComponent = () => {
     };
 
     return (
-        <div>
-            <h2>Đăng nhập</h2>
-            <form onSubmit={handleLogin}>
-                <input name="username" placeholder="Tên đăng nhập" onChange={handleChange} required />
-                <br />
-                <input type="password" name="password" placeholder="Mật khẩu" onChange={handleChange} required />
-                <br />
-                <button type="submit">Đăng nhập</button>
-                <br />
-                <button type="button" onClick={() => navigate("/resetPassword")}>Quên Mật khẩu</button>
-                <p>
-                    Chưa có tài khoản?{" "}
-                    <button type="button" onClick={() => navigate("/register")}>
-                        Đăng ký
+        <div className="login-container">
+            <div className="login-box">
+                <h2>Đăng nhập</h2>
+                <form onSubmit={handleLogin}>
+                    <input
+                        name="username"
+                        placeholder="Tên đăng nhập"
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Mật khẩu"
+                        onChange={handleChange}
+                        required
+                    />
+                    <button type="submit">Đăng nhập</button>
+                    <button type="button" onClick={() => navigate("/resetPassword")}>
+                        Quên mật khẩu
                     </button>
-                </p>
-            </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+                    <p>
+                        Chưa có tài khoản?
+                        <button type="button" onClick={() => navigate("/register")}>
+                            Đăng ký
+                        </button>
+                    </p>
+                </form>
+                {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
+            </div>
         </div>
     );
 };
