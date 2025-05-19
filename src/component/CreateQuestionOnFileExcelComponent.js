@@ -1,4 +1,4 @@
-import "../admin-layout.css"
+import "../css/admin-layout.css"
 import {useState} from "react";
 import {createQuestionsOnFileExcel} from "../service/QuestionService";
 import {useNavigate} from "react-router-dom";

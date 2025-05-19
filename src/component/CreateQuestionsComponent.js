@@ -5,7 +5,7 @@
     import {Button} from "react-bootstrap";
     import {useNavigate} from "react-router-dom";
     import {toast} from "react-toastify";
-    import "../admin-layout.css"
+    import "../css/admin-layout.css"
     import * as Yup from 'yup';
     const CreateQuestionsComponent = ()=>{
         const [category,setCategory]=useState([]);

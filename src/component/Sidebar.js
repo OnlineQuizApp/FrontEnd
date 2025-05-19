@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import "../admin-layout.css"
+import "../css/admin-layout.css"
 const Sidebar = () => {
     const [showQuestionsMenu, setShowQuestionsMenu] = useState(false);
     const [showExamsMenu, setShowExamsMenu] = useState(false);

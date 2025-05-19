@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
-import "../admin-layout.css"
+import "../css/admin-layout.css"
 import * as Yup from "yup";
 const QuestionsDetailComponent = () => {
     const [category, setCategory] = useState([]);

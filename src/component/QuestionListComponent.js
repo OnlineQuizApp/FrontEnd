@@ -5,7 +5,7 @@ import {Button, Modal} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import '../admin-layout.css'
+import '../css/admin-layout.css'
 
 const QuestionService = () => {
     const [questions, setQuestions] = useState([]);
