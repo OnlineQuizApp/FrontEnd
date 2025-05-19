@@ -16,17 +16,23 @@ import ProfileComponent from "./component/ProfileComponent";
 import ForgotPasswordComponent from "./component/ForgotPasswordComponent";
 import ResetPasswordComponent from "./component/ResetPasswordComponent";
 import ChangePasswordComponent from "./component/ChangePasswordComponent";
-
+import AdminLayout from "./component/AdminLayout"
+import ExamsListComponent from "./component/ExamsListComponent";
+import CreateExamsListComponent from "./component/CreateExamsListComponent";
 function App() {
   return (
     <>
         <ToastContainer/>
         <Routes>
-            <Route path={'/questions'} element={<QuestionListComponent/>}></Route>
-            <Route path={'/questions/create'} element={<CreateQuestionsComponent/>}></Route>
-            <Route path={'/questions/upload-file-excel'} element={<CreateQuestionOnFileExcelComponent/>}></Route>
-            <Route path={'/questions/upload-file-img'} element={<CreateQuestionsOnImg/>}></Route>
-            <Route path={'/questions/detail/:id'} element={<QuestionsDetailComponent/>}></Route>
+            <Route path="/admin" element={<AdminLayout/>}>
+                <Route path={'questions'} element={<QuestionListComponent/>}/>
+                <Route path={'questions/create'} element={<CreateQuestionsComponent/>}/>
+                <Route path={'questions/upload-file-excel'} element={<CreateQuestionOnFileExcelComponent/>}/>
+                <Route path={'questions/upload-file-img'} element={<CreateQuestionsOnImg/>}/>
+                <Route path={'questions/detail/:id'} element={<QuestionsDetailComponent/>}/>
+                <Route path={'exams'} element={<ExamsListComponent/>}/>
+                <Route path={'exams/create'} element={<CreateExamsListComponent/>}/>
+            </Route>
             <Route path="/login" element={<LoginComponent />} />
             <Route path="/register" element={<RegisterComponent />} />
             <Route path="/profile" element={<ProfileComponent />} />

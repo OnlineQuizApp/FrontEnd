@@ -1,9 +1,10 @@
 import {useEffect, useState} from "react";
-import {createQuestionsOnFileExcel, createQuestionsOnImg} from "../service/QuestionService";
+import { createQuestionsOnImg} from "../service/QuestionService";
 import {getAllCategory} from "../service/CategoryService";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
-
+import "../css/admin-layout.css"
+import * as Yup from "yup";
 const CreateQuestionsOnImg = ()=>{
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
@@ -45,13 +46,14 @@ const CreateQuestionsOnImg = ()=>{
         formData.append("categoryId", categoryId);
         formData.append("answers", JSON.stringify(answers));
 
-        for (let pair of formData.entries()) {
-            console.log(pair[0]+ ': ' + pair[1]);
+        const hasCorrectAnswer = answers.some(answer => answer.correct);
+        if (!hasCorrectAnswer) {
+            toast.error("Phải có ít nhất một đáp án đúng!");
+            return;
         }
-        console.log("answers:", JSON.stringify(answers));
         try {
             await createQuestionsOnImg(formData);
-            navigate('/questions');
+            navigate('/admin/questions');
             toast.success("Câu hỏi đã được thêm thành công! ")
             setMessage("✅ Câu hỏi đã được thêm thành công!");
         } catch (error) {
