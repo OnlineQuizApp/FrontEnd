@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import "../css/ChangePasswordComponent.css"
 import {toast} from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import HeaderComponent from "./HeaderComponent";
+import FooterComponent from "./FooterComponent";
 
-const ChangePasswordComponent = ({ token }) => {
+const ChangePasswordComponent = ({token}) => {
     const navigate = useNavigate();
     const [passwordData, setPasswordData] = useState({
         oldPassword: "",
@@ -14,7 +16,7 @@ const ChangePasswordComponent = ({ token }) => {
     const [message, setMessage] = useState("");
 
     const handleChange = (e) => {
-        setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
+        setPasswordData({...passwordData, [e.target.name]: e.target.value});
     };
 
     const handleSubmit = (e) => {
@@ -43,7 +45,7 @@ const ChangePasswordComponent = ({ token }) => {
                     confirmPassword: passwordData.confirmPassword,
                 },
                 {
-                    headers: { Authorization: `Bearer ${token}` },
+                    headers: {Authorization: `Bearer ${token}`},
                 }
             )
             .then(() => {
@@ -68,39 +70,44 @@ const ChangePasswordComponent = ({ token }) => {
     };
 
     return (
-        <div className="change-password-container">
-            <div className="change-password-box">
-                <h3>Đổi mật khẩu</h3>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="password"
-                        name="oldPassword"
-                        placeholder="Mật khẩu cũ"
-                        value={passwordData.oldPassword}
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="newPassword"
-                        placeholder="Mật khẩu mới"
-                        value={passwordData.newPassword}
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Xác nhận mật khẩu"
-                        value={passwordData.confirmPassword}
-                        onChange={handleChange}
-                        required
-                    />
-                    <button type="submit">Xác nhận đổi mật khẩu</button>
-                </form>
-                {message && <p>{message}</p>}
+        <>
+            <HeaderComponent/>
+            <div className="change-password-container">
+                <div className="change-password-box">
+                    <h3>Đổi mật khẩu</h3>
+                    <form onSubmit={handleSubmit}>
+                        <label>Mật khẩu cũ</label>
+                        <input
+                            type="password"
+                            name="oldPassword"
+                            value={passwordData.oldPassword}
+                            onChange={handleChange}
+                            required
+                        />
+                        <label>Mật khẩu mới</label>
+                        <input
+                            type="password"
+                            name="newPassword"
+                            value={passwordData.newPassword}
+                            onChange={handleChange}
+                            required
+                        />
+                        <label>Nhập lại mật khẩu</label>
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            value={passwordData.confirmPassword}
+                            onChange={handleChange}
+                            required
+                        />
+                        <button type="submit">Xác nhận đổi mật khẩu</button>
+                    </form>
+                    {message && <p>{message}</p>}
+                </div>
             </div>
-        </div>
+            <FooterComponent/>
+        </>
+
     );
 };
 
