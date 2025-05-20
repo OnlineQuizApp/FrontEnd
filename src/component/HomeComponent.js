@@ -3,42 +3,63 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../css/HomePage.css";
 
-
 const HomePage = () => {
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-
-        if (!token) {
-            window.location.href = "/login";
-            return;
-        }
-
-        try {
-            const decoded = jwtDecode(token);
-            console.log("Toàn bộ nội dung token:", decoded);
-            console.log("Các trường có trong token:", Object.keys(decoded));
-            setUsername(decoded.sub);
-        } catch (error) {
-            console.error("Invalid token:", error);
-            handleLogout();
+        if (token) {
+            try {
+                const decoded = jwtDecode(token);
+                setUsername(decoded.sub);
+            } catch (error) {
+                console.error("Invalid token:", error);
+                handleLogout();
+            }
         }
     }, []);
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        window.location.href = "/login";
+        navigate("/login");
     };
 
     return (
-        <div className="homepage-container">
-            <h1>Welcome, {username}!</h1>
-            <div className="button-group">
-                <button onClick={() => navigate("/profile")}>Hồ sơ cá nhân</button>
-                <button onClick={handleLogout}>Logout</button>
-            </div>
+        <div className="homepage">
+            {/* Header */}
+            <header className="header">
+                <div className="logo">QuizMaster</div>
+                <nav className="nav">
+                    <a href="/">Trang chủ</a>
+                    <a href="/quiz">Quiz</a>
+                    <a href="/history">Lịch sử</a>
+                    <a href="/ranking">Thành tích</a>
+                </nav>
+                <div className="user-section">
+                    {username ? (
+                        <div className="dropdown">
+                            <span className="username">Xin chào, {username}</span>
+                            <div className="dropdown-content">
+                                <button onClick={() => navigate("/profile")}>Hồ sơ người dùng</button>
+                                <button onClick={handleLogout}>Đăng xuất</button>
+                            </div>
+                        </div>
+                    ) : (
+                        <button className="login-btn" onClick={() => navigate("/login")}>Đăng nhập</button>
+                    )}
+                </div>
+            </header>
+
+            {/* Nội dung chính */}
+            <main className="content">
+                {/* Nội dung sẽ được thêm ở đây */}
+            </main>
+
+            {/* Footer */}
+            <footer className="footer">
+                <p>&copy; 2025 QuizMaster. All rights reserved.</p>
+            </footer>
         </div>
     );
 };
