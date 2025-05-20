@@ -14,9 +14,10 @@ const Sidebar = () => {
 
     return (
         <>
+
             <div className="sidebar" style={{width: '250px', background: '#cccccf', padding: '20px', height: '100vh'}}>
                 <h4
-                    style={{cursor: 'pointer', userSelect: 'none', color: 'black'}}
+                    style={{cursor: 'pointer', userSelect: 'none', color: 'white'}}
                     onClick={toggleQuestionsMenu}
                 >
                     Ngân hàng câu hỏi
@@ -25,12 +26,13 @@ const Sidebar = () => {
                     <ul style={{listStyle: 'none', paddingLeft: '20px'}}>
                         <li><Link to="/admin/questions">📋 Danh sách câu hỏi</Link></li>
                         <li><Link to="/admin/questions/create">➕ Thêm câu hỏi mới</Link></li>
-                        <li><Link to="/admin/questions/upload-file-excel">📄 Thêm từ Excel</Link></li>
+                        <li><Link to="/admin/questions/upload-file-excel">📄 Thêm từ excel</Link></li>
                         <li><Link to="/admin/questions/upload-file-img">🖼️ Thêm từ ảnh</Link></li>
+                        <li><Link to="/admin/questions/upload-video">🎥 Thêm từ video</Link></li>
                     </ul>
                 )}
                 <h4
-                    style={{cursor: 'pointer', userSelect: 'none', color: 'black'}}
+                    style={{cursor: 'pointer', userSelect: 'none', color: 'white'}}
                     onClick={toggleExamsMenu}
                 >
                     Ngân hàng đề thi

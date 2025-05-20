@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 import React from "react";
 import {getAllExams} from "../service/ExamsService";
-
+import "../css/admin-layout.css"
+import {Link} from "react-router-dom";
 const ExamsListComponent = () => {
     const [exams, setExams] = useState([]);
     const [page, setPage] = useState(0);
@@ -21,12 +22,32 @@ const ExamsListComponent = () => {
     const handleNext = () => {
         if (page < totalPage - 1) setPage(page + 1);
     }
+
+    const renderPagination = () => {
+        let startPage = Math.max(0, page - 1);
+        let endPage = Math.min(totalPage - 1, page + 1);
+
+        const pages = [];
+        for (let i = startPage; i <= endPage; i++) {
+            pages.push(i);
+        }
+
+        return pages.map(p => (
+            <button
+                key={p}
+                className={`btn btn-sm btn-outline-success btn-hover ${page === p ? 'active' : ''}`}
+                onClick={() => setPage(p)}
+            >
+                {p + 1}
+            </button>
+        ));
+    };
     return (
         <>
             <div className="container">
                 <div className="question-service-wrapper">
                     <div className="container mt-5">
-                        <table>
+                        <table className="table table-bordered mt-4">
                             <thead>
                             <tr>
                                 <th>Id</th>
@@ -47,10 +68,13 @@ const ExamsListComponent = () => {
                                     <td>{e.numberOfQuestions}</td>
                                     <td>{e.testTime}</td>
                                     <td>
-                                        <button>Chi tiết</button>
+                                        <Link className={'btn btn-sm btn-outline-success btn-hover'}
+                                              to={'/admin/exams/detail/' + e.id}>
+                                            Chi tiết
+                                        </Link>
                                     </td>
                                     <td>
-                                        <button>Xoá</button>
+                                        <button className={'btn btn-sm btn-outline-success btn-hover'}>Xoá</button>
                                     </td>
                                 </tr>
                             ))}
@@ -61,11 +85,7 @@ const ExamsListComponent = () => {
                                     onClick={() => (handlePre())}>Trang
                                 Trước
                             </button>
-                            {[...new Array(totalPage)].map((p, i) => (
-                                <button
-                                    className={`btn btn-sm btn-outline-success btn-hover ${page === i ? 'active' : ''}`}
-                                    onClick={() => (setPage(i))}>{i + 1}</button>
-                            ))}
+                            {renderPagination()}
                             <button className={'btn btn-sm btn-outline-success btn-hover'}
                                     onClick={() => (handleNext())}>Trang
                                 Sau

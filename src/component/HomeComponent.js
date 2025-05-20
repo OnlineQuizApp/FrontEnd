@@ -6,13 +6,17 @@ import "../css/HomePage.css";
 const HomePage = () => {
     const [username, setUsername] = useState(null);
     const navigate = useNavigate();
-
+    const [isAdmin, setIsAdmin] = useState(false);
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
             try {
                 const decoded = jwtDecode(token);
                 setUsername(decoded.sub);
+                const roles = decoded.roles || [];
+                if (roles.includes("ROLE_ADMIN")) {
+                    setIsAdmin(true);
+                }
             } catch (error) {
                 console.error("Invalid token:", error);
                 handleLogout();
@@ -24,7 +28,6 @@ const HomePage = () => {
         localStorage.removeItem("token");
         navigate("/login");
     };
-
     return (
         <div className="homepage">
             {/* Header */}
@@ -35,6 +38,10 @@ const HomePage = () => {
                     <a href="/quiz">Quiz</a>
                     <a href="/history">Lịch sử</a>
                     <a href="/ranking">Thành tích</a>
+                    {isAdmin && (
+                        <a href="/admin">Trang admin</a>
+                    )}
+
                 </nav>
                 <div className="user-section">
                     {username ? (

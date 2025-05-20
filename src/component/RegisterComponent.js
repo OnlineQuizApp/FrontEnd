@@ -127,14 +127,14 @@ const RegisterComponent = () => {
                 <div className="register-box">
                     <h2>Đăng ký tài khoản</h2>
                     <form onSubmit={handleRegister}>
-                        <label htmlFor="username">Tên đăng nhập</label>
+                        <label htmlFor="username">Tên đăng nhập<span className="text-danger">*</span></label>
                         <input
                             name="username"
                             value={form.username}
                             onChange={handleChange}
                         />
                         {errors.username && <p style={{color: "red"}}>{errors.username}</p>}
-                        <label htmlFor="password">Mật khẩu</label>
+                        <label htmlFor="password">Mật khẩu<span className="text-danger">*</span></label>
                         <input
                             type="password"
                             name="password"
@@ -144,7 +144,7 @@ const RegisterComponent = () => {
 
                         />
                         {errors.password && <p style={{color: "red"}}>{errors.password}</p>}
-                        <label htmlFor="passwordConfirm">Nhập lại mật khẩu</label>
+                        <label htmlFor="passwordConfirm">Nhập lại mật khẩu<span className="text-danger">*</span></label>
                         <input
                             type="password"
                             name="passwordConfirm"
@@ -153,7 +153,7 @@ const RegisterComponent = () => {
 
                         />
                         {errors.passwordConfirm && <p style={{color: "red"}}>{errors.passwordConfirm}</p>}
-                        <label htmlFor="name">Họ và tên</label>
+                        <label htmlFor="name">Họ và tên<span className="text-danger">*</span></label>
                         <input
                             name="name"
                             value={form.name}
@@ -161,7 +161,7 @@ const RegisterComponent = () => {
 
                         />
                         {errors.name && <p style={{color: "red"}}>{errors.name}</p>}
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">Email<span className="text-danger">*</span></label>
                         <input
                             type="email"
                             name="email"

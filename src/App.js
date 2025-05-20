@@ -23,6 +23,10 @@ import UnauthorizedComponent from "./component/UnauthorizedComponent";
 import HeaderComponent from "./component/HeaderComponent";
 import FooterComponent from "./component/FooterComponent";
 import HomeComponent from "./component/HomeComponent";
+import DetailExamsComponent from "./component/DetailExamsComponent";
+import CreateCategoryComponent from './component/CreateCategoryComponent'
+import CreateQuestionsVideo from "./component/CreateQuestionsVideo";
+
 function App() {
   return (
     <>
@@ -35,9 +39,12 @@ function App() {
                 <Route path={'questions/create'} element={<CreateQuestionsComponent/>}/>
                 <Route path={'questions/upload-file-excel'} element={<CreateQuestionOnFileExcelComponent/>}/>
                 <Route path={'questions/upload-file-img'} element={<CreateQuestionsOnImg/>}/>
+                <Route path={'questions/upload-video'} element={<CreateQuestionsVideo/>}/>
                 <Route path={'questions/detail/:id'} element={<QuestionsDetailComponent/>}/>
                 <Route path={'exams'} element={<ExamsListComponent/>}/>
+                <Route path={'category/create'} element={<CreateCategoryComponent/>}/>
                 <Route path={'exams/create'} element={<CreateExamsListComponent/>}/>
+                <Route path={'exams/detail/:id'} element={<DetailExamsComponent/>}/>
             </Route>
             <Route path="/login" element={<LoginComponent />} />
             <Route path="/register" element={<RegisterComponent />} />

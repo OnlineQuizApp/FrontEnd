@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import "../css/admin-layout.css"
 import * as Yup from "yup";
 const QuestionsDetailComponent = () => {
+
+    const [file, setFile] = useState(null);
     const [category, setCategory] = useState([]);
     const [answers, setAnswers] = useState([
         { content: '', correct: false },
@@ -18,6 +20,7 @@ const QuestionsDetailComponent = () => {
     const [questionDetail, setQuestionDetail] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
+    const [isUploading, setIsUploading] = useState(false);
 
     // Lấy thông tin câu hỏi theo ID
     useEffect(() => {
@@ -51,22 +54,27 @@ const QuestionsDetailComponent = () => {
     };
 
     const handleEditQuestions = async (values) => {
-        const updatedQuestion = {
-            content: values.content, // Nội dung câu hỏi
-            category: values.category, // ID danh mục
-            answers: answers // Mảng các đáp án
-        };
+        const formData = new FormData();
+        formData.append("content", values.content);
+        formData.append("categoryId", values.category);
+        formData.append("answers", JSON.stringify(answers));
+        if (file) {
+            formData.append("file", file);
+        }
         const hasCorrectAnswer = answers.some(answer => answer.correct);
         if (!hasCorrectAnswer) {
             toast.error("Phải có ít nhất một đáp án đúng!");
             return;
         }
+        setIsUploading(true); // ⏳ Bắt đầu loading
         try {
-            await updateQuestions(id, updatedQuestion); // Gửi yêu cầu cập nhật câu hỏi
+            await updateQuestions(id, formData); // Gửi yêu cầu cập nhật câu hỏi
             navigate('/admin/questions'); // Chuyển hướng về danh sách câu hỏi
             toast.success('Cập nhật câu hỏi thành công!');
         } catch (error) {
             toast.error('Lỗi khi cập nhật câu hỏi!');
+        }finally {
+            setIsUploading(false); // ✅ Kết thúc loading
         }
     };
 
@@ -84,9 +92,10 @@ const QuestionsDetailComponent = () => {
                     initialValues={{
                         content: questionDetail?.content,
                         category: questionDetail?.category?.id,
-                        answers: questionDetail?.answers
+                        answers: questionDetail?.answers,
+                        img:questionDetail?.img
                     }}
-                    onSubmit={handleEditQuestions} validationSchema={validationSchema}>
+                    onSubmit={handleEditQuestions} validationSchema={validationSchema} enableReinitialize={true}>
                     <Form>
                         <div>
                             <label>Nhập nội dung câu hỏi:</label>
@@ -98,6 +107,18 @@ const QuestionsDetailComponent = () => {
                             />
                             <ErrorMessage name="content" component="div" className="text-danger"/>
                         </div>
+                        {questionDetail.img !== null && (
+                            <div className="mb-3">
+                                <label className="form-label">Ảnh hiện tại:</label><br/>
+                                <img src={questionDetail.img} alt="Câu hỏi" style={{ maxWidth: '200px', marginBottom: '10px' }} />
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="form-control mt-2"
+                                    onChange={(e) => setFile(e.target.files[0])}
+                                />
+                            </div>
+                        )}
 
                         <div>
                             <label>Chọn danh mục:</label>
@@ -131,12 +152,19 @@ const QuestionsDetailComponent = () => {
                                 </div>
                             </div>
                         ))}
-
                         <Button type="submit" variant="primary">
                             Cập nhật
                         </Button>
                     </Form>
                 </Formik>
+                {isUploading && (
+                    <div className="text-center mt-3">
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Đang tải...</span>
+                        </div>
+                        <p>Đang xử lý hình ảnh...</p>
+                    </div>
+                )}
             </div>
             </>
             );

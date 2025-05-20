@@ -25,6 +25,10 @@ const ChangePasswordComponent = ({token}) => {
             setMessage("Mật khẩu xác nhận không khớp.");
             return;
         }
+        if (passwordData.oldPassword === passwordData.newPassword) {
+            setMessage("Mật khẩu mới không được giống mật khẩu cũ.");
+            return;
+        }
 
         const token = localStorage.getItem("token");
 
