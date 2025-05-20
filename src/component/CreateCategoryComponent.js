@@ -18,6 +18,9 @@ const CreateCategoryComponent = ()=>{
         name: Yup.string()
             .required("Vui lòng nhập tên danh mục")
     });
+    const handleBack = ()=>{
+        navigate('/admin/questions/create');
+    }
     return (
         <>
             <>
@@ -35,11 +38,24 @@ const CreateCategoryComponent = ()=>{
                         </label>
                         <Field name={'name'} className="form-control"></Field>
                         <ErrorMessage name="name" component="div" className="text-danger"/>
-                        <Button type={'submit'} className="d-flex justify-content-center gap-3 mt-4">Thêm danh mục</Button>
+                        <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap">
+                            <div className="d-flex gap-3  flex-wrap">
+                                <Button type={'submit'}
+                                        className="d-flex justify-content-center gap-3 mt-4
+                                         btn btn-sm btn-outline btn-hover"
+                                >Thêm danh
+                                    mục</Button>
+                                <Button type={'submit'} className="d-flex justify-content-center gap-3 mt-4
+                                         btn btn-sm btn-outline btn-hover"
+                                        onClick={() => {
+                                            handleBack()
+                                        }}>Quay lại</Button>
+                            </div>
+                            </div>
                     </Form>
                 </Formik>
             </>
         </>
-    );
+);
 }
 export default CreateCategoryComponent;

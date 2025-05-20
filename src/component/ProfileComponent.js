@@ -3,7 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/ProfileComponent.css"
 import {toast} from "react-toastify";
-
+import FooterComponent from "./FooterComponent";
+import HeaderComponent from "./HeaderComponent";
 const ProfileComponent = () => {
     const [user, setUser] = useState(null);
     const [message, setMessage] = useState("");
@@ -55,32 +56,36 @@ const ProfileComponent = () => {
     if (!user) return <p>Đang tải...</p>;
 
     return (
-        <div className="profile-container">
-            <div className="profile-box">
-                <h2>Thông tin cá nhân</h2>
-                <form onSubmit={handleUpdate}>
-                    <label>H và tên</label>
-                    <input
-                        name="name"
-                        value={user.name}
-                        onChange={handleChange}
-                    />
-                    <br />
-                    <label>Email</label>
-                    <input
-                        name="email"
-                        value={user.email}
-                        onChange={handleChange}
-                    />
-                    <br />
-                    <button type="submit">Cập nhật</button>
-                </form>
-                <button type="button" onClick={() => navigate("/change-Password")}>
-                    Đổi mật khẩu
-                </button>
-                {message && <p>{message}</p>}
+        <>
+            <HeaderComponent/>
+            <div className="profile-container">
+                <div className="profile-box">
+                    <h2>Thông tin cá nhân</h2>
+                    <form onSubmit={handleUpdate}>
+                        <label>Họ và tên</label>
+                        <input
+                            name="name"
+                            value={user.name}
+                            onChange={handleChange}
+                        />
+                        <br />
+                        <label>Email</label>
+                        <input
+                            name="email"
+                            value={user.email}
+                            onChange={handleChange}
+                        />
+                        <br />
+                        <button type="submit">Cập nhật</button>
+                    </form>
+                    <button type="button" onClick={() => navigate("/change-Password")}>
+                        Đổi mật khẩu
+                    </button>
+                    {message && <p>{message}</p>}
+                </div>
             </div>
-        </div>
+            <FooterComponent/>
+        </>
     );
 };
 

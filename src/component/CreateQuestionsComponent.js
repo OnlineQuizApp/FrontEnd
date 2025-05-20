@@ -106,15 +106,15 @@
                         </div>
                         <div className="d-flex align-items-center gap-1 my-2">
                             <Field as="select" name="category" className="form-control">
-                                <option value="">-- Chọn Danh Mục Câu Hỏi --</option>
+                                <option value="">-- Chọn Danh Mục Câu Hỏi--</option>
                                 {category && category.map((c) => (
                                     <option key={c.id} value={c.id}>{c.name}</option>
                                 ))}
                             </Field>
-                            <ErrorMessage name="category" component="div" className="text-danger mt-1" />
+                            <ErrorMessage name="category" component="div" className="text-danger mt-1"/>
                             <Button
                                 type="button"
-                                className="btn btn-sm btn-outline-success py-0.3 px-0.3"
+                                className="btn btn-sm btn-outline btn-hover py-0.3 px-0.3"
                                 style={{whiteSpace: "nowrap", fontSize: "1.1rem"}}
                                 onClick={() => navigate('/admin/category/create')}
                             >
@@ -136,11 +136,11 @@
                                         <input
                                             type="text"
                                             className="form-control"
-                                            placeholder="Nhập nội dung đáp án"
+                                            placeholder="Nhập nội dung đáp án..."
                                             value={answer.content}
                                             onChange={(e) => handleAnswerChange(index, 'content', e.target.value)}
                                             required
-                                            onInvalid={e => e.target.setCustomValidity('Vui lòng không để trống trường này')}
+                                            onInvalid={e => e.target.setCustomValidity('Vui lòng nhập đáp án không được để trống!')}
                                             onInput={e => e.target.setCustomValidity('')}
                                         />
                                     </td>
@@ -160,10 +160,10 @@
                             <div className="d-flex gap-3 flex-wrap">
                                 <Button onClick={back}
                                         type="button"
-                                        className="btn btn-sm btn-outline-success btn-hover">
+                                        className="btn btn-sm btn-outline btn-hover">
                                     Quay lại
                                 </Button>
-                                <Button type="submit" className="btn btn-sm btn-outline-success btn-hover">
+                                <Button type="submit" className="btn btn-sm btn-outline btn-hover">
                                     Thêm mới
                                 </Button>
                             </div>

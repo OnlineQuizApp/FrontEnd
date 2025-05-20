@@ -36,7 +36,7 @@ const Header = () => {
             <div className="user-section">
                 {username ? (
                     <div className="dropdown">
-                        <span className="username">{username}</span>
+                        <span className="username">Xin chào, {username}</span>
                         <div className="dropdown-content">
                             <button onClick={() => navigate("/profile")}>Hồ sơ người dùng</button>
                             <button onClick={handleLogout}>Đăng xuất</button>

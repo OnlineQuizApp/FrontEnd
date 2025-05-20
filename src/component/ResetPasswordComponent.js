@@ -19,7 +19,7 @@ export default function ResetPasswordComponent() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (newPassword !== confirm) {
-            setMessage("Passwords do not match.");
+            setMessage("Mật khấu không khớp");
             return;
         }
 
@@ -38,7 +38,7 @@ export default function ResetPasswordComponent() {
                 navigate("/login");
             }, 2000);
         } catch (err) {
-            setMessage("Invalid or expired token.");
+            setMessage("Link cập nhật mật khẩu đã hết hạn!");
         }
     };
 
@@ -61,7 +61,7 @@ export default function ResetPasswordComponent() {
                         onChange={(e) => setConfirm(e.target.value)}
                         required
                     />
-                    <button type="submit">Reset Password</button>
+                    <button type="submit">Cập nhật mật khẩu</button>
                     {message && <p>{message}</p>}
                 </form>
             </div>

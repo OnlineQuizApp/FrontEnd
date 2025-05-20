@@ -20,12 +20,15 @@ export default function ForgotPasswordComponent() {
             toast.success("🎉 Bạn vào hòm thư check email để cập nhật lại mật khẩu!", {
                 position: "top-center",
                 autoClose: 2000,
-                onClose: () => navigate("/login")
             });
+
+            // ✅ Đợi toast hiện xong rồi chuyển trang
+            setTimeout(() => {
+                navigate("/login");
+            }, 2200);
         } catch (err) {
             setMessage("Email không tồn tại hoặc đã xảy ra lỗi.");
-        } finally {
-            setIsLoading(false);
+            setIsLoading(false); // ❗ Quan trọng: cho người dùng thử lại
         }
     };
 

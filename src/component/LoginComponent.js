@@ -60,16 +60,14 @@ const LoginComponent = () => {
         try {
             const response = await axios.post("http://localhost:8080/api/account/login", form);
             localStorage.setItem("token", response.data.token);
-            navigate("/");
+            toast.success(" Đăng nhập thành công!", {
+                position: "top-center",
+                autoClose: 2000,
+                toastId: "success-toast"
+            });
             setTimeout(() => {
-                if (!toast.isActive("success-toast")) {
-                    toast.success("🎉 Đăng nhập thành công!", {
-                        position: "top-center",
-                        autoClose: 2000,
-                        toastId: "success-toast"
-                    });
-                }
-            }, 0);
+                navigate("/");
+            }, 1000); // đợi 1 giây để toast hiển thị xong rồi mới chuyển trang
         } catch (err) {
             if (err.response && err.response.data) {
                 const backendData = err.response.data;

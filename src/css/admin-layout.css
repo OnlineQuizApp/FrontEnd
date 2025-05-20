@@ -8,7 +8,7 @@
     --text-dark: #1a202c;
     --text-light: #4a5568;
     --sidebar-bg: #1f2937;
-    --sidebar-hover: rgba(237, 145, 67, 0.9);
+    --sidebar-hover: rgba(181, 131, 96, 0.98);
     --shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     --transition: all 0.3s ease-in-out;
     --success-color: #28a745;
@@ -36,14 +36,16 @@ body {
     min-height: 100vh;
 }
 
+
 /* SIDEBAR */
 .sidebar {
     width: 250px;
-    background-color: var(--sidebar-bg);
+    background-color: #ff8c00 !important;
     color: var(--white);
     padding: 20px;
     position: fixed;
-    height: 100vh;
+    top: 60px; /* Bắt đầu từ dưới header (chiều cao 60px) */
+    height: calc(100vh - 60px); /* Điều chỉnh chiều cao để không che header */
     overflow-y: auto;
     box-shadow: var(--shadow);
     z-index: 1000;
@@ -125,8 +127,9 @@ body {
     flex: 1;
     padding: 24px;
     background-color: var(--light-bg);
-    margin-left: 250px;
-    min-height: 100vh;
+    margin-left: 250px; /* Chừa chỗ cho sidebar */
+    margin-top: 60px; /* Đẩy xuống dưới header (chiều cao 60px) */
+    min-height: calc(100vh - 60px); /* Điều chỉnh chiều cao để phù hợp với header */
     overflow-y: auto;
 }
 
@@ -161,7 +164,7 @@ h3 { font-size: 1.25rem; margin-bottom: 1rem; }
 }
 
 .table thead {
-    background-color: var(--primary-color);
+    background-color: #ff8c00;
     color: var(--white);
 }
 
@@ -328,11 +331,18 @@ h3 { font-size: 1.25rem; margin-bottom: 1rem; }
     .sidebar {
         width: 100%;
         position: relative;
-        height: auto;
+        top: 0; /* Sidebar không cố định trên mobile */
+        height: auto; /* Chiều cao tự động */
+    }
+
+    .header {
+        left: 0; /* Header chiếm toàn bộ chiều rộng */
+        width: 100%;
     }
 
     .main-content {
-        margin-left: 0;
+        margin-left: 0; /* Không cần margin-left trên mobile vì sidebar không cố định */
+        margin-top: 60px; /* Đẩy xuống dưới header */
         padding: 1.5rem;
     }
 
@@ -349,6 +359,7 @@ h3 { font-size: 1.25rem; margin-bottom: 1rem; }
     .dropdown-menu {
         padding-left: 20px;
     }
+
     input[type="file"].form-control {
         padding: 12px 14px;
         border: 1px solid var(--gray-light);
@@ -365,7 +376,32 @@ h3 { font-size: 1.25rem; margin-bottom: 1rem; }
         border-color: var(--primary-color);
         box-shadow: 0 0 0 3px rgba(237, 145, 67, 0.15);
     }
+
     .question-service-wrapper form {
-        margin-bottom: 0.25rem;   /* hoặc mb-1 trong class bootstrap */
+        margin-bottom: 0.25rem; /* hoặc mb-1 trong class bootstrap */
     }
 }
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid #ff8c00; /* Màu cam outline */
+    color: #ff8c00; /* Màu chữ cam */
+}
+
+.btn-outline:hover {
+    background-color: #ff8c00; /* Nền cam khi hover */
+    color: #ffffff; /* Chữ trắng khi hover */
+}
+.btn-outline.active {
+    background-color: #ff8c00; /* Nền cam khi active */
+    color: #ffffff; /* Chữ trắng khi active */
+    border-color: #ff8c00; /* Giữ viền cam khi active */
+}
+.header {
+    position: fixed;
+    top: 0;
+    left: 0; /* Bắt đầu từ mép trái */
+    right: 0; /* Kéo dài đến mép phải */
+    height: 60px; /* Chiều cao cố định */
+    z-index: 1100; /* Đảm bảo header ở trên các phần tử khác */
+}
+

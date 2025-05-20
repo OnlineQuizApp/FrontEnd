@@ -112,14 +112,13 @@ const CreateQuestionsVideo = ()=>{
             <h2 className="mb-4" style={{fontSize: "1.5rem", fontWeight: "bold"}}>🎥 Thêm Mới Câu Hỏi Bằng Video</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                        <label className="form-label">Chọn video đề bài:</label>
-                        <input type="file" accept="video/*" className="form-control" onChange={handleImageChange}
+                    <label className="form-label">Chọn video đề bài <span className="text-danger">*</span> </label>
+                    <input type="file" accept="video/*" className="form-control" onChange={handleImageChange}
                                required
                                onInvalid={e => e.target.setCustomValidity('Vui lòng chọn một video đại diện cho đề bài!')}
                                onInput={e => e.target.setCustomValidity('')}/>
                     </div>
                     <div className="mb-3">
-                        <label className="form-label">Chọn danh mục (Category ID):</label>
                         <select value={categoryId}
                                 onChange={(e) => setCategoryId(Number(e.target.value))}
                                 className="form-select">
@@ -130,7 +129,7 @@ const CreateQuestionsVideo = ()=>{
                         </select>
                     </div>
                     <div className="mb-3">
-                        <label className="form-label">Nội dung câu hỏi :</label>
+                        <label className="form-label">Nội dung câu hỏi <span className="text-danger">*</span> </label>
                         <textarea
                             className="form-control"
                             value={content}
@@ -157,11 +156,11 @@ const CreateQuestionsVideo = ()=>{
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Nhập nội dung đáp án"
+                                        placeholder="Nhập nội dung đáp án..."
                                         value={answer.content}
                                         onChange={(e) => handleAnswerChange(index, 'content', e.target.value)}
                                         required
-                                        onInvalid={e => e.target.setCustomValidity('Vui lòng không để trống trường này')}
+                                        onInvalid={e => e.target.setCustomValidity('Vui lòng nhập đáp án không được để trống!')}
                                         onInput={e => e.target.setCustomValidity('')}
                                     />
                                 </td>
@@ -181,10 +180,10 @@ const CreateQuestionsVideo = ()=>{
                         <div className="d-flex gap-3  flex-wrap">
                             <Button onClick={back}
                                     type="button"
-                                    className="btn btn-sm btn-outline-success btn-hover">
+                                    className="btn btn-sm btn-outline btn-hover">
                                 Quay lại
                             </Button>
-                            <Button type="submit" className="btn btn-sm btn-outline-success btn-hover">
+                            <Button type="submit" className="btn btn-sm btn-outline btn-hover">
                                 Thêm mới
                             </Button>
                         </div>

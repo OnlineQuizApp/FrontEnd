@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '../css/admin-layout.css'
 import {getAllCategory} from "../service/CategoryService";
+import HeaderComponent from "./HeaderComponent";
 
 const QuestionService = () => {
     const [questions, setQuestions] = useState([]);
@@ -74,7 +75,7 @@ const QuestionService = () => {
         return pages.map(p => (
             <button
                 key={p}
-                className={`btn btn-sm btn-outline-success btn-hover ${page === p ? 'active' : ''}`}
+                className={`btn btn-sm btn-outline btn-hover ${page === p ? 'active' : ''}`}
                 onClick={() => setPage(p)}
             >
                 {p + 1}
@@ -84,11 +85,9 @@ const QuestionService = () => {
 
     return (
         <>
-        {/*<div className="container">*/}
             <h2 className="mb-4" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Danh Sách Câu Hỏi</h2>
-
             <div className="question-service-wrapper">
-                <div className="container mt-4">
+                <div className=" mt-4">
                     <Formik
                         initialValues={{content: '', category: ''}}
                         onSubmit={handleSearch}
@@ -108,7 +107,7 @@ const QuestionService = () => {
                                     <option value={c.name} key={c.id}>{c.name}</option>
                                 ))}
                             </Field>
-                            <button className="btn btn-sm btn-outline-success btn-hover" type="submit">Tìm Kiếm</button>
+                            <button className="btn btn-sm btn-outline btn-hover" type="submit">Tìm Kiếm</button>
                         </Form>
                     </Formik>
                 </div>
@@ -132,7 +131,7 @@ const QuestionService = () => {
                                 <td>{q?.category?.name}</td>
                                 <td>{q.img ? q.img : 'không có hình ảnh'}</td>
                                 <td>
-                                    <Link className={'btn btn-sm btn-outline-success btn-hover'}
+                                    <Link className="btn btn-sm btn-outline btn-hover"
                                           to={'detail/' + q.id}>
                                         Chi tiết
                                     </Link>
@@ -163,12 +162,12 @@ const QuestionService = () => {
                     </Modal>
                     <div className="pagination-buttons"
                          style={{justifyContent: 'center', textAlign: 'center', marginTop: '10px'}}>
-                        <button className={'btn btn-sm btn-outline-success btn-hover'}
+                        <button className="btn btn-sm btn-outline btn-hover"
                                 onClick={() => (handlePrePage())}>Trang
                             Trước
                         </button>
                         {renderPagination()}
-                        <button className={'btn btn-sm btn-outline-success btn-hover'}
+                        <button className="btn btn-sm btn-outline btn-hover"
                                 onClick={() => (handleNextPage())}>Trang
                             Sau
                         </button>

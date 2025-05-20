@@ -40,12 +40,17 @@ const DetailExamsComponent = ()=>{
                                         {console.log("Ảnh câu hỏi:", question?.img)}
                                         {console.log("Đáp án:", question?.examAnswers)}
                                         {question?.img ? (
-                                            <img
-                                                src={question?.img}
-                                                alt={`Hình câu hỏi ${qIndex + 1 + page * pageSize}`}
-                                                style={{ maxWidth: "100%", maxHeight: 200 }}
-                                            />
-                                        ): (question?.content)}
+                                            <>
+                                                <img
+                                                    src={question?.img}
+                                                    alt={`Hình câu hỏi ${qIndex + 1 + page * pageSize}`}
+                                                    style={{maxWidth: "100%", maxHeight: 200}}
+                                                />
+                                                <p>{question?.content}</p>
+                                            </>
+
+
+                                        ) : (question?.content)}
                                     </h6>
                                     {question?.examAnswers?.map((answer, aIndex) => (
                                         <div key={aIndex} style={{marginLeft: "20px"}}>

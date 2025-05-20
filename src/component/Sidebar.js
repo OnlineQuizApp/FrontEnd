@@ -14,9 +14,10 @@ const Sidebar = () => {
 
     return (
         <>
+
             <div className="sidebar" style={{width: '250px', background: '#cccccf', padding: '20px', height: '100vh'}}>
                 <h4
-                    style={{cursor: 'pointer', userSelect: 'none', color: 'black'}}
+                    style={{cursor: 'pointer', userSelect: 'none', color: 'white'}}
                     onClick={toggleQuestionsMenu}
                 >
                     Ngân hàng câu hỏi
@@ -31,7 +32,7 @@ const Sidebar = () => {
                     </ul>
                 )}
                 <h4
-                    style={{cursor: 'pointer', userSelect: 'none', color: 'black'}}
+                    style={{cursor: 'pointer', userSelect: 'none', color: 'white'}}
                     onClick={toggleExamsMenu}
                 >
                     Ngân hàng đề thi
