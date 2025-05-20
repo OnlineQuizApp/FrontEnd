@@ -146,7 +146,7 @@ const CreateQuestionsVideo = ()=>{
                         <thead>
                         <tr>
                             <th>Nội dung đáp án <span className="text-danger">*</span></th>
-                            <th>Chọn là đáp án đúng <span className="text-danger">*</span></th>
+                            <th>Chọn đáp án đúng <span className="text-danger">*</span></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -180,7 +180,7 @@ const CreateQuestionsVideo = ()=>{
                         <div className="d-flex gap-3  flex-wrap">
                             <Button onClick={back}
                                     type="button"
-                                    className="btn btn-sm btn-outline btn-hover">
+                                    className="btn btn-sm btn-outline-back btn-hover">
                                 Quay lại
                             </Button>
                             <Button type="submit" className="btn btn-sm btn-outline btn-hover">

@@ -80,7 +80,7 @@ const ChangePasswordComponent = ({token}) => {
                 <div className="change-password-box">
                     <h3>Đổi mật khẩu</h3>
                     <form onSubmit={handleSubmit}>
-                        <label>Mật khẩu cũ</label>
+                        <label>Mật khẩu cũ</label><span className="text-danger">*</span>
                         <input
                             type="password"
                             name="oldPassword"
@@ -88,7 +88,7 @@ const ChangePasswordComponent = ({token}) => {
                             onChange={handleChange}
                             required
                         />
-                        <label>Mật khẩu mới</label>
+                        <label>Mật khẩu mới</label><span className="text-danger">*</span>
                         <input
                             type="password"
                             name="newPassword"
@@ -96,7 +96,7 @@ const ChangePasswordComponent = ({token}) => {
                             onChange={handleChange}
                             required
                         />
-                        <label>Nhập lại mật khẩu</label>
+                        <label>Nhập lại mật khẩu</label><span className="text-danger">*</span>
                         <input
                             type="password"
                             name="confirmPassword"
