@@ -59,18 +59,18 @@ const ProfileComponent = () => {
             <div className="profile-box">
                 <h2>Thông tin cá nhân</h2>
                 <form onSubmit={handleUpdate}>
+                    <label>H và tên</label>
                     <input
                         name="name"
                         value={user.name}
                         onChange={handleChange}
-                        placeholder="Họ tên"
                     />
                     <br />
+                    <label>Email</label>
                     <input
                         name="email"
                         value={user.email}
                         onChange={handleChange}
-                        placeholder="Email"
                     />
                     <br />
                     <button type="submit">Cập nhật</button>

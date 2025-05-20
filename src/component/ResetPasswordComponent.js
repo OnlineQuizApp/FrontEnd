@@ -4,6 +4,8 @@ import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import "../css/ResetPasswordComponent.css";
 import {toast} from "react-toastify";
+import HeaderComponent from "./HeaderComponent";
+import FooterComponent from "./FooterComponent";
 
 export default function ResetPasswordComponent() {
     const [newPassword, setNewPassword] = useState("");
@@ -41,26 +43,31 @@ export default function ResetPasswordComponent() {
     };
 
     return (
-        <div className="reset-password-container">
-            <form onSubmit={handleSubmit} className="reset-password-box">
-                <h2>Reset Password</h2>
-                <input
-                    type="password"
-                    placeholder="New password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Confirm password"
-                    value={confirm}
-                    onChange={(e) => setConfirm(e.target.value)}
-                    required
-                />
-                <button type="submit">Reset Password</button>
-                {message && <p>{message}</p>}
-            </form>
-        </div>
+
+        <>
+        <HeaderComponent/>
+            <div className="reset-password-container">
+                <form onSubmit={handleSubmit} className="reset-password-box">
+                    <h2>Đặt lại mật khẩu</h2>
+                    <input
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        value={confirm}
+                        onChange={(e) => setConfirm(e.target.value)}
+                        required
+                    />
+                    <button type="submit">Reset Password</button>
+                    {message && <p>{message}</p>}
+                </form>
+            </div>
+            <FooterComponent/>
+        </>
+
+
     );
 }

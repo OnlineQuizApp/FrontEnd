@@ -19,12 +19,18 @@ import ChangePasswordComponent from "./component/ChangePasswordComponent";
 import AdminLayout from "./component/AdminLayout"
 import ExamsListComponent from "./component/ExamsListComponent";
 import CreateExamsListComponent from "./component/CreateExamsListComponent";
+import UnauthorizedComponent from "./component/UnauthorizedComponent";
+import HeaderComponent from "./component/HeaderComponent";
+import FooterComponent from "./component/FooterComponent";
+import HomeComponent from "./component/HomeComponent";
 function App() {
   return (
     <>
         <ToastContainer/>
         <Routes>
-            <Route path="/admin" element={<AdminLayout/>}>
+            <Route path="/admin" element={ <PrivateRoute roles={['ADMIN']}>
+                <AdminLayout />
+            </PrivateRoute>}>
                 <Route path={'questions'} element={<QuestionListComponent/>}/>
                 <Route path={'questions/create'} element={<CreateQuestionsComponent/>}/>
                 <Route path={'questions/upload-file-excel'} element={<CreateQuestionOnFileExcelComponent/>}/>
@@ -42,11 +48,12 @@ function App() {
             <Route
                 path="/"
                 element={
-                    <PrivateRoute>
                         <HomePage />
-                    </PrivateRoute>
                 }
             />
+            <Route path="/unauthorized" element={<UnauthorizedComponent />} />
+            <Route path="/header" element={<HeaderComponent />} />
+            <Route path="/footer" element={<FooterComponent />} />
         </Routes>
     </>
   );
