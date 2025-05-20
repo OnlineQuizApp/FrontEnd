@@ -39,7 +39,7 @@ export default function ForgotPasswordComponent() {
                 <div className="forgot-password-box">
                     <form onSubmit={handleSubmit}>
                         <h2>Quên Mật khẩu</h2>
-                        <label>Email</label>
+                        <label>Email</label><span className="text-danger">*</span>
                         <input
                             type="email"
                             placeholder="Nhập email của bạn"

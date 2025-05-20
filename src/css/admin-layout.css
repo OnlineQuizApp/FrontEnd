@@ -396,6 +396,21 @@ h3 { font-size: 1.25rem; margin-bottom: 1rem; }
     color: #ffffff; /* Chữ trắng khi active */
     border-color: #ff8c00; /* Giữ viền cam khi active */
 }
+.btn-outline-back {
+    background-color: transparent;
+    border: 1px solid rgb(59, 59, 62); /* Màu cam outline */
+    color: rgba(237, 145, 82, 0.98); /* Màu chữ cam */
+}
+
+.btn-outline-back:hover {
+    background-color: #b0b0b1; /* Nền cam khi hover */
+    color: #3b3b3e; /* Chữ trắng khi hover */
+}
+.btn-outline-back.active {
+    background-color: rgba(240, 240, 240, 0.49); /* Nền cam khi active */
+    color: rgb(255, 255, 255); /* Chữ trắng khi active */
+    border-color: #1e1f22; /* Giữ viền cam khi active */
+}
 .header {
     position: fixed;
     top: 0;

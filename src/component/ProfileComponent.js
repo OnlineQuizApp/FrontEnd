@@ -62,20 +62,20 @@ const ProfileComponent = () => {
                 <div className="profile-box">
                     <h2>Thông tin cá nhân</h2>
                     <form onSubmit={handleUpdate}>
-                        <label>Họ và tên</label>
+                        <label>Họ và tên</label><span className="text-danger">*</span>
                         <input
                             name="name"
                             value={user.name}
                             onChange={handleChange}
                         />
-                        <br />
-                        <label>Email</label>
+                        <br/>
+                        <label>Email</label><span className="text-danger">*</span>
                         <input
                             name="email"
                             value={user.email}
                             onChange={handleChange}
                         />
-                        <br />
+                        <br/>
                         <button type="submit">Cập nhật</button>
                     </form>
                     <button type="button" onClick={() => navigate("/change-Password")}>

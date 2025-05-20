@@ -45,8 +45,8 @@ const CreateQuestionOnFileExcelComponent = ()=>{
             <div className="container mt-5">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label htmlFor="file" className="form-label">Chọn File Excel <span
-                            className="text-danger">*</span> </label>
+                        <label htmlFor="file" className="form-label">Chọn File Exce
+                            <span className="text-danger">*</span> </label>
                         <input
                             type="file"
                             id="file"
@@ -61,7 +61,7 @@ const CreateQuestionOnFileExcelComponent = ()=>{
                             <Button
                                 onClick={back}
                                 type="button"
-                                className="btn btn-sm btn-outline btn-hover"
+                                className="btn btn-sm btn-outline-back btn-hover"
                             >
                                 Quay lại
                             </Button>
