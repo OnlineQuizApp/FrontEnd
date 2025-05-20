@@ -2,13 +2,17 @@
     import {useEffect, useState} from "react";
     import {getAllCategory} from "../service/CategoryService";
     import {createQuestions} from "../service/QuestionService";
-    import {Button} from "react-bootstrap";
+    import {Button, Modal} from "react-bootstrap";
     import {useNavigate} from "react-router-dom";
     import {toast} from "react-toastify";
     import "../css/admin-layout.css"
     import * as Yup from 'yup';
+    import 'bootstrap/dist/js/bootstrap.min.js'
+    import 'bootstrap/dist/css/bootstrap.min.css'
+    import "../css/ModalConfirm.css";
     const CreateQuestionsComponent = ()=>{
         const [category,setCategory]=useState([]);
+        const [showConfirmModal, setShowConfirmModal] = useState(false);
         useEffect(() => {
             const fetchData = async ()=>{
                 const data =await getAllCategory();
@@ -41,25 +45,45 @@
             } catch (error) {
                 toast.error('Lỗi khi thêm câu hỏi!');
             }
-
-
         }
+        const handleCorrectAnswerChange = (index) => {
+            const updatedAnswers =[...answers]
+            updatedAnswers[index].correct=!updatedAnswers[index].correct
+            setAnswers(updatedAnswers);
+        }; /// hàm check đáp án đúng sai khi click bào checkbox
         const handleAnswerChange = (index, field, value) => {
             const updatedAnswers = [...answers];
             updatedAnswers[index][field] = value;
             setAnswers(updatedAnswers);
-        };
+        }; // hàm nhập đáp án
         const validationSchema = Yup.object({
             content: Yup.string()
-                .required("Vui lòng nhập nội dung câu hỏi"),
+                .required("Vui lòng nhập nội dung câu hỏi").max(1000,"Đáp án không được quá 1000 kí tự"),
             category: Yup.string()
                 .required("Vui lòng chọn danh mục")
         });
+        const back =()=>{
+            navigate('/admin/questions')
+        }
+
+        const handleConfirmDeleteAnswers = () => {
+            setAnswers([
+                {content: '', correct: false},
+                {content: '', correct: false},
+                {content: '', correct: false},
+                {content: '', correct: false}
+            ]);
+            setShowConfirmModal(false);
+        };
+        const showModal = () => {
+            setShowConfirmModal(true);
+        };
 
 
+        const [errors, setErrors] = useState({}); // để lưu lỗi từ backend
         return (
             <>
-                <h1>Thêm Câu Hỏi</h1>
+                <h2 className="mb-4" style={{fontSize: "1.5rem", fontWeight: "bold"}}> Thêm Mới Câu Hỏi</h2>
                 <Formik
                     initialValues={{
                         content: '',
@@ -68,53 +92,110 @@
                     onSubmit={handleCreateQuestions} validationSchema={validationSchema}>
                     <Form>
                         <div>
-                            <label>Nhập nội dung câu hỏi:</label>
+                            <label>
+                                Nhập nội dung câu hỏi <span className="text-danger">*</span>
+                            </label>
                             <Field
                                 name="content"
                                 as="textarea"
                                 placeholder="Nhập câu hỏi"
                                 className="form-control"
                             />
-                            <ErrorMessage name="content" component="div" className="text-danger" />
+                            {errors.content && <div style={{color: "red"}}>{errors.content}</div>}
+                            <ErrorMessage name="content" component="div" className="text-danger"/>
                         </div>
-
-                        <div>
-                            <label>Chọn danh mục:</label>
+                        <div className="d-flex align-items-center gap-1 my-2">
                             <Field as="select" name="category" className="form-control">
                                 <option value="">-- Chọn Danh Mục Câu Hỏi --</option>
                                 {category && category.map((c) => (
                                     <option key={c.id} value={c.id}>{c.name}</option>
                                 ))}
                             </Field>
-                            <ErrorMessage name="category" component="div" className="text-danger" />
+                            <ErrorMessage name="category" component="div" className="text-danger mt-1" />
+                            <Button
+                                type="button"
+                                className="btn btn-sm btn-outline-success py-0.3 px-0.3"
+                                style={{whiteSpace: "nowrap", fontSize: "1.1rem"}}
+                                onClick={() => navigate('/admin/category/create')}
+                            >
+                                Thêm Danh mục
+                            </Button>
                         </div>
-                        {answers.map((answer, index) => (
-                            <div className="mb-3" key={index}>
-                                <label className="form-label">Đáp án {index + 1}:</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={answer.content}
-                                    onChange={(e) => handleAnswerChange(index, 'content', e.target.value)}
-                                    required
-                                />
-                                <div className="form-check mt-1">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        checked={answer.correct}
-                                        onChange={(e) => handleAnswerChange(index, 'correct', e.target.checked)}
-                                    />
-                                    <label className="form-check-label">Là đáp án đúng</label>
-                                </div>
-                            </div>
-                        ))}
 
-                        <Button type="submit" variant="primary">
-                            Thêm mới
-                        </Button>
+                        <table className="table table-sm table-success-custom mt-3">
+                            <thead>
+                            <tr>
+                                <th>Nội dung đáp án <span className="text-danger">*</span></th>
+                                <th>Chọn là đáp án đúng <span className="text-danger">*</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {answers.map((answer, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Nhập nội dung đáp án"
+                                            value={answer.content}
+                                            onChange={(e) => handleAnswerChange(index, 'content', e.target.value)}
+                                            required
+                                            onInvalid={e => e.target.setCustomValidity('Vui lòng không để trống trường này')}
+                                            onInput={e => e.target.setCustomValidity('')}
+                                        />
+                                    </td>
+                                    <td className="text-center align-middle">
+                                        <input
+                                            type="checkbox"
+                                            checked={answer.correct}
+                                            onChange={() => handleCorrectAnswerChange(index)}
+                                        />
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+
+                        <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap">
+                            <div className="d-flex gap-3 flex-wrap">
+                                <Button onClick={back}
+                                        type="button"
+                                        className="btn btn-sm btn-outline-success btn-hover">
+                                    Quay lại
+                                </Button>
+                                <Button type="submit" className="btn btn-sm btn-outline-success btn-hover">
+                                    Thêm mới
+                                </Button>
+                            </div>
+                                <a
+                                    style={{cursor: 'pointer'}}
+                                    type="button"
+                                    onClick={() => {
+                                        showModal()
+                                    }}
+                                >Xoá hết đáp án</a>
+                        </div>
                     </Form>
                 </Formik>
+                {showConfirmModal && (
+                    <div className="modal-overlay">
+                        <div className="custom-modal">
+                            <h4>Xoá hết nội dung đáp án trong biểu mẫu?</h4>
+                            <p>
+                                Thao tác này sẽ xoá nội dung đáp án của bạn trong biểu mẫu. Bạn sẽ không thể
+                                huỷ được thao tác này sau khi thực hiện.
+                            </p>
+                            <div className="modal-buttons">
+                                <button className="cancel-btn" onClick={() => setShowConfirmModal(false)}>
+                                    Huỷ
+                                </button>
+                                <button className="delete-btn" onClick={handleConfirmDeleteAnswers}>
+                                    Xoá hết nội dung đáp án
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </>
         );
     }

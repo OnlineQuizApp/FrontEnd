@@ -8,9 +8,9 @@ const authHeader = token
     ? { headers: { Authorization: `Bearer ${token}` }}
     : {}; // không gửi gì cả nếu không có token
 
-export async function getAllQuestions(page,category){
+export async function getAllQuestions(page,content,category){
     try {
-        const response = await axios.get(`http://localhost:8080/api/questions?page=${page}&category=${category}`,authHeader);
+        const response = await axios.get(`http://localhost:8080/api/questions?page=${page}&content=${content}&category=${category}`,authHeader);
         const  data = response.data.content;
         const totalPage = response.data.totalPages;
         return {data,totalPage}
@@ -57,13 +57,24 @@ export async function createQuestionsOnFileExcel(file){
         console.log("creteFileExcel:"+response.data);
     }catch (e) {
         console.log("Lỗi thêm file excel: "+e);
-        return { data: [], totalPage: 0 };
+        throw e;
     }
 }
 export async function createQuestionsOnImg(newQuestion){
     console.log("token: ",authHeader)
     try {
         const response = await axios.post(`http://localhost:8080/api/questions/upload-file-img`,newQuestion,authHeader);
+        console.log("createImg:"+response.data);
+    }catch (e) {
+        console.log("Lỗi thêm mới img: "+e);
+        return { data: [], totalPage: 0 };
+    }
+
+}
+export async function createQuestionsOnVideo(newQuestion){
+    console.log("token: ",authHeader)
+    try {
+        const response = await axios.post(`http://localhost:8080/api/questions/upload-video`,newQuestion,authHeader);
         console.log("createImg:"+response.data);
     }catch (e) {
         console.log("Lỗi thêm mới img: "+e);

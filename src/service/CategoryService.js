@@ -15,3 +15,13 @@ export async function getAllCategory(){
     }
 
 }
+
+export async function createCategory(newCategory){
+    try {
+        const response =await axios.post(`http://localhost:8080/api/category`,newCategory,authHeader);
+        console.log("createCategory")
+    }catch (e){
+        console.log("Lỗi createCategory: "+e)
+    }
+
+}

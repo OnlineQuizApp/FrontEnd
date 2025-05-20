@@ -25,8 +25,9 @@ const Sidebar = () => {
                     <ul style={{listStyle: 'none', paddingLeft: '20px'}}>
                         <li><Link to="/admin/questions">📋 Danh sách câu hỏi</Link></li>
                         <li><Link to="/admin/questions/create">➕ Thêm câu hỏi mới</Link></li>
-                        <li><Link to="/admin/questions/upload-file-excel">📄 Thêm từ Excel</Link></li>
+                        <li><Link to="/admin/questions/upload-file-excel">📄 Thêm từ excel</Link></li>
                         <li><Link to="/admin/questions/upload-file-img">🖼️ Thêm từ ảnh</Link></li>
+                        <li><Link to="/admin/questions/upload-video">🎥 Thêm từ video</Link></li>
                     </ul>
                 )}
                 <h4

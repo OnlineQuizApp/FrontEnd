@@ -1,14 +1,11 @@
 import {useEffect, useState} from "react";
-import { createQuestionsOnImg} from "../service/QuestionService";
+import {createQuestionsOnImg, createQuestionsOnVideo} from "../service/QuestionService";
 import {getAllCategory} from "../service/CategoryService";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import "../css/admin-layout.css"
 import {Button} from "react-bootstrap";
-import 'bootstrap/dist/js/bootstrap.min.js'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import "../css/ModalConfirm.css";
-const CreateQuestionsOnImg = ()=>{
+const CreateQuestionsVideo = ()=>{
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
     const [categories, setCategories] = useState([]);
@@ -16,6 +13,7 @@ const CreateQuestionsOnImg = ()=>{
     const [content, setContent] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const MAX_SIZE_BYTES = 50 * 1024 * 1024;
     useEffect(() => {
         const fetchData = async ()=>{
             const data =await getAllCategory();
@@ -48,13 +46,14 @@ const CreateQuestionsOnImg = ()=>{
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!file ) {
-            setMessage("❌ Vui lòng chọn một hình ảnh !");
+            setMessage("❌ Vui lòng chọn một video !");
             return;
         }
         if (!categoryId ) {
             setMessage("❌ Vui lòng chọn một danh mục câu hỏi !");
             return;
         }
+
         // Chuẩn bị dữ liệu gửi lên (ví dụ: gửi qua FormData nếu có ảnh)
         const formData = new FormData();
         formData.append("file", file);
@@ -72,12 +71,15 @@ const CreateQuestionsOnImg = ()=>{
             toast.error("Có đáp án vượt quá 1000 kí tự, vui lòng kiểm tra lại!");
             return ;
         }
-
+        if (file.size > MAX_SIZE_BYTES) {
+            toast.error("Video quá lớn, vui lòng chọn file nhỏ hơn ... MB");
+            return;
+        }
         setIsUploading(true); // ⏳ Bắt đầu loading
         try {
-            await createQuestionsOnImg(formData);
+            await createQuestionsOnVideo(formData);
             navigate('/admin/questions');
-            toast.success("Câu hỏi đã được thêm thành công! ")
+            toast.success("Câu hỏi đã được thêm thành công! ");
         } catch (error) {
             setMessage("❌ Lỗi khi thêm câu hỏi. Vui lòng thử lại!");
         }finally {
@@ -107,15 +109,14 @@ const CreateQuestionsOnImg = ()=>{
     return(
         <>
             {/*<div className="container mt-5">*/}
-            <h2 className="mb-4" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>🖼️ Thêm Mới Câu Hỏi Bằng Hình Ảnh</h2>
+            <h2 className="mb-4" style={{fontSize: "1.5rem", fontWeight: "bold"}}>🎥 Thêm Mới Câu Hỏi Bằng Video</h2>
             <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label className="form-label">Chọn ảnh đề bài:</label>
-                        <input type="file" accept="image/*" className="form-control" onChange={handleImageChange}
+                <div className="mb-3">
+                        <label className="form-label">Chọn video đề bài:</label>
+                        <input type="file" accept="video/*" className="form-control" onChange={handleImageChange}
                                required
-                               onInvalid={e => e.target.setCustomValidity('Vui lòng chọn một hình ảnh đại diện cho câu hỏi!')}
-                               onInput={e => e.target.setCustomValidity('')}
-                        />
+                               onInvalid={e => e.target.setCustomValidity('Vui lòng chọn một video đại diện cho đề bài!')}
+                               onInput={e => e.target.setCustomValidity('')}/>
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Chọn danh mục (Category ID):</label>
@@ -139,7 +140,6 @@ const CreateQuestionsOnImg = ()=>{
                             required
                             onInvalid={e => e.target.setCustomValidity('Vui lòng không để trống trường này')}
                             onInput={e => e.target.setCustomValidity('')}
-
                         />
                     </div>
 
@@ -221,7 +221,7 @@ const CreateQuestionsOnImg = ()=>{
                         <div className="spinner-border text-primary" role="status">
                             <span className="visually-hidden">Đang tải...</span>
                         </div>
-                        <p>Đang xử lý hình ảnh...</p>
+                        <p>Đang xử lý video...</p>
                     </div>
                 )}
             {/*</div>*/}
@@ -229,4 +229,4 @@ const CreateQuestionsOnImg = ()=>{
     );
 
 }
-export default CreateQuestionsOnImg;
+export default CreateQuestionsVideo;

@@ -42,13 +42,13 @@ export async function deleteExams(id){
     }
 }
 
-export async function detailExams(id,page){
-    try {
-        const response = await axios.get(`http://localhost:8080/api/exams/id=${id}?page=${page}`,authHeader);
-        const data=response.data.content;
-        const totalPage=response.data.totalPages;
-        return {data,totalPage}
-    }catch (e){
-        console.log("Lỗi lấy dữ liệu: "+e)
+    export async function detailExams(id,page){
+        try {
+            const response = await axios.get(`http://localhost:8080/api/exams/${id}?page=${page}`,authHeader);
+            const data=response.data.content;
+            const totalPage=response.data.totalPages;
+            return {data,totalPage}
+        }catch (e){
+            console.log("Lỗi lấy dữ liệu: "+e)
+        }
     }
-}
