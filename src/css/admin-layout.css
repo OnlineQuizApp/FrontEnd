@@ -181,9 +181,21 @@ h3 { font-size: 1.25rem; margin-bottom: 1rem; }
     word-break: break-word;   /* Tách từ nếu cần */
 }
 .table .col-id {
-    max-width: 60px;
-    width: 60px;
+    max-width: 70px;
+    width: 70px;
     text-align: center;
+}
+.col-button .action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.col-button .action-buttons .btn {
+    min-width: 70px;
+    padding: 4px 10px;
+    font-size: 0.900rem;
 }
 .question-service-wrapper > .container {
     margin-top: 0; /* giảm margin trên của container form */
@@ -418,5 +430,40 @@ h3 { font-size: 1.25rem; margin-bottom: 1rem; }
     right: 0; /* Kéo dài đến mép phải */
     height: 60px; /* Chiều cao cố định */
     z-index: 1100; /* Đảm bảo header ở trên các phần tử khác */
+}
+.zoom-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.zoomed-image {
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px white;
+}
+
+.close-button {
+    position: fixed;
+    top: 50px;
+    right: 30px;
+    font-size: 40px;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    z-index: 1060;
+}
+
+.close-button:hover {
+    color: red;
 }
 

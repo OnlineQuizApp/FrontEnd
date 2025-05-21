@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -11,8 +11,14 @@ const LoginComponent = () => {
     const [form, setForm] = useState({ username: "", password: "" });
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const navigate = useNavigate();
-
+    const navigate   = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            // Nếu đã đăng nhập thì chuyển hướng ra trang chủ (hoặc dashboard)
+            navigate("/");
+        }
+    }, [navigate]);
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
         setErrors({ ...errors, [e.target.name]: "" });

@@ -13,7 +13,7 @@ const CreateQuestionsVideo = ()=>{
     const [content, setContent] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
-    const MAX_SIZE_BYTES = 50 * 1024 * 1024;
+    const MAX_SIZE_BYTES = 50 * 1024 * 1024; //  tối dđa 50mb
     useEffect(() => {
         const fetchData = async ()=>{
             const data =await getAllCategory();
@@ -72,7 +72,7 @@ const CreateQuestionsVideo = ()=>{
             return ;
         }
         if (file.size > MAX_SIZE_BYTES) {
-            toast.error("Video quá lớn, vui lòng chọn file nhỏ hơn ... MB");
+            toast.error(`Video quá lớn, vui lòng chọn file nhỏ hơn ...\`${MAX_SIZE_BYTES}\` MB`);
             return;
         }
         setIsUploading(true); // ⏳ Bắt đầu loading
@@ -113,7 +113,9 @@ const CreateQuestionsVideo = ()=>{
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label className="form-label">Chọn video đề bài <span className="text-danger">*</span> </label>
-                    <input type="file" accept="video/*" className="form-control" onChange={handleImageChange}
+                    <input type="file"
+                           accept="video/mp4"
+                           className="form-control" onChange={handleImageChange}
                                required
                                onInvalid={e => e.target.setCustomValidity('Vui lòng chọn một video đại diện cho đề bài!')}
                                onInput={e => e.target.setCustomValidity('')}/>
@@ -176,37 +178,43 @@ const CreateQuestionsVideo = ()=>{
                         </tbody>
                     </table>
 
-                    <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap">
+                <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap">
+                    <div className="d-flex gap-3  flex-wrap">
                         <div className="d-flex gap-3  flex-wrap">
-                            <Button onClick={back}
-                                    type="button"
-                                    className="btn btn-sm btn-outline-back btn-hover">
-                                Quay lại
-                            </Button>
-                            <Button type="submit" className="btn btn-sm btn-outline btn-hover">
-                                Thêm mới
-                            </Button>
+                            <button onClick={back}
+                                    type="button" className="btn btn-sm btn-outline btn-hover"
+                                    disabled={isUploading}>
+                                {isUploading ? 'Đang tải...' : 'Quay lại'}
+                            </button>
+                            <button type="submit" className="btn btn-sm btn-outline btn-hover"
+                                    disabled={isUploading}>
+                                {isUploading ? 'Đang tải...' : 'Tải lên'}
+                            </button>
                         </div>
-
-                            <a
-                                style={{textAlign: 'end'}}
-                                type="button"
-                                onClick={showModal}
-                            >Xoá hết đáp án</a>
-
                     </div>
-                </form>
-                {showConfirmModal && (
-                    <div className="modal-overlay">
-                        <div className="custom-modal">
-                            <h4>Xoá hết nội dung đáp án trong biểu mẫu?</h4>
-                            <p>
-                                Thao tác này sẽ xoá nội dung đáp án của bạn trong biểu mẫu. Bạn sẽ không thể
-                                huỷ được thao tác này sau khi thực hiện.
-                            </p>
-                            <div className="modal-buttons">
-                                <button className="cancel-btn" onClick={() => setShowConfirmModal(false)}>
-                                    Huỷ
+                    <a
+                        style={{
+                            textAlign: 'end',
+                            pointerEvents: isUploading ? 'none' : 'auto',
+                            opacity: isUploading ? 0.6 : 1
+                        }}
+                        onClick={showModal}
+                    >
+                        {isUploading ? 'Đang tải...' : 'Xoá hết đáp án'}
+                    </a>
+                </div>
+            </form>
+            {showConfirmModal && (
+                <div className="modal-overlay">
+                    <div className="custom-modal">
+                        <h4>Xoá hết nội dung đáp án trong biểu mẫu?</h4>
+                        <p>
+                            Thao tác này sẽ xoá nội dung đáp án của bạn trong biểu mẫu. Bạn sẽ không thể
+                            huỷ được thao tác này sau khi thực hiện.
+                        </p>
+                        <div className="modal-buttons">
+                            <button className="cancel-btn" onClick={() => setShowConfirmModal(false)}>
+                            Huỷ
                                 </button>
                                 <button className="delete-btn" onClick={handleConfirmDeleteAnswers}>
                                     Xoá hết nội dung đáp án

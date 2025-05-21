@@ -1,24 +1,25 @@
-import { useEffect, useState } from "react";
-import { detailQuestions,updateQuestions  } from "../service/QuestionService";
+import {useEffect, useState} from "react";
+import {detailQuestions, updateQuestions} from "../service/QuestionService";
 import {getAllCategory} from "../service/CategoryService";
-import { useNavigate, useParams } from "react-router-dom";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Button } from "react-bootstrap";
-import { toast } from "react-toastify";
+import {useNavigate, useParams} from "react-router-dom";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import {Button} from "react-bootstrap";
+import {toast} from "react-toastify";
 import "../css/admin-layout.css"
 import * as Yup from "yup";
-const QuestionsDetailComponent = () => {
 
+const QuestionsDetailComponent = () => {
+    const [isImageZoomed, setIsImageZoomed] = useState(false);
     const [file, setFile] = useState(null);
     const [category, setCategory] = useState([]);
     const [answers, setAnswers] = useState([
-        { content: '', correct: false },
-        { content: '', correct: false },
-        { content: '', correct: false },
-        { content: '', correct: false }
+        {content: '', correct: false},
+        {content: '', correct: false},
+        {content: '', correct: false},
+        {content: '', correct: false}
     ]);
     const [questionDetail, setQuestionDetail] = useState(null);
-    const { id } = useParams();
+    const {id} = useParams();
     const navigate = useNavigate();
     const [isUploading, setIsUploading] = useState(false);
 
@@ -26,7 +27,7 @@ const QuestionsDetailComponent = () => {
     useEffect(() => {
         const fetchData = async () => {
             const data = await detailQuestions(id);
-            console.log("data"+data);
+            console.log("Data from API:", data);
             setQuestionDetail(data);
             // Cập nhật câu hỏi và đáp án vào form
             if (data) {
@@ -60,6 +61,9 @@ const QuestionsDetailComponent = () => {
         formData.append("answers", JSON.stringify(answers));
         if (file) {
             formData.append("file", file);
+            const isImage = file.type.startsWith("image/");
+            const isVideo = file.type.startsWith("video/");
+            formData.append("typeFile", isImage ? "image" : isVideo ? "video" : "unknown");
         }
         const hasCorrectAnswer = answers.some(answer => answer.correct);
         if (!hasCorrectAnswer) {
@@ -73,7 +77,7 @@ const QuestionsDetailComponent = () => {
             toast.success('Cập nhật câu hỏi thành công!');
         } catch (error) {
             toast.error('Lỗi khi cập nhật câu hỏi!');
-        }finally {
+        } finally {
             setIsUploading(false); // ✅ Kết thúc loading
         }
     };
@@ -93,7 +97,8 @@ const QuestionsDetailComponent = () => {
                         content: questionDetail?.content,
                         category: questionDetail?.category?.id,
                         answers: questionDetail?.answers,
-                        img:questionDetail?.img
+                        img: questionDetail?.img,
+                        video:questionDetail?.video
                     }}
                     onSubmit={handleEditQuestions} validationSchema={validationSchema} enableReinitialize={true}>
                     <Form>
@@ -107,10 +112,12 @@ const QuestionsDetailComponent = () => {
                             />
                             <ErrorMessage name="content" component="div" className="text-danger"/>
                         </div>
-                        {questionDetail.img !== null && (
+                        {questionDetail.video==null&&questionDetail.img !== null && (
                             <div className="mb-3">
                                 <label className="form-label">Ảnh hiện tại:</label><br/>
-                                <img src={questionDetail.img} alt="Câu hỏi" style={{ maxWidth: '200px', marginBottom: '10px' }} />
+                                <img src={questionDetail.img} alt="Câu hỏi"
+                                     style={{maxWidth: '200px', marginBottom: '10px'}}
+                                     onClick={() => setIsImageZoomed(true)}/>
                                 <input
                                     type="file"
                                     accept="image/*"
@@ -119,7 +126,22 @@ const QuestionsDetailComponent = () => {
                                 />
                             </div>
                         )}
-
+                        {questionDetail.img==null&&questionDetail.video !== null && (
+                            <div className="mb-3">
+                                <label className="form-label">Video hiện tại:</label><br/>
+                                <video width="320" height="240" controls
+                                    onClick={() => setIsImageZoomed(true)}>
+                                    <source src={questionDetail?.video} type="video/mp4"/>
+                                    Trình duyệt của bạn không hỗ trợ thẻ video.
+                                </video>
+                                <input
+                                    type="file"
+                                    accept="video/mp4"
+                                    className="form-control mt-2"
+                                    onChange={(e) => setFile(e.target.files[0])}
+                                />
+                            </div>
+                        )}
                         <div>
                             <label>Chọn danh mục:</label>
                             <Field as="select" name="category" className="form-control">
@@ -157,17 +179,38 @@ const QuestionsDetailComponent = () => {
                         </Button>
                     </Form>
                 </Formik>
+                {isImageZoomed && (
+                    <div className="zoom-overlay">
+                        {questionDetail.img ? (
+                            <img
+                                src={questionDetail.img}
+                                alt="Ảnh phóng to"
+                                className="zoomed-image"
+                                onClick={(e) => e.stopPropagation()}
+                            />
+                        ) : (
+                            <video
+                                src={questionDetail.video}
+                                controls
+                                autoPlay
+                                className="zoomed-video"
+                                onClick={(e) => e.stopPropagation()}
+                            />
+                        )}
+                        <button className="close-button" onClick={() => setIsImageZoomed(false)}>×</button>
+                    </div>
+                )}
                 {isUploading && (
                     <div className="text-center mt-3">
                         <div className="spinner-border text-primary" role="status">
                             <span className="visually-hidden">Đang tải...</span>
                         </div>
-                        <p>Đang xử lý hình ảnh...</p>
+                        <p>Đang xử lý ...</p>
                     </div>
                 )}
             </div>
-            </>
-            );
-            };
+        </>
+    );
+};
 
-            export default QuestionsDetailComponent;
+export default QuestionsDetailComponent;

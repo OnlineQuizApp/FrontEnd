@@ -13,6 +13,7 @@
     const CreateQuestionsComponent = ()=>{
         const [category,setCategory]=useState([]);
         const [showConfirmModal, setShowConfirmModal] = useState(false);
+        const [message, setMessage] = useState('');
         useEffect(() => {
             const fetchData = async ()=>{
                 const data =await getAllCategory();
@@ -43,7 +44,13 @@
                 navigate('/admin/questions');  // Chuyển hướng sau khi thêm câu hỏi thành công
                 toast.success('Thêm mới câu hỏi thành công!');
             } catch (error) {
-                toast.error('Lỗi khi thêm câu hỏi!');
+                let errorMsg = 'Đã xảy ra lỗi!';
+                if (Array.isArray(error.response?.data)) {
+                    errorMsg = error.response.data.map(e => e.defaultMessage).join(', ');
+                } else {
+                    errorMsg = error.response?.data || errorMsg;
+                }
+                setMessage(errorMsg);
             }
         }
         const handleCorrectAnswerChange = (index) => {
@@ -177,6 +184,7 @@
                         </div>
                     </Form>
                 </Formik>
+                {message && <div className="mt-3">{message}</div>}
                 {showConfirmModal && (
                     <div className="modal-overlay">
                         <div className="custom-modal">

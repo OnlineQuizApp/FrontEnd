@@ -29,9 +29,9 @@ const CreateQuestionOnFileExcelComponent = ()=>{
             await createQuestionsOnFileExcel(formData) ;
             navigate('/admin/questions');
             toast.success("Dữ liệu đã được tải lên thành công!")
-            setMessage('✅ Dữ liệu đã được tải lên thành công!');
+            setMessage('Dữ liệu đã được tải lên thành công!');
         } catch (error) {
-            setMessage('❌ ' + (error.response?.data || 'Đã xảy ra lỗi!'));
+            setMessage((error.response?.data || 'Đã xảy ra lỗi!'));
         }finally {
             setIsUploading(false); // ✅ Kết thúc loading
         }
@@ -52,7 +52,7 @@ const CreateQuestionOnFileExcelComponent = ()=>{
                             id="file"
                             className="form-control"
                             onChange={handleFileChange}
-                            accept=".xlsx,.xls"
+                            accept=".xlsx, .xls"
                             required
                         />
                     </div>

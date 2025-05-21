@@ -26,6 +26,7 @@ import HomeComponent from "./component/HomeComponent";
 import DetailExamsComponent from "./component/DetailExamsComponent";
 import CreateCategoryComponent from './component/CreateCategoryComponent'
 import CreateQuestionsVideo from "./component/CreateQuestionsVideo";
+import TestVideo from "./component/TestVideo";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
                 <Route path={'exams/detail/:id'} element={<DetailExamsComponent/>}/>
             </Route>
             <Route path="/login" element={<LoginComponent />} />
+            <Route path="/test" element={<TestVideo />} />
             <Route path="/register" element={<RegisterComponent />} />
             <Route path="/profile" element={<ProfileComponent />} />
             <Route path="/resetPassword" element={<ForgotPasswordComponent />} />
