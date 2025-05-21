@@ -39,7 +39,6 @@ const CreateQuestionsVideo = ()=>{
         const updatedAnswers = [...answers];  // hàm xử lý checkbox chọn đáp án đúng
         updatedAnswers[index][field] = value;
         setAnswers(updatedAnswers);
-
     };
     const navigate = useNavigate();
 

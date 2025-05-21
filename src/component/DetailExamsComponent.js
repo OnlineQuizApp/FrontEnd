@@ -6,12 +6,12 @@ const DetailExamsComponent = ()=>{
     const [examsDetail,setExamsDetail]= useState([]);
     const [page, setPage] = useState(0);
     const [totalPage, setTotalPage] = useState(0);
-
+    const [isImageZoomed, setIsImageZoomed] = useState(false);
+    const [zoomedQuestion, setZoomedQuestion] = useState(null);
     const {id} = useParams();
     useEffect(() => {
         const fetchData = async () => {
             const {data, totalPage} = await detailExams(id,page);
-            console.log(data,"-------------------")
             setExamsDetail(data);
             setTotalPage(totalPage);
         }
@@ -33,28 +33,40 @@ const DetailExamsComponent = ()=>{
                     return (
                         <div key={index}>
                             {exam?.questions?.length > 0 ? exam.questions.map((question, qIndex) => (
-
                                 <div key={qIndex} className="mb-4 p-3 border rounded shadow-sm">
                                     <h6>
                                         <strong>Câu {qIndex + 1 + page * pageSize}:</strong>
-                                        {console.log("Ảnh câu hỏi:", question?.img)}
-                                        {console.log("Đáp án:", question?.examAnswers)}
-                                        {question?.img ? (
+                                        {question?.img==null&&question?.video!=null&&(
                                             <>
-                                                <img
-                                                    src={question?.img}
-                                                    alt={`Hình câu hỏi ${qIndex + 1 + page * pageSize}`}
-                                                    style={{maxWidth: "100%", maxHeight: 200}}
-                                                />
+                                                <video width="320" height="240" controls
+                                                       onClick={() => {
+                                                           setIsImageZoomed(true);
+                                                           setZoomedQuestion(question)}}>
+                                                    <source src={question?.video} type="video/mp4"/>
+                                                    Trình duyệt của bạn không hỗ trợ thẻ video.
+                                                </video>
                                                 <p>{question?.content}</p>
                                             </>
+                                        )}
+                                        {question?.img!==null&&question?.video==null&&(
+                                            <>
+                                                <img src={question?.img} alt="Câu hỏi"
+                                                     style={{maxWidth: '200px', marginBottom: '10px'}}
+                                                     onClick={() => {
+                                                         setIsImageZoomed(true);
+                                                         setZoomedQuestion(question)}}/>
+                                                <p>{question?.content}</p>
+                                            </>
+                                        )}
+                                        {question?.img===null&&question?.video===null&&question?.content!=null&&(
+                                            <p>{question?.content}</p>
+                                        )}
 
-
-                                        ) : (question?.content)}
                                     </h6>
                                     {question?.examAnswers?.map((answer, aIndex) => (
                                         <div key={aIndex} style={{marginLeft: "20px"}}>
-                                            <input type="checkbox" name={`q_${qIndex}`} disabled  checked={answer?.correct} />
+                                            <input type="checkbox" name={`q_${qIndex}`} disabled
+                                                   checked={answer?.correct}/>
                                             <label style={{marginLeft: 8}}>{answer?.content}</label>
                                         </div>
                                     ))}
@@ -66,6 +78,27 @@ const DetailExamsComponent = ()=>{
                     );
                 })}
             </div>
+            {isImageZoomed && zoomedQuestion&&(
+                <div className="zoom-overlay">
+                    {zoomedQuestion?.img ? (
+                        <img
+                            src={zoomedQuestion?.img}
+                            alt="Ảnh phóng to"
+                            className="zoomed-image"
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    ) : (
+                        <video
+                            src={zoomedQuestion?.video}
+                            controls
+                            autoPlay
+                            className="zoomed-video"
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    )}
+                    <button className="close-button" onClick={() => setIsImageZoomed(false)}>×</button>
+                </div>
+            )}
             <div style={{justifyContent: 'center', textAlign: 'center'}}>
                 <button className={'btn btn-sm btn-outline-success btn-hover'}
                         onClick={() => (handlePre())}>Trang

@@ -55,7 +55,8 @@ const ExamsListComponent = () => {
                                 <th>Loại đề</th>
                                 <th>số câu</th>
                                 <th>Thời gian làm bài</th>
-                                <th>Chỉnh Sửa</th>
+                                <th>Chi tiết</th>
+                                <th>Chỉnh sửa</th>
                                 <th>Xoá</th>
                             </tr>
                             </thead>
@@ -71,6 +72,12 @@ const ExamsListComponent = () => {
                                         <Link className={'btn btn-sm btn-outline-success btn-hover'}
                                               to={'/admin/exams/detail/' + e.id}>
                                             Chi tiết
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link className={'btn btn-sm btn-outline-success btn-hover'}
+                                              to={'/admin/exams/update/' + e.id}>
+                                           Chỉnh sửa
                                         </Link>
                                     </td>
                                     <td>
