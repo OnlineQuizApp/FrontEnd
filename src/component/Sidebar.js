@@ -40,7 +40,8 @@ const Sidebar = () => {
                 {showExamsMenu && (
                     <ul style={{listStyle: 'none', paddingLeft: '20px'}}>
                         <li><Link to="/admin/exams">📋 Danh sách đề thi</Link></li>
-                        <li><Link to="/admin/exams/create">➕ Thêm đề thi</Link></li>
+                        <li><Link to="/admin/exams/create">➕ Thêm đề thi </Link></li>
+                        <li><Link to="/admin/exams/create-random">➕ Thêm đề thi random</Link></li>
                     </ul>
                 )}
             </div>

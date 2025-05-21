@@ -18,15 +18,19 @@ import ResetPasswordComponent from "./component/ResetPasswordComponent";
 import ChangePasswordComponent from "./component/ChangePasswordComponent";
 import AdminLayout from "./component/AdminLayout"
 import ExamsListComponent from "./component/ExamsListComponent";
-import CreateExamsListComponent from "./component/CreateExamsListComponent";
+import CreateExamsRandomComponent from "./component/CreateExamsRandomComponent";
+import ConfirmExamsComponent from "./component/ConfirmExamsComponent";
+import CreateExamsComponent from "./component/CreateExamsComponent";
 import UnauthorizedComponent from "./component/UnauthorizedComponent";
 import HeaderComponent from "./component/HeaderComponent";
 import FooterComponent from "./component/FooterComponent";
-import HomeComponent from "./component/HomeComponent";
+
 import DetailExamsComponent from "./component/DetailExamsComponent";
 import CreateCategoryComponent from './component/CreateCategoryComponent'
 import CreateQuestionsVideo from "./component/CreateQuestionsVideo";
 import TestVideo from "./component/TestVideo";
+import UpdateExamsConfirmComponent from "./component/UpdateExamsConfirmComponent";
+import UpdateExamsComponent from "./component/UpdateExamsComponent";
 
 function App() {
   return (
@@ -43,8 +47,12 @@ function App() {
                 <Route path={'questions/upload-video'} element={<CreateQuestionsVideo/>}/>
                 <Route path={'questions/detail/:id'} element={<QuestionsDetailComponent/>}/>
                 <Route path={'exams'} element={<ExamsListComponent/>}/>
+                <Route path={'exams/updateConfirm/:id'} element={<UpdateExamsConfirmComponent/>}/>
+                <Route path={'exams/update/:id'} element={<UpdateExamsComponent/>}/>
                 <Route path={'category/create'} element={<CreateCategoryComponent/>}/>
-                <Route path={'exams/create'} element={<CreateExamsListComponent/>}/>
+                <Route path={'exams/create'} element={<CreateExamsComponent/>}/>
+                <Route path={'exams/confirm/:id'} element={<ConfirmExamsComponent/>}/>
+                <Route path={'exams/create-random'} element={<CreateExamsRandomComponent/>}/>
                 <Route path={'exams/detail/:id'} element={<DetailExamsComponent/>}/>
             </Route>
             <Route path="/login" element={<LoginComponent />} />

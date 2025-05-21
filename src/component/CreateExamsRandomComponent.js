@@ -1,10 +1,10 @@
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useEffect, useState} from "react";
 import {getAllCategory} from "../service/CategoryService";
-import {createExams} from "../service/ExamsService";
+import { createExamsRandom} from "../service/ExamsService";
 import {useNavigate} from "react-router-dom";
 
-const CreateExamsListComponent = () => {
+const CreateExamsRandomComponent = () => {
    const [category,setCategory]=useState('');
     useEffect(() => {
         const fetchData= async ()=>{
@@ -17,7 +17,7 @@ const CreateExamsListComponent = () => {
 
     const handleCreateExams=(value)=>{
         const fetchData = async ()=>{
-           await createExams(value);
+           await createExamsRandom(value);
            navigate('/admin/exams')
         }
         fetchData();
@@ -55,4 +55,4 @@ const CreateExamsListComponent = () => {
         </>
     );
 }
-export default CreateExamsListComponent;
+export default CreateExamsRandomComponent;
