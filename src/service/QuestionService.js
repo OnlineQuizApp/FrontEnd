@@ -41,14 +41,7 @@ export async function deleteQuestions(id){
     }
 }
 export async function createQuestions(newQuestions){
-
-    try {
-        const response = await axios.post(`http://localhost:8080/api/questions`,newQuestions,authHeader);
-        console.log("delete:"+response.data);
-    }catch (e) {
-        console.log("Lỗi thêm câuu hỏi: "+e);
-        return { data: [], totalPage: 0 };
-    }
+       return  await axios.post(`http://localhost:8080/api/questions`,newQuestions,authHeader);
 }
 export async function createQuestionsOnFileExcel(file){
 
@@ -61,14 +54,14 @@ export async function createQuestionsOnFileExcel(file){
     }
 }
 export async function createQuestionsOnImg(newQuestion){
-    console.log("token: ",authHeader)
-    try {
-        const response = await axios.post(`http://localhost:8080/api/questions/upload-file-img`,newQuestion,authHeader);
-        console.log("createImg:"+response.data);
-    }catch (e) {
-        console.log("Lỗi thêm mới img: "+e);
-        return { data: [], totalPage: 0 };
-    }
+
+    // try {
+        return  axios.post(`http://localhost:8080/api/questions/upload-file-img`,newQuestion,authHeader);
+    //     console.log("createImg:"+response.data);
+    // }catch (e) {
+    //     console.log("Lỗi thêm mới img: "+e);
+    //     return { data: [], totalPage: 0 };
+    // }
 
 }
 export async function createQuestionsOnVideo(newQuestion){
@@ -87,7 +80,7 @@ export async function updateQuestions(id,newQuestion){
 
     try {
         const response = await axios.put(`http://localhost:8080/api/questions/${id}`,newQuestion,authHeader);
-        console.log("createImg:"+response.data);
+        console.log("update:"+response.data);
     }catch (e) {
         console.log("Lỗi update: "+e);
         return { data: [], totalPage: 0 };

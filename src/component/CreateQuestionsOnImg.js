@@ -79,7 +79,18 @@ const CreateQuestionsOnImg = ()=>{
             navigate('/admin/questions');
             toast.success("Câu hỏi đã được thêm thành công! ")
         } catch (error) {
-            setMessage("❌ Lỗi khi thêm câu hỏi. Vui lòng thử lại!");
+            let errorMsg = 'Đã xảy ra lỗi!';
+            if (error.response?.data) {
+                const data = error.response.data;
+                if (Array.isArray(data)) {
+                    errorMsg = data.map(e => e.defaultMessage).join(', ');
+                } else if (typeof data === 'string') {
+                    errorMsg = data;
+                } else {
+                    errorMsg = JSON.stringify(data);
+                }
+            }
+            setMessage(errorMsg);
         }finally {
             setIsUploading(false); // ✅ Kết thúc loading
         }
@@ -176,33 +187,39 @@ const CreateQuestionsOnImg = ()=>{
                         </tbody>
                     </table>
 
-                    <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap">
-                        <div className="d-flex gap-3  flex-wrap">
-                            <Button onClick={back}
-                                    type="button"
-                                    className="btn btn-sm btn-outline-back btn-hover">
-                                Quay lại
-                            </Button>
-                            <Button type="submit" className="btn btn-sm btn-outline btn-hover">
-                                Thêm mới
-                            </Button>
-                        </div>
-
-                            <a
-                                style={{textAlign: 'end'}}
-                                type="button"
-                                onClick={showModal}
-                            >Xoá hết đáp án</a>
-
+                <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap">
+                    <div className="d-flex gap-3  flex-wrap">
+                        <button onClick={back}
+                                type="button" className="btn btn-sm btn-outline btn-hover"
+                                disabled={isUploading}>
+                            {isUploading ? 'Đang tải...' : 'Quay lại'}
+                        </button>
+                        <button type="submit" className="btn btn-sm btn-outline btn-hover"
+                                disabled={isUploading}>
+                            {isUploading ? 'Đang tải...' : 'Tải lên'}
+                        </button>
                     </div>
-                </form>
-                {showConfirmModal && (
-                    <div className="modal-overlay">
-                        <div className="custom-modal">
-                            <h4>Xoá hết nội dung đáp án trong biểu mẫu?</h4>
-                            <p>
-                                Thao tác này sẽ xoá nội dung đáp án của bạn trong biểu mẫu. Bạn sẽ không thể
-                                huỷ được thao tác này sau khi thực hiện.
+                    <a
+                        style={{
+                            textAlign: 'end',
+                            pointerEvents: isUploading ? 'none' : 'auto',
+                            opacity: isUploading ? 0.6 : 1
+                        }}
+                        onClick={showModal}
+                    >
+                        {isUploading ? 'Đang tải...' : 'Xoá hết đáp án'}
+                    </a>
+
+                </div>
+            </form>
+            {message && <div className="mt-3">{message}</div>}
+            {showConfirmModal && (
+                <div className="modal-overlay">
+                    <div className="custom-modal">
+                        <h4>Xoá hết nội dung đáp án trong biểu mẫu?</h4>
+                        <p>
+                            Thao tác này sẽ xoá nội dung đáp án của bạn trong biểu mẫu. Bạn sẽ không thể
+                            huỷ được thao tác này sau khi thực hiện.
                             </p>
                             <div className="modal-buttons">
                                 <button className="cancel-btn" onClick={() => setShowConfirmModal(false)}>
@@ -223,7 +240,6 @@ const CreateQuestionsOnImg = ()=>{
                         <p>Đang xử lý hình ảnh...</p>
                     </div>
                 )}
-            {/*</div>*/}
         </>
     );
 

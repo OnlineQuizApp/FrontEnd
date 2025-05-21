@@ -75,8 +75,9 @@ const QuestionService = () => {
         return pages.map(p => (
             <button
                 key={p}
-                className={`btn btn-sm btn-outline btn-hover ${page === p ? 'active' : ''}`}
+                className={`btn btn-sm btn-outline btn-hover ${page === p ? ' active  ' : ' '}`}
                 onClick={() => setPage(p)}
+                style={{marginRight:4,marginLeft:4}}
             >
                 {p + 1}
             </button>
@@ -115,59 +116,58 @@ const QuestionService = () => {
                     <table className="table table-bordered mt-0">
                         <thead>
                         <tr>
-                            <th class="col-id">ID</th>
+                            <th class="col-id">STT</th>
                             <th>Nội Dung Câu Hỏi</th>
-                            <th>Loại Câu Hỏi</th>
-                            <th>Hình ảnh</th>
-                            <th>Chi tiết</th>
-                            <th>Xoá</th>
+                            <th style={{width: '240px', whiteSpace: 'nowrap'}}>Loại Câu Hỏi</th>
+                            <th style={{width: '200px', whiteSpace: 'nowrap'}}>Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {questions && questions.map(q => (
+                        {questions && questions.map((q, i) => (
                             <tr key={q.id}>
-                                <td class="col-id">{q.id}</td>
+                                <td class="col-id">{i + 1}</td>
                                 <td>{q.content}</td>
-                                <td>{q?.category?.name}</td>
-                                <td>{q.img ? q.img : 'không có hình ảnh'}</td>
-                                <td>
-                                    <Link className="btn btn-sm btn-outline btn-hover"
-                                          to={'detail/' + q.id}>
-                                        Chi tiết
-                                    </Link>
+                                <td style={{width: '240px', whiteSpace: 'nowrap'}}>{q?.category?.name}</td>
+                                <td className="col-button">
+                                    <div className="action-buttons">
+                                        <Link className="btn btn-sm btn-outline btn-hover"
+                                              to={'detail/' + q.id}>
+                                            Chi tiết
+                                        </Link>
+                                        <button className={'btn btn-sm btn-outline-danger btn-hover'} onClick={() => {
+                                            handleShowModal(q.id, q.content)
+                                        }}>
+                                            Xoá
+                                        </button>
+                                    </div>
                                 </td>
-                                <td>
-                                    <button className={'btn btn-sm btn-outline-danger btn-hover'}  onClick={() => {
-                                        handleShowModal(q.id, q.content)
-                                    }}>
-                                        Xoá
-                                    </button>
-                                </td>
+
+
                             </tr>
                         ))}
                         </tbody>
                     </table>
                 </div>
-                    <Modal show={isShowModal} onHide={closeModal}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Xác nhận xoá</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <p>Bạn có muốn xoá câu hỏi "{questionsContent}" này không?</p>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={closeModal}> Huỷ</Button>
+                <Modal show={isShowModal} onHide={closeModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Xác nhận xoá</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Bạn có muốn xoá câu hỏi "{questionsContent}" này không?</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={closeModal}> Huỷ</Button>
                             <Button variant="primary" onClick={handleDeleteQuestions}>Xác Nhận Xoá</Button>
                         </Modal.Footer>
                     </Modal>
                     <div className="pagination-buttons"
                          style={{justifyContent: 'center', textAlign: 'center', marginTop: '10px'}}>
-                        <button className="btn btn-sm btn-outline btn-hover"
+                        <button style={{marginRight:4}} className="btn btn-sm btn-outline btn-hover"
                                 onClick={() => (handlePrePage())}>Trang
                             Trước
                         </button>
                         {renderPagination()}
-                        <button className="btn btn-sm btn-outline btn-hover"
+                        <button style={{marginLeft:4}} className="btn btn-sm btn-outline btn-hover"
                                 onClick={() => (handleNextPage())}>Trang
                             Sau
                         </button>
