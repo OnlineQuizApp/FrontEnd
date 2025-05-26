@@ -4,12 +4,16 @@ import "../css/admin-layout.css"
 const Sidebar = () => {
     const [showQuestionsMenu, setShowQuestionsMenu] = useState(false);
     const [showExamsMenu, setShowExamsMenu] = useState(false);
+    const [showExamSetMenu, setShowExamSetMenu] = useState(false);
 
     const toggleQuestionsMenu = () => {
         setShowQuestionsMenu(prev => !prev);
     };
     const toggleExamsMenu = () => {
         setShowExamsMenu(prev => !prev);
+    };
+    const toggleExamSetMenu = () => {
+        setShowExamSetMenu(prev => !prev);
     };
 
     return (
@@ -42,6 +46,18 @@ const Sidebar = () => {
                         <li><Link to="/admin/exams">📋 Danh sách đề thi</Link></li>
                         <li><Link to="/admin/exams/create">➕ Thêm đề thi </Link></li>
                         <li><Link to="/admin/exams/create-random">➕ Thêm đề thi random</Link></li>
+                    </ul>
+                )}
+                <h4
+                    style={{cursor: 'pointer', userSelect: 'none', color: 'white'}}
+                    onClick={toggleExamSetMenu}
+                >
+                    Ngân hàng bộ đề thi
+                </h4>
+                {showExamSetMenu && (
+                    <ul style={{listStyle: 'none', paddingLeft: '20px'}}>
+                        <li><Link to="/admin/exams-set">📋 Danh sách các bộ đề thi</Link></li>
+                        <li><Link to="/admin/exams-set/create">➕ Thêm bộ đề thi </Link></li>
                     </ul>
                 )}
             </div>

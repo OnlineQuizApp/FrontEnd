@@ -1,14 +1,11 @@
 import {useEffect, useState} from "react";
-import { createQuestionsOnImg} from "../service/QuestionService";
-import {getAllCategory} from "../service/CategoryService";
+import {createQuestionsOnImg, createQuestionsOnVideo} from "../../service/QuestionService";
+import {getAllCategory} from "../../service/CategoryService";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
-import "../css/admin-layout.css"
+import "../../css/admin-layout.css"
 import {Button} from "react-bootstrap";
-import 'bootstrap/dist/js/bootstrap.min.js'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import "../css/ModalConfirm.css";
-const CreateQuestionsOnImg = ()=>{
+const CreateQuestionsVideo = ()=>{
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
     const [categories, setCategories] = useState([]);
@@ -16,6 +13,7 @@ const CreateQuestionsOnImg = ()=>{
     const [content, setContent] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const MAX_SIZE_BYTES = 50 * 1024 * 1024; //  tối dđa 50mb
     useEffect(() => {
         const fetchData = async ()=>{
             const data =await getAllCategory();
@@ -41,20 +39,20 @@ const CreateQuestionsOnImg = ()=>{
         const updatedAnswers = [...answers];  // hàm xử lý checkbox chọn đáp án đúng
         updatedAnswers[index][field] = value;
         setAnswers(updatedAnswers);
-
     };
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!file ) {
-            setMessage("❌ Vui lòng chọn một hình ảnh !");
+            setMessage("❌ Vui lòng chọn một video !");
             return;
         }
         if (!categoryId ) {
             setMessage("❌ Vui lòng chọn một danh mục câu hỏi !");
             return;
         }
+
         // Chuẩn bị dữ liệu gửi lên (ví dụ: gửi qua FormData nếu có ảnh)
         const formData = new FormData();
         formData.append("file", file);
@@ -72,25 +70,17 @@ const CreateQuestionsOnImg = ()=>{
             toast.error("Có đáp án vượt quá 1000 kí tự, vui lòng kiểm tra lại!");
             return ;
         }
-
+        if (file.size > MAX_SIZE_BYTES) {
+            toast.error(`Video quá lớn, vui lòng chọn file nhỏ hơn ...\`${MAX_SIZE_BYTES}\` MB`);
+            return;
+        }
         setIsUploading(true); // ⏳ Bắt đầu loading
         try {
-            await createQuestionsOnImg(formData);
+            await createQuestionsOnVideo(formData);
             navigate('/admin/questions');
-            toast.success("Câu hỏi đã được thêm thành công! ")
+            toast.success("Câu hỏi đã được thêm thành công! ");
         } catch (error) {
-            let errorMsg = 'Đã xảy ra lỗi!';
-            if (error.response?.data) {
-                const data = error.response.data;
-                if (Array.isArray(data)) {
-                    errorMsg = data.map(e => e.defaultMessage).join(', ');
-                } else if (typeof data === 'string') {
-                    errorMsg = data;
-                } else {
-                    errorMsg = JSON.stringify(data);
-                }
-            }
-            setMessage(errorMsg);
+            setMessage("❌ Lỗi khi thêm câu hỏi. Vui lòng thử lại!");
         }finally {
             setIsUploading(false); // ✅ Kết thúc loading
         }
@@ -118,15 +108,16 @@ const CreateQuestionsOnImg = ()=>{
     return(
         <>
             {/*<div className="container mt-5">*/}
-            <h2 className="mb-4" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>🖼️ Thêm Mới Câu Hỏi Bằng Hình Ảnh</h2>
+            <h2 className="mb-4" style={{fontSize: "1.5rem", fontWeight: "bold"}}>🎥 Thêm Mới Câu Hỏi Bằng Video</h2>
             <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label className="form-label">Chọn ảnh đề bài <span className="text-danger">*</span> </label>
-                        <input type="file" accept="image/*" className="form-control" onChange={handleImageChange}
+                <div className="mb-3">
+                    <label className="form-label">Chọn video đề bài <span className="text-danger">*</span> </label>
+                    <input type="file"
+                           accept="video/mp4"
+                           className="form-control" onChange={handleImageChange}
                                required
-                               onInvalid={e => e.target.setCustomValidity('Vui lòng chọn một hình ảnh đại diện cho câu hỏi!')}
-                               onInput={e => e.target.setCustomValidity('')}
-                        />
+                               onInvalid={e => e.target.setCustomValidity('Vui lòng chọn một video đại diện cho đề bài!')}
+                               onInput={e => e.target.setCustomValidity('')}/>
                     </div>
                     <div className="mb-3">
                         <select value={categoryId}
@@ -149,7 +140,6 @@ const CreateQuestionsOnImg = ()=>{
                             required
                             onInvalid={e => e.target.setCustomValidity('Vui lòng không để trống trường này')}
                             onInput={e => e.target.setCustomValidity('')}
-
                         />
                     </div>
 
@@ -189,15 +179,17 @@ const CreateQuestionsOnImg = ()=>{
 
                 <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap">
                     <div className="d-flex gap-3  flex-wrap">
-                        <button onClick={back}
-                                type="button" className="btn btn-sm btn-outline btn-hover"
-                                disabled={isUploading}>
-                            {isUploading ? 'Đang tải...' : 'Quay lại'}
-                        </button>
-                        <button type="submit" className="btn btn-sm btn-outline btn-hover"
-                                disabled={isUploading}>
-                            {isUploading ? 'Đang tải...' : 'Tải lên'}
-                        </button>
+                        <div className="d-flex gap-3  flex-wrap">
+                            <button onClick={back}
+                                    type="button" className="btn btn-sm btn-outline btn-hover"
+                                    disabled={isUploading}>
+                                {isUploading ? 'Đang tải...' : 'Quay lại'}
+                            </button>
+                            <button type="submit" className="btn btn-sm btn-outline btn-hover"
+                                    disabled={isUploading}>
+                                {isUploading ? 'Đang tải...' : 'Tải lên'}
+                            </button>
+                        </div>
                     </div>
                     <a
                         style={{
@@ -209,10 +201,8 @@ const CreateQuestionsOnImg = ()=>{
                     >
                         {isUploading ? 'Đang tải...' : 'Xoá hết đáp án'}
                     </a>
-
                 </div>
             </form>
-            {message && <div className="mt-3">{message}</div>}
             {showConfirmModal && (
                 <div className="modal-overlay">
                     <div className="custom-modal">
@@ -220,10 +210,10 @@ const CreateQuestionsOnImg = ()=>{
                         <p>
                             Thao tác này sẽ xoá nội dung đáp án của bạn trong biểu mẫu. Bạn sẽ không thể
                             huỷ được thao tác này sau khi thực hiện.
-                            </p>
-                            <div className="modal-buttons">
-                                <button className="cancel-btn" onClick={() => setShowConfirmModal(false)}>
-                                    Huỷ
+                        </p>
+                        <div className="modal-buttons">
+                            <button className="cancel-btn" onClick={() => setShowConfirmModal(false)}>
+                            Huỷ
                                 </button>
                                 <button className="delete-btn" onClick={handleConfirmDeleteAnswers}>
                                     Xoá hết nội dung đáp án
@@ -237,11 +227,12 @@ const CreateQuestionsOnImg = ()=>{
                         <div className="spinner-border text-primary" role="status">
                             <span className="visually-hidden">Đang tải...</span>
                         </div>
-                        <p>Đang xử lý hình ảnh...</p>
+                        <p>Đang xử lý video...</p>
                     </div>
                 )}
+            {/*</div>*/}
         </>
     );
 
 }
-export default CreateQuestionsOnImg;
+export default CreateQuestionsVideo;

@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
-import {detailQuestions, updateQuestions} from "../service/QuestionService";
-import {getAllCategory} from "../service/CategoryService";
+import {detailQuestions, updateQuestions} from "../../service/QuestionService";
+import {getAllCategory} from "../../service/CategoryService";
 import {useNavigate, useParams} from "react-router-dom";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {Button} from "react-bootstrap";
 import {toast} from "react-toastify";
-import "../css/admin-layout.css"
+import "../../css/admin-layout.css"
 import * as Yup from "yup";
 
 const QuestionsDetailComponent = () => {
@@ -90,15 +90,15 @@ const QuestionsDetailComponent = () => {
     });
     return (
         <>
+            <h2 className="mb-4" style={{fontSize: "1.5rem", fontWeight: "bold"}}>Chỉnh Sửa Câu Hỏi</h2>
             <div className="container">
-                <h1>Chỉnh Sửa Câu Hỏi</h1>
                 <Formik
                     initialValues={{
                         content: questionDetail?.content,
                         category: questionDetail?.category?.id,
                         answers: questionDetail?.answers,
                         img: questionDetail?.img,
-                        video:questionDetail?.video
+                        video: questionDetail?.video
                     }}
                     onSubmit={handleEditQuestions} validationSchema={validationSchema} enableReinitialize={true}>
                     <Form>
@@ -112,7 +112,7 @@ const QuestionsDetailComponent = () => {
                             />
                             <ErrorMessage name="content" component="div" className="text-danger"/>
                         </div>
-                        {questionDetail.video==null&&questionDetail.img !== null && (
+                        {questionDetail.video == null && questionDetail.img !== null && (
                             <div className="mb-3">
                                 <label className="form-label">Ảnh hiện tại:</label><br/>
                                 <img src={questionDetail.img} alt="Câu hỏi"
@@ -126,11 +126,11 @@ const QuestionsDetailComponent = () => {
                                 />
                             </div>
                         )}
-                        {questionDetail.img==null&&questionDetail.video !== null && (
+                        {questionDetail.img == null && questionDetail.video !== null && (
                             <div className="mb-3">
                                 <label className="form-label">Video hiện tại:</label><br/>
                                 <video width="320" height="240" controls
-                                    onClick={() => setIsImageZoomed(true)}>
+                                       onClick={() => setIsImageZoomed(true)}>
                                     <source src={questionDetail?.video} type="video/mp4"/>
                                     Trình duyệt của bạn không hỗ trợ thẻ video.
                                 </video>
@@ -152,7 +152,6 @@ const QuestionsDetailComponent = () => {
                             </Field>
                             <ErrorMessage name="category" component="div" className="text-danger"/>
                         </div>
-
                         {answers && answers.map((answer, index) => (
                             <div className="mb-3" key={index}>
                                 <label className="form-label">Đáp án {index + 1}:</label>
@@ -170,7 +169,7 @@ const QuestionsDetailComponent = () => {
                                         checked={answer.correct}
                                         onChange={(e) => handleAnswerChange(index, 'correct', e.target.checked)}
                                     />
-                                    <label className="form-check-label">Là đáp án đúng</label>
+                                    <label className="form-check-label"> Là đáp án đúng</label>
                                 </div>
                             </div>
                         ))}
