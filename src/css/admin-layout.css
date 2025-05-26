@@ -185,17 +185,35 @@ h3 { font-size: 1.25rem; margin-bottom: 1rem; }
     width: 70px;
     text-align: center;
 }
-.col-button .action-buttons {
+.action-buttons {
     display: flex;
-    gap: 8px;
     justify-content: center;
     align-items: center;
+    gap: 12px;
 }
 
-.col-button .action-buttons .btn {
-    min-width: 70px;
-    padding: 4px 10px;
-    font-size: 0.900rem;
+.icon-btn {
+    font-size: 20px;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.icon-btn:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.1);
+}
+
+.icon-btn.edit {
+    color: #007bff;
+}
+
+.icon-btn.delete {
+    color: #dc3545;
 }
 .question-service-wrapper > .container {
     margin-top: 0; /* giảm margin trên của container form */
@@ -466,4 +484,96 @@ h3 { font-size: 1.25rem; margin-bottom: 1rem; }
 .close-button:hover {
     color: red;
 }
+/* Container tổng của danh sách câu hỏi căn giữa màn hình */
+.questions-container {
+    max-width: 600px;   /* Giới hạn chiều rộng để căn giữa hợp lý */
+    margin: 20px auto;  /* căn giữa theo chiều ngang và khoảng cách trên dưới */
+    padding: 0 10px;
+}
 
+/* Mỗi câu hỏi dùng flexbox căn hàng ngang, căn giữa theo chiều dọc */
+.question-item {
+    display: flex;
+    align-items: center;  /* căn giữa theo chiều dọc */
+    justify-content: space-between;  /* khoảng cách giữa nội dung và icon xoá */
+    margin-bottom: 8px;
+}
+
+/* Nội dung câu hỏi chiếm hết khoảng còn lại */
+.question-content {
+    flex-grow: 1;
+    margin-right: 8px;  /* icon xoá sẽ cách câu hỏi 8px */
+    word-break: break-word; /* tránh tràn ngang */
+}
+
+/* Icon xoá */
+.delete-label {
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+    user-select: none;
+    transition: color 0.3s ease;
+    font-size: 18px; /* làm icon to vừa phải */
+}
+
+.delete-label:hover {
+    color: darkred;
+}
+
+/* Ảnh và video căn giữa và giới hạn kích thước */
+.questions-container img,
+.questions-container video {
+    display: block;
+    margin: 8px auto 16px auto;
+    max-width: 100%;
+    height: auto;
+}
+.header-container {
+    display: flex;
+    justify-content: space-between; /* title trái, nút phải */
+    align-items: center;
+    margin-bottom: 1rem; /* khoảng cách dưới */
+    padding: 0 10px; /* padding trái phải nếu muốn */
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.button-group {
+    display: flex;
+    gap: 20px; /* khoảng cách giữa 2 nút */
+}
+
+.btn-edit, .btn-add-question {
+    min-width: 120px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;}
+
+.list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.list li {
+    list-style-type: none;
+    position: relative;       /* Tạo context cho con tuyệt đối */
+    padding-right: 30px;      /* Tạo khoảng trống cho icon ở bên phải */
+    border-bottom: 1px solid #ccc; /* Tùy chọn */
+    line-height: 1.5em;
+}
+
+.delete-icon {
+    position: absolute;
+    right: 5px;               /* Căn sát bên phải */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: red;               /* Màu icon */
+    font-size: 18px;
+}

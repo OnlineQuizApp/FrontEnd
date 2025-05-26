@@ -1,15 +1,15 @@
     import {ErrorMessage, Field, Form, Formik} from "formik";
     import {useEffect, useState} from "react";
-    import {getAllCategory} from "../service/CategoryService";
-    import {createQuestions} from "../service/QuestionService";
+    import {getAllCategory} from "../../service/CategoryService";
+    import {createQuestions} from "../../service/QuestionService";
     import {Button, Modal} from "react-bootstrap";
     import {useNavigate} from "react-router-dom";
     import {toast} from "react-toastify";
-    import "../css/admin-layout.css"
+    import "../../css/admin-layout.css"
     import * as Yup from 'yup';
     import 'bootstrap/dist/js/bootstrap.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
-    import "../css/ModalConfirm.css";
+    import "../../css/ModalConfirm.css";
     const CreateQuestionsComponent = ()=>{
         const [category,setCategory]=useState([]);
         const [showConfirmModal, setShowConfirmModal] = useState(false);

@@ -1,7 +1,7 @@
-import "../css/admin-layout.css"
-import "../css/Spinner.css"
+import "../../css/admin-layout.css"
+import "../../css/Spinner.css"
 import {useState} from "react";
-import {createQuestionsOnFileExcel} from "../service/QuestionService";
+import {createQuestionsOnFileExcel} from "../../service/QuestionService";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {Button} from "react-bootstrap";

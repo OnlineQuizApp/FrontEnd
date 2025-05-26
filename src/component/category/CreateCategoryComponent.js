@@ -2,7 +2,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import {Button} from "react-bootstrap";
 import * as Yup from "yup";
 import React from "react";
-import {createCategory} from "../service/CategoryService";
+import {createCategory} from "../../service/CategoryService";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 const CreateCategoryComponent = ()=>{

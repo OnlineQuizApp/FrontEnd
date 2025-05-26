@@ -1,12 +1,13 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {getExamsById, getQuestionsByCategory} from "../service/ExamsService";
-import {confirmExams} from "../service/ExamsService";
+import {getExamsById, getQuestionsByCategory} from "../../service/ExamsService";
+import {confirmExams} from "../../service/ExamsService";
 import {toast} from "react-toastify";
-import "../css/admin-layout.css"
+import "../../css/admin-layout.css"
 
 const ConfirmExamsComponent = () => {
     const [questions, setQuestions] = useState([]);
+    const [exams,setExams] = useState('')
     const {id} = useParams();
     const [selectedQuestionsId, setSelectedQuestionsId] = useState([]);
     const navigate = useNavigate();
@@ -16,10 +17,8 @@ const ConfirmExamsComponent = () => {
         const fetchData = async () => {
             try {
                 const exams = await getExamsById(id);
+                setExams(exams);
                 const data = await getQuestionsByCategory(exams.category);
-                console.log("Exams lấy được:", exams);
-                console.log("Category của đề:", exams.category);
-                console.log("Danh sách câu hỏi theo category:", data);
                 setQuestions(data);
             } catch (error) {
                 console.error("Lỗi khi lấy dữ liệu đề và câu hỏi", error);
@@ -40,7 +39,6 @@ const ConfirmExamsComponent = () => {
     const handleConfirm = async () => {
         try {
             await confirmExams(id, selectedQuestionsId);
-            console.log("danh  sách câu hỏi: " + selectedQuestionsId)
             navigate('/admin/exams')
             toast.success("Thêm  đề thi thành công!")
         } catch (error) {
@@ -50,6 +48,8 @@ const ConfirmExamsComponent = () => {
     return (
         <>
             <h2 className="mb-4" style={{fontSize: "1.5rem", fontWeight: "bold"}}>Chọn câu hỏi cho đề thi</h2>
+            <p><strong>Tiêu đề đề thi</strong>: {exams.title}</p>
+            <p><strong>Số câu hỏi</strong>: {exams.numberOfQuestions}</p>
             <table className="table table-sm table-success-custom mt-3">
                 <thead>
                 <tr>
@@ -127,7 +127,7 @@ const ConfirmExamsComponent = () => {
                     </button>
                 </div>
             )}
-            <button onClick={handleConfirm} disabled={selectedQuestionsId.length === 0}>
+            <button className="btn-add-question" onClick={handleConfirm} disabled={selectedQuestionsId.length === 0}>
                 Xác nhận chọn câu hỏi
             </button>
         </>

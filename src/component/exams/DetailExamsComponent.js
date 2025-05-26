@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {detailExams} from "../service/ExamsService";
+import {detailExams} from "../../service/ExamsService";
 import {useParams} from "react-router-dom";
 
 const DetailExamsComponent = ()=>{
@@ -17,16 +17,42 @@ const DetailExamsComponent = ()=>{
         }
         fetchData();
     }, [page]);
-    const handlePre = () => {
-        if (page > 0) setPage(page - 1);
+    const handleNextPage = () => {
+        if (page < totalPage - 1) {
+            setPage((preV) => preV + 1)
+        }
     }
-    const handleNext = () => {
-        if (page < totalPage - 1) setPage(page + 1);
+    const handlePrePage = () => {
+        if (page > 0) {
+            setPage((preV) => preV - 1)
+        }
     }
     const pageSize=1;
+
+
+    const renderPagination = () => {
+        let startPage = Math.max(0, page - 1);
+        let endPage = Math.min(totalPage - 1, page + 1);
+
+        const pages = [];
+        for (let i = startPage; i <= endPage; i++) {
+            pages.push(i);
+        }
+
+        return pages.map(p => (
+            <button
+                key={p}
+                className={`btn btn-sm btn-outline btn-hover ${page === p ? ' active  ' : ' '}`}
+                onClick={() => setPage(p)}
+                style={{marginRight: 4, marginLeft: 4}}
+            >
+                {p + 1}
+            </button>
+        ));
+    };
     return(
         <>
-
+            <h2 className="mb-4" style={{fontSize: "1.5rem", fontWeight: "bold"}}>Chi Tiết Đề Thi</h2>
             <div className="container mt-4">
                 {examsDetail && examsDetail.length > 0 && examsDetail.map((exam, index) => {
                     console.log("Exam questions:", exam.questions);
@@ -36,29 +62,31 @@ const DetailExamsComponent = ()=>{
                                 <div key={qIndex} className="mb-4 p-3 border rounded shadow-sm">
                                     <h6>
                                         <strong>Câu {qIndex + 1 + page * pageSize}:</strong>
-                                        {question?.img==null&&question?.video!=null&&(
+                                        {question?.img == null && question?.video != null && (
                                             <>
                                                 <video width="320" height="240" controls
                                                        onClick={() => {
                                                            setIsImageZoomed(true);
-                                                           setZoomedQuestion(question)}}>
+                                                           setZoomedQuestion(question)
+                                                       }}>
                                                     <source src={question?.video} type="video/mp4"/>
                                                     Trình duyệt của bạn không hỗ trợ thẻ video.
                                                 </video>
                                                 <p>{question?.content}</p>
                                             </>
                                         )}
-                                        {question?.img!==null&&question?.video==null&&(
+                                        {question?.img !== null && question?.video == null && (
                                             <>
                                                 <img src={question?.img} alt="Câu hỏi"
                                                      style={{maxWidth: '200px', marginBottom: '10px'}}
                                                      onClick={() => {
                                                          setIsImageZoomed(true);
-                                                         setZoomedQuestion(question)}}/>
+                                                         setZoomedQuestion(question)
+                                                     }}/>
                                                 <p>{question?.content}</p>
                                             </>
                                         )}
-                                        {question?.img===null&&question?.video===null&&question?.content!=null&&(
+                                        {question?.img === null && question?.video === null && question?.content != null && (
                                             <p>{question?.content}</p>
                                         )}
 
@@ -78,7 +106,7 @@ const DetailExamsComponent = ()=>{
                     );
                 })}
             </div>
-            {isImageZoomed && zoomedQuestion&&(
+            {isImageZoomed && zoomedQuestion && (
                 <div className="zoom-overlay">
                     {zoomedQuestion?.img ? (
                         <img
@@ -99,19 +127,34 @@ const DetailExamsComponent = ()=>{
                     <button className="close-button" onClick={() => setIsImageZoomed(false)}>×</button>
                 </div>
             )}
-            <div style={{justifyContent: 'center', textAlign: 'center'}}>
-                <button className={'btn btn-sm btn-outline-success btn-hover'}
-                        onClick={() => (handlePre())}>Trang
-                    Trước
+            <div className="pagination-buttons"
+                 style={{justifyContent: 'center', textAlign: 'center', marginTop: '10px'}}>
+                <button
+                    className="btn btn-sm btn-outline btn-hover"
+                    onClick={() => setPage(0)}
+                    disabled={page === 0}
+                    style={{marginRight: 4}}
+                >
+                    {'<<'}
                 </button>
-                {[...new Array(totalPage)].map((p, i) => (
-                    <button
-                        className={`btn btn-sm btn-outline-success btn-hover ${page === i ? 'active' : ''}`}
-                        onClick={() => (setPage(i))}>{i + 1}</button>
-                ))}
-                <button className={'btn btn-sm btn-outline-success btn-hover'}
-                        onClick={() => (handleNext())}>Trang
-                    Sau
+                <button style={{marginRight: 4}} className="btn btn-sm btn-outline btn-hover"
+                        onClick={() => (handlePrePage())}
+                        disabled={page === 0}>
+                    {'<'}
+                </button>
+                {renderPagination()}
+                <button style={{marginLeft: 4}} className="btn btn-sm btn-outline btn-hover"
+                        onClick={() => (handleNextPage())}
+                        disabled={page >= totalPage - 1}>
+                    {'>'}
+                </button>
+                <button
+                    className="btn btn-sm btn-outline btn-hover"
+                    onClick={() => setPage(totalPage - 1)}
+                    disabled={page >= totalPage - 1}
+                    style={{marginLeft: 4}}
+                >
+                    {'>>'}
                 </button>
             </div>
         </>

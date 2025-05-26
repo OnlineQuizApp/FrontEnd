@@ -3,12 +3,12 @@ import './App.css';
 import React from "react";
 import LoginComponent from "./component/LoginComponent";
 import HomePage from "./component/HomeComponent";
-import QuestionListComponent from "./component/QuestionListComponent";
+import QuestionListComponent from "./component/questions/QuestionListComponent";
 import {Route, Routes} from "react-router-dom";
-import QuestionsDetailComponent from "./component/QuestionsDetailComponent";
-import CreateQuestionsComponent from "./component/CreateQuestionsComponent";
-import CreateQuestionOnFileExcelComponent from "./component/CreateQuestionOnFileExcelComponent";
-import CreateQuestionsOnImg from "./component/CreateQuestionsOnImg";
+import QuestionsDetailComponent from "./component/questions/QuestionsDetailComponent";
+import CreateQuestionsComponent from "./component/questions/CreateQuestionsComponent";
+import CreateQuestionOnFileExcelComponent from "./component/questions/CreateQuestionOnFileExcelComponent";
+import CreateQuestionsOnImg from "./component/questions/CreateQuestionsOnImg";
 import {ToastContainer} from "react-toastify";
 import PrivateRoute from "./component/PrivateRoute";
 import RegisterComponent from "./component/RegisterComponent";
@@ -17,20 +17,25 @@ import ForgotPasswordComponent from "./component/ForgotPasswordComponent";
 import ResetPasswordComponent from "./component/ResetPasswordComponent";
 import ChangePasswordComponent from "./component/ChangePasswordComponent";
 import AdminLayout from "./component/AdminLayout"
-import ExamsListComponent from "./component/ExamsListComponent";
-import CreateExamsRandomComponent from "./component/CreateExamsRandomComponent";
-import ConfirmExamsComponent from "./component/ConfirmExamsComponent";
-import CreateExamsComponent from "./component/CreateExamsComponent";
+import ExamsListComponent from "./component/exams/ExamsListComponent";
+import CreateExamsRandomComponent from "./component/exams/CreateExamsRandomComponent";
+import ConfirmExamsComponent from "./component/exams/ConfirmExamsComponent";
+import CreateExamsComponent from "./component/exams/CreateExamsComponent";
 import UnauthorizedComponent from "./component/UnauthorizedComponent";
 import HeaderComponent from "./component/HeaderComponent";
 import FooterComponent from "./component/FooterComponent";
 
-import DetailExamsComponent from "./component/DetailExamsComponent";
-import CreateCategoryComponent from './component/CreateCategoryComponent'
-import CreateQuestionsVideo from "./component/CreateQuestionsVideo";
+import DetailExamsComponent from "./component/exams/DetailExamsComponent";
+import CreateCategoryComponent from './component/category/CreateCategoryComponent'
+import CreateQuestionsVideo from "./component/questions/CreateQuestionsVideo";
 import TestVideo from "./component/TestVideo";
-import UpdateExamsConfirmComponent from "./component/UpdateExamsConfirmComponent";
-import UpdateExamsComponent from "./component/UpdateExamsComponent";
+import UpdateExamsComponent from "./component/exams/UpdateExamsComponent";
+import ConfirmExamsUpdateComponent from "./component/exams/ConfirmExamsUpdateComponent";
+import CreateExamSetComponent from "./component/examSet/CreateExamSetComponent";
+import ConfirmExamSetComponent from "./component/examSet/ConfirmExamSetComponent";
+import ConfirmExamSetUpdateComponent from "./component/examSet/ConfirmExamSetUpdateComponent";
+import ExamSetListComponent from "./component/examSet/ExamSetListComponent";
+import UpdateExamSetComponent from "./component/examSet/UpdateExamSetComponent";
 
 function App() {
   return (
@@ -47,11 +52,16 @@ function App() {
                 <Route path={'questions/upload-video'} element={<CreateQuestionsVideo/>}/>
                 <Route path={'questions/detail/:id'} element={<QuestionsDetailComponent/>}/>
                 <Route path={'exams'} element={<ExamsListComponent/>}/>
-                <Route path={'exams/updateConfirm/:id'} element={<UpdateExamsConfirmComponent/>}/>
                 <Route path={'exams/update/:id'} element={<UpdateExamsComponent/>}/>
                 <Route path={'category/create'} element={<CreateCategoryComponent/>}/>
                 <Route path={'exams/create'} element={<CreateExamsComponent/>}/>
                 <Route path={'exams/confirm/:id'} element={<ConfirmExamsComponent/>}/>
+                <Route path={'exams-set'} element={<ExamSetListComponent/>}/>
+                <Route path={'exams-set/create'} element={<CreateExamSetComponent/>}/>
+                <Route path={'exams-set-create/confirm/:id'} element={<ConfirmExamSetComponent/>}/>
+                <Route path={'exams-set-update/detail/:id'} element={<UpdateExamSetComponent/>}/>
+                <Route path={'exams-set/confirmUpdate/:id'} element={<ConfirmExamSetUpdateComponent/>}/>
+                <Route path={'exams/confirmUpdate/:id'} element={<ConfirmExamsUpdateComponent/>}/>
                 <Route path={'exams/create-random'} element={<CreateExamsRandomComponent/>}/>
                 <Route path={'exams/detail/:id'} element={<DetailExamsComponent/>}/>
             </Route>
