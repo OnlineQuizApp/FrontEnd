@@ -5,6 +5,7 @@ import {createQuestionsOnFileExcel} from "../../service/QuestionService";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {Button} from "react-bootstrap";
+import {ErrorMessage} from "formik";
 
 
 const CreateQuestionOnFileExcelComponent = ()=>{
@@ -54,7 +55,10 @@ const CreateQuestionOnFileExcelComponent = ()=>{
                             onChange={handleFileChange}
                             accept=".xlsx, .xls"
                             required
+                            onInvalid={e => e.target.setCustomValidity('Vui lòng chọn một file excel câu hỏi!')}
+                            onInput={e => e.target.setCustomValidity('')}
                         />
+
                     </div>
                     <div className="d-flex justify-content-center gap-3 mt-4">
                         {!isUploading && (

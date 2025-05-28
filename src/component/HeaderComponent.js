@@ -31,7 +31,7 @@ const Header = () => {
                 <a href="/" style={{textDecoration:'none'}}>Trang chủ</a>
                 <a href="/quiz" style={{textDecoration:'none'}}>Quiz</a>
                 <a href="/history" style={{textDecoration:'none'}}>Lịch sử</a>
-                <a href="/ranking" style={{textDecoration:'none'}}>Thành tích</a>
+                <a href="/leaderboard" style={{textDecoration:'none'}}>Thành tích</a>
             </nav>
             <div className="user-section">
                 {username ? (

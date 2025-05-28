@@ -24,7 +24,6 @@ const ExamsListComponent = () => {
                 setCategoryList(category);
                 setExams(data || []);
                 setTotalPage(totalPage || 0);
-                // Nếu page vượt quá totalPage (vd: xóa hết đề thi trên trang cuối cùng), reset page về 0
                 if (page >= totalPage && totalPage > 0) {
                     setPage(0);
                 }
@@ -111,7 +110,7 @@ const ExamsListComponent = () => {
                             <table className="table table-bordered mt-0">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th class="col-id">STT</th>
                                     <th>Tiêu đề</th>
                                     <th>Loại đề</th>
                                     <th>số câu</th>
@@ -120,47 +119,50 @@ const ExamsListComponent = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {exams && exams.map((e) => (
-                                    <tr key={e.id}>
-                                        <td>{e.id}</td>
-                                        <td>{e.title}</td>
-                                        <td>{e.category}</td>
-                                        <td>{e.numberOfQuestions}</td>
-                                        <td>{e.testTime}</td>
-                                        <td className={'col-button action-buttons'}>
-                                            <Link
-                                                to={`/admin/exams/detail/${e.id}`}
-                                                title="Xem chi tiết"
-                                                className="icon-btn view"
-                                            >
-                                                👁️
-                                            </Link>
-                                            <Link
-                                                to={`/admin/exams/update/${e.id}`}
-                                                title="Chỉnh sửa"
-                                                className="icon-btn edit"
-                                            >
-                                                ✏️
-                                            </Link>
-                                            <button
-                                                onClick={() => {
-                                                    setShowConfirmModal(true);
-                                                    setIdDelete(e.id);
-                                                }}
-                                                title="Xoá"
-                                                className="icon-btn delete"
-                                            >
-                                                🗑️
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
+                                {exams&&exams.length>0 && (
+                                    exams && exams.map((e,i) => (
+                                        <tr key={e.id}>
+                                            <td class="col-id" >{i+1}</td>
+                                            <td>{e.title}</td>
+                                            <td>{e.category}</td>
+                                            <td>{e.numberOfQuestions}</td>
+                                            <td>{e.testTime}</td>
+                                            <td className={'col-button action-buttons'}>
+                                                <Link
+                                                    to={`/admin/exams/detail/${e.id}`}
+                                                    title="Xem chi tiết"
+                                                    className="icon-btn view"
+                                                >
+                                                    👁️
+                                                </Link>
+                                                <Link
+                                                    to={`/admin/exams/update/${e.id}`}
+                                                    title="Chỉnh sửa"
+                                                    className="icon-btn edit"
+                                                >
+                                                    ✏️
+                                                </Link>
+                                                <button
+                                                    onClick={() => {
+                                                        setShowConfirmModal(true);
+                                                        setIdDelete(e.id);
+                                                    }}
+                                                    title="Xoá"
+                                                    className="icon-btn delete"
+                                                >
+                                                    🗑️
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                                 </tbody>
                             </table>
+                            {exams&&exams.length===0 && (<p style={{textAlign:'center'}}>Không có đề thi nào trong hệ thống!</p>)}
                             {showConfirmModal && (
                                 <div className="modal-overlay">
                                     <div className="custom-modal">
-                                        <h4>Xác nhận xoá câu hỏi này khỏi đề thi?</h4>
+                                        <h4>Xác nhận xoá đề thi của bạn?</h4>
                                         <p>
                                             Thao tác này sẽ đề thi của bạn. Bạn sẽ không thể
                                             huỷ được thao tác này sau khi thực hiện.

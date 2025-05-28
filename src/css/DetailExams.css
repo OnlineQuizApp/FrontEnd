@@ -1,0 +1,73 @@
+/* Container cho câu hỏi */
+.question-container {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 8px;
+    background: linear-gradient(145deg, #fdf6ee, #ffffff); /* Nền giống container */
+    box-shadow: var(--shadow);
+}
+
+/* Tiêu đề và nội dung câu hỏi */
+.question-title {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    display: inline; /* Đảm bảo nội dung câu hỏi hiển thị cùng dòng */
+}
+
+.question-title::after {
+    content: ": "; /* Thêm hai dấu chấm sau "Câu X" */
+    color: var(--text-dark);
+}
+
+/* Nội dung câu hỏi */
+.question-content {
+    display: inline; /* Nội dung câu hỏi hiển thị cùng dòng với tiêu đề */
+    color: var(--text-dark);
+}
+
+/* Căn giữa hình ảnh và video */
+.media-container {
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    margin: 0.5rem 0; /* Khoảng cách trên dưới */
+}
+
+.media-container img,
+.media-container video {
+    max-width: 100%; /* Đảm bảo không vượt quá chiều rộng container */
+    height: auto; /* Giữ tỷ lệ */
+    border-radius: 8px; /* Bo góc nhẹ */
+    box-shadow: var(--shadow); /* Áp dụng bóng từ biến CSS */
+}
+
+/* Danh sách đáp án */
+.answer-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0.5rem;
+}
+
+.answer-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.answer-list li input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.answer-list li label {
+    flex-grow: 1; /* Đáp án chiếm toàn bộ không gian còn lại */
+}
+
+/* Định dạng ký tự A, B, C, D */
+.answer-list li::before {
+    content: attr(data-option) ". "; /* Thêm A., B., C., D. */
+    font-weight: 600;
+    margin-right: 8px;
+    color: var(--text-dark);
+}

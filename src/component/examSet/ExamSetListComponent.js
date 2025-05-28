@@ -101,18 +101,18 @@ const ExamSetListComponent = () => {
                         <table className="table table-bordered mt-0">
                             <thead>
                             <tr>
-                                <th>Số thứ tự</th>
+                                <th >STT</th>
                                 <th>Tên bộ đề</th>
                                 <th>Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {examSet && examSet.length > 0 ? (
+                            {examSet && examSet.length > 0 && (
                                 examSet && examSet.map((e, i) => (
                                     <tr key={e.id}>
-                                        <td>{i + 1}</td>
+                                        <td >{i + 1}</td>
                                         <td>{e.name}</td>
-                                        <td className={'col-button action-buttons'}>
+                                        <td >
                                             <Link
                                                 to={`/admin/exams-set-update/detail/${e.id}`}
                                                 title="Chỉnh sửa"
@@ -133,19 +133,14 @@ const ExamSetListComponent = () => {
                                         </td>
                                     </tr>
                                 ))
-                            ) : (
-                                <tr>
-                                    <td colSpan={3} style={{textAlign: 'center'}}>
-                                        Không có bộ đề thi nào
-                                    </td>
-                                </tr>
                             )}
                             </tbody>
                         </table>
+                        {examSet && examSet.length === 0 && (<p style={{textAlign:'center'}}>Không có bộ đề nào trong hệ thống!</p>)}
                         {showConfirmModal && (
                             <div className="modal-overlay">
                                 <div className="custom-modal">
-                                    <h4>Xác nhận xoá câu hỏi này khỏi đề thi?</h4>
+                                    <h4>Xác nhận xoá đề thi này khỏi bộ đề?</h4>
                                     <p>
                                         Thao tác này sẽ đề thi của bạn. Bạn sẽ không thể
                                         huỷ được thao tác này sau khi thực hiện.
@@ -161,7 +156,6 @@ const ExamSetListComponent = () => {
                                 </div>
                             </div>
                         )}
-
                         <div className="pagination-buttons"
                              style={{justifyContent: 'center', textAlign: 'center', marginTop: '10px'}}>
                             <button

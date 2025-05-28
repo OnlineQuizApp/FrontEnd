@@ -37,7 +37,7 @@ const HomePage = () => {
                     <a href="/">Trang chủ</a>
                     <a href="/quiz">Quiz</a>
                     <a href="/history">Lịch sử</a>
-                    <a href="/ranking">Thành tích</a>
+                    <a href="/leaderboard">Thành tích</a>
                     {isAdmin && (
                         <a href="/admin">Trang admin</a>
                     )}
@@ -59,9 +59,7 @@ const HomePage = () => {
             </header>
 
             {/* Nội dung chính */}
-            <main className="content">
-                {/* Nội dung sẽ được thêm ở đây */}
-            </main>
+
 
             {/* Footer */}
             <footer className="footer">

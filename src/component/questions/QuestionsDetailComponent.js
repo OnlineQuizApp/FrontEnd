@@ -154,7 +154,9 @@ const QuestionsDetailComponent = () => {
                         </div>
                         {answers && answers.map((answer, index) => (
                             <div className="mb-3" key={index}>
-                                <label className="form-label">Đáp án {index + 1}:</label>
+                                <label className="form-label">
+                                    Đáp án {String.fromCharCode(65 + index)}:
+                                </label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -169,12 +171,12 @@ const QuestionsDetailComponent = () => {
                                         checked={answer.correct}
                                         onChange={(e) => handleAnswerChange(index, 'correct', e.target.checked)}
                                     />
-                                    <label className="form-check-label"> Là đáp án đúng</label>
+                                    <label className="form-check-label">Là đáp án đúng</label>
                                 </div>
                             </div>
                         ))}
                         <Button type="submit" variant="primary">
-                            Cập nhật
+                        Cập nhật
                         </Button>
                     </Form>
                 </Formik>

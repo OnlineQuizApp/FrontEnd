@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
 import {deleteQuestions, getAllQuestions} from "../../service/QuestionService";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {Button, Modal} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '../../css/admin-layout.css'
+import '../../css/IconMessage.css'
 import {getAllCategory} from "../../service/CategoryService";
 
 
@@ -124,28 +124,30 @@ const QuestionService = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {questions && questions.map((q, i) => (
-                                <tr key={q.id}>
-                                    <td class="col-id">{i + 1}</td>
-                                    <td>{q.content}</td>
-                                    <td style={{width: '240px', whiteSpace: 'nowrap'}}>{q?.category?.name}</td>
-                                    <td className="col-button">
-                                        <div className="action-buttons">
-                                            <Link to={'detail/' + q.id} className="icon-btn edit" title="Chỉnh sửa">
-                                                ✏️
-                                            </Link>
-                                            <button onClick={() => handleShowModal(q.id, q.content)}
-                                                    className="icon-btn delete" title="Xoá">
-                                                🗑️
-                                            </button>
-                                        </div>
-                                    </td>
-
-
-                                </tr>
-                            ))}
+                            {questions && questions.length > 0 && (
+                                questions && questions.map((q, i) => (
+                                    <tr key={q.id}>
+                                        <td class="col-id">{i + 1}</td>
+                                        <td>{q.content}</td>
+                                        <td style={{width: '240px', whiteSpace: 'nowrap'}}>{q?.category?.name}</td>
+                                        <td className="col-button">
+                                            <div className="action-buttons">
+                                                <Link to={'detail/' + q.id} className="icon-btn edit" title="Chỉnh sửa">
+                                                    ✏️
+                                                </Link>
+                                                <button onClick={() => handleShowModal(q.id, q.content)}
+                                                        className="icon-btn delete" title="Xoá">
+                                                    🗑️
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                             </tbody>
                         </table>
+                        {questions && questions.length === 0 && (
+                            <p style={{justifyContent: 'center'}}>Không có câu hỏi nào trong hệ thống! </p>)}
                     </div>
                     {isShowModal && (
                         <div className="modal-overlay">
@@ -198,6 +200,15 @@ const QuestionService = () => {
                     </div>
                 </div>
             </div>
+            <a href="https://m.me/739909372528743"
+               target="_blank"
+               rel="noopener noreferrer"
+               className="messenger-btn">
+                <svg className="messenger-icon" viewBox="0 0 24 24">
+                    <path
+                        d="M12,2A9.65,9.65,0,0,0,2,12c0,2.52,1.23,4.97,3.29,6.64L4.54,21a.84.84,0,0,0,.19.78A.86.86,0,0,0,5.3,22a.93.93,0,0,0,.35-.07L8.9,20.76A9.19,9.19,0,0,0,12,21,9.65,9.65,0,0,0,22,12,9.65,9.65,0,0,0,12,2ZM7,12.5a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,7,12.5Zm5,0A1.5,1.5,0,1,1,13.5,11,1.5,1.5,0,0,1,12,12.5Zm5,0A1.5,1.5,0,1,1,18.5,11,1.5,1.5,0,0,1,17,12.5Z"/>
+                </svg>
+            </a>
         </>
     )
         ;
