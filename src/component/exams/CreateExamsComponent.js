@@ -99,7 +99,7 @@ const CreateExamsComponent = () => {
 
                     <div className="mb-3">
                         <label>Nhập thời gian làm bài (phút) <span className="text-danger">*</span></label>
-                        <Field name="testTime" type={'text'} className="form-control" placeholder="ví dụ: 00:30"/>
+                        <Field name="testTime" type={'text'} className="form-control" placeholder="ví dụ: 30:00"/>
                         <ErrorMessage name="testTime" component="div" className="text-danger"/>
                     </div>
                     <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap">

@@ -38,6 +38,7 @@ export async function getAllExams() {
     return response.data
 }
 export async function updateExamSet(id, newExamSet) {
+
     const response = await axios.put(`http://localhost:8080/api/exam-set/${id}`, newExamSet, authHeader);
 }
 

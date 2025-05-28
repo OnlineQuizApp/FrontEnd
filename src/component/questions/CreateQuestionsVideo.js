@@ -44,6 +44,12 @@ const CreateQuestionsVideo = ()=>{
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const answersContent = answers.map((a=>a.content.trim()));
+        const check = answersContent.filter((a,i)=>answersContent.indexOf(a)!==i);
+        if (check.length>0){
+            toast.warning("Đáp án không được trùng lặp!");
+            return;
+        }
         if (!file ) {
             setMessage("❌ Vui lòng chọn một video !");
             return;
@@ -122,7 +128,11 @@ const CreateQuestionsVideo = ()=>{
                     <div className="mb-3">
                         <select value={categoryId}
                                 onChange={(e) => setCategoryId(Number(e.target.value))}
-                                className="form-select">
+                                className="form-select"
+                                required
+                                onInvalid={e => e.target.setCustomValidity('Vui lòng chọn danh mục câu hỏi!')}
+                                onInput={e => e.target.setCustomValidity('')}
+                         >
                             <option value="">-- Chọn danh mục --</option>
                             {categories && categories.map((c) => (
                                 <option value={c.id}>{c.name}</option>
@@ -181,7 +191,7 @@ const CreateQuestionsVideo = ()=>{
                     <div className="d-flex gap-3  flex-wrap">
                         <div className="d-flex gap-3  flex-wrap">
                             <button onClick={back}
-                                    type="button" className="btn btn-sm btn-outline btn-hover"
+                                    type="button"   className="btn btn-sm btn-outline-back btn-hover"
                                     disabled={isUploading}>
                                 {isUploading ? 'Đang tải...' : 'Quay lại'}
                             </button>

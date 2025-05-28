@@ -6,7 +6,7 @@ const AdminLayout = () => {
     return (
         <div className="app-layout">
             <Sidebar/>
-            <HeaderComponent />    {/* đây sẽ fixed */}
+            <HeaderComponent />
             <div className="main-content">
                 <Outlet/>
             </div>

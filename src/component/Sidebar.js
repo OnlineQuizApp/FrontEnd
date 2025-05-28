@@ -28,11 +28,11 @@ const Sidebar = () => {
                 </h4>
                 {showQuestionsMenu && (
                     <ul style={{listStyle: 'none', paddingLeft: '20px'}}>
-                        <li><Link to="/admin/questions">📋 Danh sách câu hỏi</Link></li>
-                        <li><Link to="/admin/questions/create">➕ Thêm câu hỏi mới</Link></li>
-                        <li><Link to="/admin/questions/upload-file-excel">📄 Thêm từ excel</Link></li>
-                        <li><Link to="/admin/questions/upload-file-img">🖼️ Thêm từ ảnh</Link></li>
-                        <li><Link to="/admin/questions/upload-video">🎥 Thêm từ video</Link></li>
+                        <li><Link to="/admin/questions">Danh sách câu hỏi</Link></li>
+                        <li><Link to="/admin/questions/create">Thêm câu hỏi mới</Link></li>
+                        <li><Link to="/admin/questions/upload-file-excel">Thêm từ excel</Link></li>
+                        <li><Link to="/admin/questions/upload-file-img">Thêm từ ảnh</Link></li>
+                        <li><Link to="/admin/questions/upload-video">Thêm từ video</Link></li>
                     </ul>
                 )}
                 <h4
@@ -43,9 +43,9 @@ const Sidebar = () => {
                 </h4>
                 {showExamsMenu && (
                     <ul style={{listStyle: 'none', paddingLeft: '20px'}}>
-                        <li><Link to="/admin/exams">📋 Danh sách đề thi</Link></li>
-                        <li><Link to="/admin/exams/create">➕ Thêm đề thi </Link></li>
-                        <li><Link to="/admin/exams/create-random">➕ Thêm đề thi random</Link></li>
+                        <li><Link to="/admin/exams">Danh sách đề thi</Link></li>
+                        <li><Link to="/admin/exams/create">Thêm đề thi </Link></li>
+                        <li><Link to="/admin/exams/create-random">Thêm đề thi random</Link></li>
                     </ul>
                 )}
                 <h4
@@ -56,12 +56,11 @@ const Sidebar = () => {
                 </h4>
                 {showExamSetMenu && (
                     <ul style={{listStyle: 'none', paddingLeft: '20px'}}>
-                        <li><Link to="/admin/exams-set">📋 Danh sách các bộ đề thi</Link></li>
-                        <li><Link to="/admin/exams-set/create">➕ Thêm bộ đề thi </Link></li>
+                        <li><Link to="/admin/exams-set">Danh sách bộ đề thi</Link></li>
+                        <li><Link to="/admin/exams-set/create">Thêm bộ đề thi </Link></li>
                     </ul>
                 )}
             </div>
-
         </>
     );
 };

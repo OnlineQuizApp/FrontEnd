@@ -14,16 +14,15 @@ const ConfirmExamSetUpdateComponent = () => {
         const fetchData = async () => {
             try {
                 const allExams = await getAllExams();
-                console.log("tất cả đề thi: ", allExams)
                 const data = await getExamSetByIdUpdate(id);
-                console.log("Bộ đề trả về: ", data.examSets.id)
                 const examSet = data?.examSetDetailDto || [];
-                console.log('đề thi trong bộ đề: ' + examSet)
                 const currentExamIds = examSet.flatMap(e => e.exams.map(exam => exam.id));
-                console.log("id của đề thi có trong bộ đề:" + currentExamIds)
                 const filterExams = allExams.filter(e => !currentExamIds.includes(e.id));
-                console.log("examSet- sau khi lọc-----------:", filterExams);
+                if (filterExams.length===0){
+                    toast.warn("Tất cả đề thi trong hệ thống đã hết hoặc không có đề thi nào mới!");
+                }
                 setExam(filterExams);
+
             } catch (error) {
                 console.error("Lỗi khi lấy dữ liệu đề và câu hỏi", error);
             }
@@ -50,38 +49,37 @@ const ConfirmExamSetUpdateComponent = () => {
     };
     return (
         <>
-
             <h2 className="mb-4" style={{fontSize: "1.5rem", fontWeight: "bold"}}>Chọn đề thi cho bộ đề</h2>
-            <table className="table table-sm table-success-custom mt-3">
-                <thead>
-                <tr>
-                    <th>Số thứ tự</th>
-                    <th>Tên đề thi</th>
-                    <th>Chọn đề thi<span className="text-danger">*</span></th>
-                </tr>
-                </thead>
-                <tbody>
-                {exam && exam.map((q, index) => (
-                    <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{q.title}</td>
-                        <td>
-                            <input
-                                type="checkbox"
-                                checked={selectedQuestionsId.includes(q.id)}
-                                onChange={() => handleCheckboxChange(q.id)}
-                            />
-                        </td>
+            {exam.length > 0 ? (
+                <table className="table table-sm table-success-custom mt-3">
+                    <thead>
+                    <tr>
+                        <th>Số thứ tự</th>
+                        <th>Tên đề thi</th>
+                        <th>Chọn đề thi<span className="text-danger">*</span></th>
                     </tr>
-                ))}
-                </tbody>
-                <tr>  {exam.length === 0 && (
-                    <td rowSpan={3}>Đã hết đề thi trong hệ thống</td>
-                )}
-                </tr>
-            </table>
+                    </thead>
+                    <tbody>
+                    {exam && exam.map((q, index) => (
+                        <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{q.title}</td>
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedQuestionsId.includes(q.id)}
+                                    onChange={() => handleCheckboxChange(q.id)}
+                                />
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            ) : (
+                <p>Đã hết đề thi trong hệ thống</p>)}
             <div>
-                <button  className="btn btn-sm btn-outline btn-hover" onClick={handleConfirm} disabled={selectedQuestionsId.length === 0}>
+                <button className="btn btn-sm btn-outline btn-hover" onClick={handleConfirm}
+                        disabled={selectedQuestionsId.length === 0}>
                     Xác nhận thêm các đề thi này
                 </button>
             </div>

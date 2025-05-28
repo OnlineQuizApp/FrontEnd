@@ -24,11 +24,9 @@ import CreateExamsComponent from "./component/exams/CreateExamsComponent";
 import UnauthorizedComponent from "./component/UnauthorizedComponent";
 import HeaderComponent from "./component/HeaderComponent";
 import FooterComponent from "./component/FooterComponent";
-
 import DetailExamsComponent from "./component/exams/DetailExamsComponent";
 import CreateCategoryComponent from './component/category/CreateCategoryComponent'
 import CreateQuestionsVideo from "./component/questions/CreateQuestionsVideo";
-import TestVideo from "./component/TestVideo";
 import UpdateExamsComponent from "./component/exams/UpdateExamsComponent";
 import ConfirmExamsUpdateComponent from "./component/exams/ConfirmExamsUpdateComponent";
 import CreateExamSetComponent from "./component/examSet/CreateExamSetComponent";
@@ -36,6 +34,9 @@ import ConfirmExamSetComponent from "./component/examSet/ConfirmExamSetComponent
 import ConfirmExamSetUpdateComponent from "./component/examSet/ConfirmExamSetUpdateComponent";
 import ExamSetListComponent from "./component/examSet/ExamSetListComponent";
 import UpdateExamSetComponent from "./component/examSet/UpdateExamSetComponent";
+import GetRatingPointsComponent from "./component/ratingPoints/GetRatingPointsComponent";
+import UserChat from "./component/chatSocKetTest/UserChat";
+import AdminChat from "./component/chatSocKetTest/AdminChat";
 
 function App() {
   return (
@@ -66,12 +67,14 @@ function App() {
                 <Route path={'exams/detail/:id'} element={<DetailExamsComponent/>}/>
             </Route>
             <Route path="/login" element={<LoginComponent />} />
-            <Route path="/test" element={<TestVideo />} />
             <Route path="/register" element={<RegisterComponent />} />
             <Route path="/profile" element={<ProfileComponent />} />
             <Route path="/resetPassword" element={<ForgotPasswordComponent />} />
             <Route path="/reset-password" element={<ResetPasswordComponent />} />
             <Route path="/change-password" element={<ChangePasswordComponent />} />
+            <Route path="/leaderboard" element={<GetRatingPointsComponent/>} />
+            <Route path="/chat/user" element={<UserChat/>} />
+            <Route path="/chat/admin" element={<AdminChat/>} />
             <Route
                 path="/"
                 element={

@@ -4,7 +4,6 @@ import {getAllCategory} from "../../service/CategoryService";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import "../../css/admin-layout.css"
-import {Button} from "react-bootstrap";
 import 'bootstrap/dist/js/bootstrap.min.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "../../css/ModalConfirm.css";
@@ -16,6 +15,14 @@ const CreateQuestionsOnImg = ()=>{
     const [content, setContent] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [answers, setAnswers] = useState([
+        { content: '', correct: false },
+        { content: '', correct: false },
+        { content: '', correct: false },
+        { content: '', correct: false }
+    ]);
+
+
     useEffect(() => {
         const fetchData = async ()=>{
             const data =await getAllCategory();
@@ -28,12 +35,7 @@ const CreateQuestionsOnImg = ()=>{
             toast.error(message);
         }
     }, [message]);
-    const [answers, setAnswers] = useState([
-        { content: '', correct: false },
-        { content: '', correct: false },
-        { content: '', correct: false },
-        { content: '', correct: false }
-    ]);
+
     const handleImageChange = (e) => {                 // Hàm xử lý việc chọn file
         setFile(e.target.files[0]);                        // lấy file đầu tiên trong danh sách
     };
@@ -47,6 +49,13 @@ const CreateQuestionsOnImg = ()=>{
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const  answersContent = answers.map(e=>e.content.trim());
+        const  check = answersContent.filter((a,i)=>answersContent.indexOf(a)!==i);
+        if (check.length>0){
+            toast.warning("Đáp án không được trùng lặp!");
+            return;
+        }
+
         if (!file ) {
             setMessage("❌ Vui lòng chọn một hình ảnh !");
             return;
@@ -130,7 +139,11 @@ const CreateQuestionsOnImg = ()=>{
                     <div className="mb-3">
                         <select value={categoryId}
                                 onChange={(e) => setCategoryId(Number(e.target.value))}
-                                className="form-select">
+                                className="form-select"
+                                required
+                                onInvalid={e => e.target.setCustomValidity('Vui lòng chọn danh mục câu hỏi!')}
+                                onInput={e => e.target.setCustomValidity('')}
+                        >
                             <option value="">-- Chọn danh mục --</option>
                             {categories && categories.map((c) => (
                                 <option value={c.id}>{c.name}</option>
@@ -146,7 +159,7 @@ const CreateQuestionsOnImg = ()=>{
                             placeholder="Nhập mô tả hoặc nội dung câu hỏi ..."
                             rows={3}
                             required
-                            onInvalid={e => e.target.setCustomValidity('Vui lòng không để trống trường này')}
+                            onInvalid={e => e.target.setCustomValidity('Vui lòng nhập nội dung câu hỏi!')}
                             onInput={e => e.target.setCustomValidity('')}
 
                         />
@@ -189,7 +202,7 @@ const CreateQuestionsOnImg = ()=>{
                 <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap">
                     <div className="d-flex gap-3  flex-wrap">
                         <button onClick={back}
-                                type="button" className="btn btn-sm btn-outline btn-hover"
+                                type="button"   className="btn btn-sm btn-outline-back btn-hover"
                                 disabled={isUploading}>
                             {isUploading ? 'Đang tải...' : 'Quay lại'}
                         </button>
@@ -208,7 +221,6 @@ const CreateQuestionsOnImg = ()=>{
                     >
                         {isUploading ? 'Đang tải...' : 'Xoá hết đáp án'}
                     </a>
-
                 </div>
             </form>
             {message && <div className="mt-3">{message}</div>}

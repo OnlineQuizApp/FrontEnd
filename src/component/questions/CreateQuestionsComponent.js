@@ -29,6 +29,12 @@
             { content: '', correct: false }
         ]);
         const handleCreateQuestions= async (value)=>{
+            const answersContent = answers.map(a=>a.content.trim())
+            const check = answersContent.filter((a,i)=>answersContent.indexOf(a)!==i)
+            if (check.length>0){
+                toast.warning("Đáp án không được trùng lặp!");
+                return;
+            }
             const newQuestion = {
                 content: value.content,  // Nội dung câu hỏi
                 category: value.category,  // ID danh mục

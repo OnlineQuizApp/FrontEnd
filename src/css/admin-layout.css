@@ -13,18 +13,26 @@
     --transition: all 0.3s ease-in-out;
     --success-color: #28a745;
     --success-dark: #218838;
-}
 
+}
+.main-content {
+    flex: 1;
+    padding: 24px;
+    background: linear-gradient(145deg, #fdf6ee, #ffffff); /* Áp dụng gradient giống container */
+    margin-left: 250px; /* Chừa chỗ cho sidebar */
+    margin-top: 60px; /* Đẩy xuống dưới header */
+    min-height: calc(100vh - 60px); /* Điều chỉnh chiều cao để phù hợp với header */
+    overflow-y: auto;
+}
 /* RESET */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--light-bg);
+    background: linear-gradient(145deg, #fdf6ee, #ffffff); /* Cập nhật để giống container */
     color: var(--text-dark);
     line-height: 1.6;
     overflow-x: hidden;
@@ -135,12 +143,23 @@ body {
 
 /* CONTAINER */
 .container {
-    background: var(--white);
+    background: linear-gradient(145deg, #fdf6ee, #ffffff);
     padding: 1.75rem;
     border-radius: 14px;
     box-shadow: var(--shadow);
     margin-bottom: 2rem;
 }
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ff6600, #ff8533, #ff6600);
+    border-radius: 20px 20px 0 0;
+}
+
 
 /* HEADINGS */
 h1, h2, h3 {
@@ -157,7 +176,7 @@ h3 { font-size: 1.25rem; margin-bottom: 1rem; }
 .table {
     width: 100%;
     border-collapse: collapse;
-    background-color: var(--white);
+    background: linear-gradient(145deg, #fffbf7, #ffffff);
     border-radius: 10px;
     overflow: hidden;
     table-layout: fixed; /* Thêm dòng này để cột có kích thước đồng đều */
@@ -561,13 +580,10 @@ h3 { font-size: 1.25rem; margin-bottom: 1rem; }
 }
 
 .list li {
-    list-style-type: none;
-    position: relative;       /* Tạo context cho con tuyệt đối */
-    padding-right: 30px;      /* Tạo khoảng trống cho icon ở bên phải */
-    border-bottom: 1px solid #ccc; /* Tùy chọn */
-    line-height: 1.5em;
+    margin-bottom: 1rem;
+    list-style-type: none; /* Loại bỏ số hoặc dấu chấm */
+    position: relative; /* Để định vị icon xóa */
 }
-
 .delete-icon {
     position: absolute;
     right: 5px;               /* Căn sát bên phải */

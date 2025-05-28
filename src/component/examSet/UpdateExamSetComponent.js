@@ -14,6 +14,10 @@ const UpdateExamSetComponent = () => {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [idDelete,setIdDelete] = useState(null);
     const [loading,setLoading] = useState(null);
+    const [file, setFile] = useState(null);
+    const [isImageZoomed, setIsImageZoomed] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
+    const [fieldFile,setFieldFile] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -40,11 +44,17 @@ const UpdateExamSetComponent = () => {
     }, [id,loading]);
     const handleUpdateExams = async (value) => {
         try {
-            await updateExamSet(id, value);
+            setIsUploading(true);
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("name", value.name);
+            formData.append("creationDate", value.creationDate);
+            await updateExamSet(id, formData);
+            setIsUploading(false);
             navigate('/admin/exams-set');
             toast.success("Chỉnh sửa bộ đề thi thành công!")
         } catch (error) {
-            toast.error(" Bộ đề thi đã tồn tại trong hệ thống!")
+            toast.error(" Bộ đề thi đã tồn tại trong hệ thống!");
         }
     }
 
@@ -107,25 +117,47 @@ const UpdateExamSetComponent = () => {
                 }
             )
     });
+    const handleImageChange = (e) => {                 // Hàm xử lý việc chọn file
+        setFile(e.target.files[0]);// lấy file đầu tiên trong danh sách
+        setFieldFile(true);
+    };
     return (
         <>
             <h3>Cập nhật bộ đề thi</h3>
             <Formik initialValues={examSet || {
-                id: '',
-                name: '',
-                creationDate: '',
+                id: examSet?.id,
+                name: examSet?.name,
+                img:examSet?.img,
+                creationDate: examSet?.creationDate,
                 softDelete: false
             }} validationSchema={validationSchema} onSubmit={handleUpdateExams} enableReinitialize={true}>
                 {({dirty}) => (
                     <Form>
                         <div className="mb-3">
-                            <label>Nhập tên bộ đề <span className="text-danger">*</span></label>
+                            <label>Nhập tên muốn cập nhật cho bộ đề </label>
                             <Field name="name" className="form-control" placeholder="Nhập tiêu đề đề thi"/>
                             <ErrorMessage name="name" component="div" className="text-danger"/>
                         </div>
+                        <div className="mb-3">
+                            <img src={examSet.img} alt="Ảnh bộ đề"
+                                 style={{maxWidth: '200px', marginBottom: '10px'}}
+                                 onClick={() => setIsImageZoomed(true)}/>
+                            <label>Chọn hình ảnh muốn cập nhật cho cho bộ đề</label>
+                            <input
+                                name="img"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                onInvalid={e => e.target.setCustomValidity('Vui lòng chọn một hình ảnh đại diện cho câu hỏi!')}
+                                onInput={e => e.target.setCustomValidity('')}
+                                className="form-control"
+                                placeholder="Chọn hình ảnh cho bộ đề"
+                            />
+                            <ErrorMessage name="img" component="div" className="text-danger"/>
+                        </div>
 
                         <div className="mb-3">
-                            <label>Ngày tạo đề <span className="text-danger">*</span></label>
+                            <label>Chọn ngày muốn cập nhật</label>
                             <Field type={'date'} name="creationDate" className="form-control"
                                    placeholder="Chọn ngày tạo bộ đề">
                             </Field>
@@ -153,16 +185,16 @@ const UpdateExamSetComponent = () => {
                                 <h2 className="title" style={{margin: 0}}>Danh sách đề thi</h2>
 
                                 <div className="button-group">
-                                    {dirty && (
-                                        <Button type="submit" className="btn btn-sm btn-outline btn-hover">
-                                            Chỉnh sửa
+                                    {(fieldFile || dirty) && (
+                                        <Button type="submit" className="btn btn-sm btn-outline btn-hover" disabled={isUploading}>
+                                            {isUploading ? 'Đang tải hình ảnh ...' : 'Chỉnh sửa'}
                                         </Button>
                                     )}
                                     <button
-                                        onClick={()=>handleConfirm()}
+                                        onClick={() => handleConfirm()}
                                         className="btn btn-sm btn-outline btn-hover"
-                                    >
-                                        Thêm đề thi vào bộ đề
+                                        disabled={isUploading}>
+                                        {isUploading ? 'Đang tải hình ảnh ...' : 'Thêm đề thi vào bộ đề'}
                                     </button>
                                 </div>
                             </div>
@@ -171,13 +203,13 @@ const UpdateExamSetComponent = () => {
                 )}
             </Formik>
             {Array.isArray(existingExamSet) && existingExamSet.length > 0 ? (
-               existingExamSet.map((examSet, index) => (
+                existingExamSet.map((examSet, index) => (
                     <div key={index} className="mb-4">
                         {Array.isArray(examSet.exams) && examSet.exams.length > 0 ? (
-                            <ol  style={{ paddingLeft: '20px' }} className={"list"} >
+                            <ul style={{paddingLeft: '20px'}} className={"list"}>
                                 {examSet.exams.map((exam, i) => (
-                                    <li key={i} style={{ marginBottom: '1rem', listStyleType: 'decimal' }}>
-                                        <div style={{ whiteSpace: 'pre-line' }}>
+                                    <li key={i} style={{marginBottom: '1rem'}}>
+                                        <div style={{whiteSpace: 'pre-line'}}>
                                             <strong>Đề {i + 1}:</strong> {exam.title}
                                             {"\n"}{" ".repeat(5)}<strong>Thể loại:</strong> {exam.category}
                                             {"\n"}{" ".repeat(5)}<strong>Số lượng câu hỏi:</strong> {exam.numberOfQuestions}
@@ -195,7 +227,7 @@ const UpdateExamSetComponent = () => {
                                         </label>
                                     </li>
                                 ))}
-                            </ol>
+                            </ul>
                         ) : (
                             <p>Không có đề thi</p>
                         )}
@@ -221,6 +253,20 @@ const UpdateExamSetComponent = () => {
                             </button>
                         </div>
                     </div>
+                </div>
+            )}
+            {isImageZoomed && (
+                <div className="zoom-overlay">
+                    {examSet.img &&
+                        <img
+                            src={examSet.img}
+                            alt="Ảnh phóng to"
+                            className="zoomed-image"
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    }
+                    <button className="close-button" onClick={() => setIsImageZoomed(false)}>×</button>
+
                 </div>
             )}
         </>
