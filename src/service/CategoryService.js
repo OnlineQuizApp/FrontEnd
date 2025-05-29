@@ -1,4 +1,5 @@
 import axios from "axios";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 
 const token = localStorage.getItem("token");
@@ -6,9 +7,12 @@ const token = localStorage.getItem("token");
 const authHeader = token
     ? { headers: { Authorization: `Bearer ${token}` }}
     : {}; // không gửi gì cả nếu không có token
+
+
 export async function getAllCategory(){
     try {
-        const response =await axios.get(`http://localhost:8080/api/category`,authHeader);
+        console.log(apiUrl)
+        const response =await axios.get(`${apiUrl}/api/category`,authHeader);
         return response.data
     }catch (e){
         console.log("Lỗi: "+e)
@@ -18,7 +22,7 @@ export async function getAllCategory(){
 
 export async function createCategory(newCategory){
     try {
-        const response =await axios.post(`http://localhost:8080/api/category`,newCategory,authHeader);
+        const response =await axios.post(`${apiUrl}/api/category`,newCategory,authHeader);
         console.log("createCategory")
     }catch (e){
         console.log("Lỗi createCategory: "+e)

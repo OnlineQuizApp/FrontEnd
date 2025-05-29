@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../css/LoginComponent.css";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
-
+const apiUrl = process.env.REACT_APP_API_URL;
 const LoginComponent = () => {
     const [form, setForm] = useState({ username: "", password: "" });
     const [errors, setErrors] = useState({});
@@ -64,7 +64,7 @@ const LoginComponent = () => {
         }
 
         try {
-            const response = await axios.post("http://localhost:8080/api/account/login", form);
+            const response = await axios.post(`${apiUrl}/api/account/login`, form);
             localStorage.setItem("token", response.data.token);
             toast.success(" Đăng nhập thành công!", {
                 position: "top-center",

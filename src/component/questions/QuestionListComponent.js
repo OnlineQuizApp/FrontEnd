@@ -24,6 +24,7 @@ const QuestionService = () => {
     useEffect(() => {
         const fetchData = async () => {
             const {data, totalPage} = await getAllQuestions(page, questionContentSearch, categorySearch);
+            console.log(data)
             setQuestions(data);
             setTotalPage(totalPage);
             const category = await getAllCategory();
@@ -132,13 +133,17 @@ const QuestionService = () => {
                                         <td style={{width: '240px', whiteSpace: 'nowrap'}}>{q?.category?.name}</td>
                                         <td className="col-button">
                                             <div className="action-buttons">
-                                                <Link to={'detail/' + q.id} className="icon-btn edit" title="Chỉnh sửa">
-                                                    ✏️
-                                                </Link>
-                                                <button onClick={() => handleShowModal(q.id, q.content)}
-                                                        className="icon-btn delete" title="Xoá">
-                                                    🗑️
-                                                </button>
+                                                {!q.exitsExamsId && <>
+                                                    <Link to={'detail/' + q.id} className="icon-btn edit"
+                                                          title="Chỉnh sửa">
+                                                        ✏️
+                                                    </Link>
+                                                    <button onClick={() => handleShowModal(q.id, q.content)}
+                                                            className="icon-btn delete" title="Xoá">🗑️
+                                                    </button>
+                                                </>
+                                                }
+
                                             </div>
                                         </td>
                                     </tr>
@@ -154,7 +159,7 @@ const QuestionService = () => {
                             <div className="custom-modal">
                                 <h4>Xác nhận xoá câu hỏi này khỏi đề thi?</h4>
                                 <p>
-                                    Thao tác này sẽ xoá nội dung câu hỏi "{questionsContent}" của bạn. Bạn sẽ không thể
+                                    Thao tác này sẽ xoá câu hỏi "{questionsContent}" của bạn. Bạn sẽ không thể
                                     huỷ được thao tác này sau khi thực hiện.
                                 </p>
                                 <div className="modal-buttons">
