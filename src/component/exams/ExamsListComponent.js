@@ -97,7 +97,7 @@ const ExamsListComponent = () => {
                                     />
                                     <Field as="select" name="category" className="form-select form-select-sm"
                                            style={{maxWidth: '200px'}}>
-                                        <option value="">-- Chọn danh mục --</option>
+                                        <option value={''}>-- Chọn danh mục --</option>
                                         {categoryList && categoryList.map((c) => (
                                             <option value={c.name} key={c.id}>{c.name}</option>
                                         ))}
