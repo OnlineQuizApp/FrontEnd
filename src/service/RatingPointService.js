@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const apiUrl = process.env.REACT_APP_API_URL;
 
 
 
@@ -11,7 +11,7 @@ const authHeader = token
 
 export async function getAllRatingPoints(){
     try {
-        const response =await axios.get(`http://localhost:8080/api/rating-points/get-all`,authHeader);
+        const response =await axios.get(`${apiUrl}/api/rating-points/get-all`,authHeader);
         return response.data;
     }catch (e) {
         console.log("Lỗi lấy thông tin toàn bộ bảng xếp hạng :"+ e)
@@ -20,7 +20,7 @@ export async function getAllRatingPoints(){
 
 export async function getRatingPointsByUser(){
     try {
-        const response =await axios.get(`http://localhost:8080/api/rating-points`,authHeader);
+        const response =await axios.get(`${apiUrl}/api/rating-points`,authHeader);
         return response.data;
     }catch (e) {
         console.log("Lỗi lấy thông tin người dùng trong bảng xếp hạng :"+ e)
