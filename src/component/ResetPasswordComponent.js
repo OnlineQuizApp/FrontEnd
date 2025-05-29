@@ -49,15 +49,14 @@ export default function ResetPasswordComponent() {
             <div className="reset-password-container">
                 <form onSubmit={handleSubmit} className="reset-password-box">
                     <h2>Đặt lại mật khẩu</h2>
-                    <label>Mật khẩu mới</label><span className="text-danger">*</span>
+                    <label>Mật khẩu mới<span className="text-danger">*</span></label>
                     <input
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                         required
                     />
-                    <label>Nhập lại mật khẩu</label>
-                    <span className="text-danger">*</span>
+                    <label>Nhập lại mật khẩu<span className="text-danger">*</span></label>
                     <input
                         type="password"
                         value={confirm}
