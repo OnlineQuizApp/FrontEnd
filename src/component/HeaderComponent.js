@@ -6,13 +6,17 @@ import '../css/HeaderComponent.css';
 const Header = () => {
     const [username, setUsername] = useState(null);
     const navigate = useNavigate();
-
+    const [isAdmin, setIsAdmin] = useState(false);
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
             try {
                 const decoded = jwtDecode(token);
                 setUsername(decoded.sub);
+                const roles = decoded.roles || [];
+                if (roles.includes("ROLE_ADMIN")) {
+                    setIsAdmin(true);
+                }
             } catch {
                 handleLogout();
             }
@@ -29,9 +33,22 @@ const Header = () => {
             <div className="logo">QuizMaster</div>
             <nav className="nav">
                 <a href="/" style={{textDecoration:'none'}}>Trang chủ</a>
-                <a href="/quiz" style={{textDecoration:'none'}}>Quiz</a>
-                <a href="/history" style={{textDecoration:'none'}}>Lịch sử</a>
+                {!isAdmin && (
+                    <a href="/quiz" style={{textDecoration:'none'}}>Quiz</a>
+                )}
+                {!isAdmin && (
+                    <a href="/history" style={{textDecoration:'none'}}>Lịch sử</a>
+                )}
                 <a href="/leaderboard" style={{textDecoration:'none'}}>Thành tích</a>
+                {isAdmin && (
+                    <a href="/admin">Trang admin</a>
+                )}
+                {isAdmin && (
+                    <a href="/statistics">Thống kê</a>
+                )}
+                {isAdmin && (
+                    <a href="/users">Quản lý người dùng</a>
+                )}
             </nav>
             <div className="user-section">
                 {username ? (

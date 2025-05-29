@@ -1,0 +1,182 @@
+/* ExamResultDetail.css */
+.exam-result-detail-container {
+    max-width: 1000px;
+    margin: 6rem 6rem 8rem 16rem;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Header styling with orange theme */
+.exam-result-detail-container h2 {
+    color: #ff6200;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #ff6200;
+    padding-bottom: 0.5rem;
+}
+
+/* Result summary section - highlighted */
+.exam-result-detail-container p {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 0.8rem 0;
+    text-align: center;
+}
+
+.exam-result-detail-container p strong {
+    color: #ff6200;
+    font-weight: 600;
+}
+
+/* Highlighted result section */
+.exam-result-detail-container p:nth-child(2),
+.exam-result-detail-container p:nth-child(3),
+.exam-result-detail-container p:nth-child(4) {
+    background-color: #fff3e0;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 0.5rem 0;
+    font-weight: 500;
+}
+
+/* Question list styling */
+.question-list {
+    margin-top: 2rem;
+}
+
+.question-item {
+    width: 100%; /* Full width for each question */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.question-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.question-item h4 {
+    color: #ff6200;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    width: 500px;
+}
+
+/* Answer section styling */
+.answer-section {
+    display: flex;
+    flex-direction: column; /* Answers below question */
+    gap: 0.5rem;
+    width: 300px;
+}
+
+.answer-section p {
+    font-size: 1rem;
+    color: #333;
+    text-align: left;
+}
+
+.answer-section p strong {
+    color: #ff6200;
+}
+
+.answer-section p:first-child {
+    color: #555;
+}
+
+.answer-section p:last-child {
+    color: #2e7d32; /* Green for correct answer */
+}
+
+/* Back button styling */
+.back-button {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 0.8rem 2rem;
+    background-color: #ff6200;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.back-button:hover {
+    background-color: #e55b00;
+    transform: scale(1.05);
+}
+
+/* Loading and error states */
+.exam-result-detail-container.loading,
+.exam-result-detail-container.error {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ff6200;
+    padding: 2rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .exam-result-detail-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .exam-result-detail-container h2 {
+        font-size: 1.8rem;
+    }
+
+    .exam-result-detail-container p {
+        font-size: 1rem;
+    }
+
+    .question-item h4 {
+        font-size: 1.2rem;
+    }
+
+    .answer-section p {
+        font-size: 0.9rem;
+    }
+
+    .back-button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .exam-result-detail-container {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    .exam-result-detail-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .question-item {
+        padding: 1rem;
+    }
+
+    .question-item h4 {
+        font-size: 1.1rem;
+    }
+
+    .answer-section p {
+        font-size: 0.85rem;
+    }
+
+    .back-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+}

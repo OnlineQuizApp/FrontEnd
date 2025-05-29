@@ -3,6 +3,7 @@ import {getAllRatingPoints, getRatingPointsByUser} from "../../service/RatingPoi
 import "../../css/RatingPoints.css"
 import "../../css/ProfileComponent.css"
 import HeaderComponent from "../HeaderComponent";
+import FooterComponent from "../FooterComponent";
 
 
 const GetRatingPointsComponent = () => {
@@ -73,6 +74,7 @@ const GetRatingPointsComponent = () => {
                     </div>
                 </div>
             </div>
+            <FooterComponent/>
         </>
     );
 }

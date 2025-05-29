@@ -1,0 +1,254 @@
+/* ExamSetList.css */
+.exam-set-list-container {
+    max-width: 1200px;
+    margin: 70px auto 0;
+    padding: 2rem;
+    background-color: #fafafa;
+    min-height: calc(100vh - 165px);
+}
+
+.exam-set-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.exam-set-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.exam-set-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(255, 107, 53, 0.2);
+}
+
+.exam-set-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #ff6b35, #ff8c42);
+}
+
+.exam-set-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.exam-set-card:hover img {
+    transform: scale(1.05);
+}
+
+.exam-set-card h3 {
+    padding: 1rem 1.5rem 0.5rem;
+    margin: 0;
+    color: #333;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.exam-set-card p {
+    padding: 0 1.5rem 1.5rem;
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.exam-set-card p::before {
+    content: '📅';
+    font-size: 1rem;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.pagination button {
+
+    background: linear-gradient(135deg, #ff6b35, #ff8c42);
+    color: white;
+    border: none;
+    padding: -0.2rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+    min-width: 100px;
+}
+
+.pagination button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+    background: linear-gradient(135deg, #ff5722, #ff6b35);
+}
+
+.pagination button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.pagination button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.pagination span {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-width: 80px;
+    text-align: center;
+}
+
+/* Empty State */
+.exam-set-grid:empty::after {
+    content: 'Không có bộ đề nào để hiển thị';
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #666;
+    font-size: 1.2rem;
+    padding: 3rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading Animation */
+@keyframes shimmer {
+    0% {
+        background-position: -468px 0;
+    }
+    100% {
+        background-position: 468px 0;
+    }
+}
+
+.exam-set-card.loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 400% 100%;
+    animation: shimmer 1.2s ease-in-out infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .exam-set-list-container {
+        padding: 1.5rem;
+        margin-top: 25px;
+    }
+
+    .exam-set-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .exam-set-list-container {
+        padding: 1rem;
+        margin-top: 80px;
+    }
+
+    .exam-set-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .exam-set-card img {
+        height: 140px;
+    }
+
+    .exam-set-card h3 {
+        font-size: 1rem;
+        padding: 0.8rem 1rem 0.3rem;
+    }
+
+    .exam-set-card p {
+        padding: 0 1rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .pagination {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .pagination button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
+        min-width: 80px;
+    }
+
+    .pagination span {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .exam-set-list-container {
+        padding: 0.5rem;
+        margin-top: 25px;
+    }
+
+    .exam-set-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .exam-set-card {
+        border-radius: 10px;
+    }
+
+    .exam-set-card img {
+        height: 140px;
+    }
+
+    .exam-set-card h3 {
+        font-size: 1rem;
+        padding: 0.6rem 0.8rem 0.2rem;
+    }
+
+    .exam-set-card p {
+        padding: 0 0.8rem 0.8rem;
+        font-size: 0.75rem;
+    }
+
+    .pagination {
+        gap: 0.3rem;
+    }
+
+    .pagination button,
+    .pagination span {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+        border-radius: 20px;
+    }
+}

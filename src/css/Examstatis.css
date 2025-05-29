@@ -1,0 +1,167 @@
+/* Custom styles for Exam Statistics Dashboard with orange theme */
+
+/* Root variables for consistent theming */
+:root {
+    --primary-orange: #f97316; /* Main orange color */
+    --secondary-orange: #fb923c; /* Lighter orange for hover effects */
+    --dark-orange: #c2410c; /* Darker orange for contrast */
+    --text-primary: #1f2937; /* Dark gray for text */
+    --text-secondary: #4b5563; /* Lighter gray for secondary text */
+    --bg-light: #fff7ed; /* Light orange-tinted background */
+}
+
+/* Ensure container takes full height on smaller screens */
+.container {
+    margin-top: 65px;
+    min-height: 100vh;
+    background-color: var(--bg-light);
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* Header styling */
+thead {
+    background-color: var(--primary-orange) !important;
+}
+
+th {
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Row hover effect */
+tbody tr:hover {
+    background-color: var(--bg-light);
+    transition: background-color 0.3s ease;
+}
+
+/* Cell padding and text styling */
+td, th {
+    padding: 1rem;
+    text-align: left;
+    color: var(--text-primary);
+}
+
+td {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Loading and Error states */
+.flex.h-screen {
+    background-color: var(--bg-light);
+}
+
+.text-gray-600 {
+    color: var(--text-secondary);
+}
+
+.text-red-600 {
+    color: var(--dark-orange);
+}
+
+/* Title styling */
+h1 {
+    color: var(--primary-orange);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    /* Stack table headers and cells for mobile */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    thead, tbody, tr, th, td {
+        display: block;
+    }
+
+    thead {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    tr {
+        margin-bottom: 1rem;
+        border-bottom: 2px solid var(--secondary-orange);
+    }
+
+    th, td {
+        text-align: left;
+        padding: 0.75rem;
+        position: relative;
+    }
+
+    /* Add labels for mobile view */
+    td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--primary-orange);
+        display: inline-block;
+        width: 40%;
+        padding-right: 1rem;
+    }
+
+    td {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Adjust font sizes */
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    th, td {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.25rem;
+    }
+
+    th, td {
+        font-size: 0.85rem;
+    }
+
+    td:before {
+        width: 50%;
+    }
+}
+
+/* Scrollbar styling for webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-orange);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-orange);
+}

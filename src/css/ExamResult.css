@@ -1,0 +1,91 @@
+/* ExamResult.css */
+
+.exam-result-container {
+    max-width: 800px;
+    margin: 100px auto 0; /* Cách lề trên 100px */
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.exam-result-container h2 {
+    color: #ff6b00;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.exam-result-container p {
+    font-size: 1.2rem;
+    margin: 15px 0;
+    color: #333;
+    line-height: 1.6;
+}
+
+.exam-result-container p strong {
+    color: #ff6b00;
+    font-weight: 600;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 30px;
+    background-color: #ff6b00;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: 2px solid #ff6b00;
+    box-shadow: 0 4px 10px rgba(255, 107, 0, 0.2);
+}
+
+.back-button:hover {
+    background-color: white;
+    color: #ff6b00;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 107, 0, 0.3);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .exam-result-container {
+        margin: 80px 20px 0;
+        padding: 20px;
+    }
+
+    .exam-result-container h2 {
+        font-size: 1.8rem;
+    }
+
+    .exam-result-container p {
+        font-size: 1rem;
+    }
+
+    .back-button {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .exam-result-container {
+        margin: 60px 15px 0;
+        padding: 15px;
+    }
+
+    .exam-result-container h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .back-button {
+        width: 100%;
+        padding: 12px;
+    }
+}

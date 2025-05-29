@@ -4,7 +4,7 @@ import React from "react";
 import LoginComponent from "./component/LoginComponent";
 import HomePage from "./component/HomeComponent";
 import QuestionListComponent from "./component/questions/QuestionListComponent";
-import {Route, Routes} from "react-router-dom";
+import {Route, Router, Routes} from "react-router-dom";
 import QuestionsDetailComponent from "./component/questions/QuestionsDetailComponent";
 import CreateQuestionsComponent from "./component/questions/CreateQuestionsComponent";
 import CreateQuestionOnFileExcelComponent from "./component/questions/CreateQuestionOnFileExcelComponent";
@@ -37,6 +37,15 @@ import UpdateExamSetComponent from "./component/examSet/UpdateExamSetComponent";
 import GetRatingPointsComponent from "./component/ratingPoints/GetRatingPointsComponent";
 import UserChat from "./component/chatSocKetTest/UserChat";
 import AdminChat from "./component/chatSocKetTest/AdminChat";
+import ShowExamListComponent from "./component/exams/ShowExamListComponent";
+import HistoryExamComponent from "./component/exams/HistoryExamComponent";
+import ExamPage from "./component/exams/ExamPage";
+import ExamResult from "./component/exams/ExamResult";
+import FindExamByUserComponent from "./component/exams/FindExamByUserComponent";
+import FindExamByExamSetComponent from "./component/exams/FindExamByExamSetComponent";
+import ExamResultDetail from "./component/exams/ExamResultDetail";
+import UserList from "./component/UserList";
+import ExamStatistics from "./component/exams/examstatis";
 
 function App() {
   return (
@@ -84,6 +93,16 @@ function App() {
             <Route path="/unauthorized" element={<UnauthorizedComponent />} />
             <Route path="/header" element={<HeaderComponent />} />
             <Route path="/footer" element={<FooterComponent />} />
+            <Route path="/user/:userId/exams" element={<ShowExamListComponent />} />
+            <Route path="/user/:userId/history/:examId" element={<HistoryExamComponent />} />
+            <Route path="/exam/:id" element={<ExamPage />} />
+            <Route path="/exam/result" element={<ExamResult />} />
+            <Route path="/quiz" element={<FindExamByUserComponent />} />
+            <Route path="/exams/:examSetId" element={<FindExamByExamSetComponent />} />
+            <Route path="/result/:resultId" element={<ExamResultDetail />} />
+            <Route path="/history" element={<HistoryExamComponent />} />
+            <Route path="/users" element={<UserList />} />
+            <Route path="/statistics" element={<ExamStatistics />} />
         </Routes>
     </>
   );

@@ -80,3 +80,24 @@ export async function confirmExamsUpdate(id, listQuestionsId) {
 export async function deleteQuestionsOfExams(idExams, idQuestions) {
     const response = await axios.delete(`http://localhost:8080/api/exams/delete-questions-of-exams/${idExams}/${idQuestions}`,authHeader);
 }
+export const fetchExamsByUser = async (userId) => {
+    try {
+        const response = await axios.get(`http://localhost:8080/api/exams/showListExam`, {
+            params: { userId }
+        });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || 'Lỗi khi lấy danh sách đề thi.';
+    }
+};
+
+export const fetchExamHistory = async (userId, examId) => {
+    try {
+        const response = await axios.get(`http://localhost:8080/api/exams/historyExam`, {
+            params: { userId, examId }
+        });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || 'Lỗi khi lấy lịch sử đề thi.';
+    }
+};

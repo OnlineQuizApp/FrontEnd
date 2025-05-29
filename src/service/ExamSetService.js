@@ -52,3 +52,12 @@ export async function deleteExamByExamSetId(idExamSet,idExams) {
 export async function deleteExamSet(id) {
     const response = await axios.delete(`http://localhost:8080/api/exam-set/${id}`, authHeader);
 }
+const getAll = (page = 0) => {
+    return axios
+        .get(`http://localhost:8080/api/exam-set/list?page=${page}`)
+        .then((res) => res.data);
+};
+
+export default {
+    getAll
+};

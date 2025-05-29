@@ -2,6 +2,9 @@ import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../css/HomePage.css";
+import Header from "./HeaderComponent";
+import Footer from "./FooterComponent";
+import ExamSetList from "./examSet/ExamSetList";
 
 const HomePage = () => {
     const [username, setUsername] = useState(null);
@@ -30,41 +33,9 @@ const HomePage = () => {
     };
     return (
         <div className="homepage">
-            {/* Header */}
-            <header className="header">
-                <div className="logo">QuizMaster</div>
-                <nav className="nav">
-                    <a href="/">Trang chủ</a>
-                    <a href="/quiz">Quiz</a>
-                    <a href="/history">Lịch sử</a>
-                    <a href="/leaderboard">Thành tích</a>
-                    {isAdmin && (
-                        <a href="/admin">Trang admin</a>
-                    )}
-
-                </nav>
-                <div className="user-section">
-                    {username ? (
-                        <div className="dropdown">
-                            <span className="username">Xin chào, {username}</span>
-                            <div className="dropdown-content">
-                                <button onClick={() => navigate("/profile")}>Hồ sơ người dùng</button>
-                                <button onClick={handleLogout}>Đăng xuất</button>
-                            </div>
-                        </div>
-                    ) : (
-                        <button className="login-btn" onClick={() => navigate("/login")}>Đăng nhập</button>
-                    )}
-                </div>
-            </header>
-
-            {/* Nội dung chính */}
-
-
-            {/* Footer */}
-            <footer className="footer">
-                <p>&copy; 2025 QuizMaster. All rights reserved.</p>
-            </footer>
+            <Header/>
+            <ExamSetList/>
+            <Footer/>
         </div>
     );
 };
