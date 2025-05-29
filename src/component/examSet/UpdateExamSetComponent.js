@@ -46,6 +46,7 @@ const UpdateExamSetComponent = () => {
         try {
             setIsUploading(true);
             const formData = new FormData();
+            formData.append("id", id);
             formData.append("file", file);
             formData.append("name", value.name);
             formData.append("creationDate", value.creationDate);
@@ -54,6 +55,7 @@ const UpdateExamSetComponent = () => {
             navigate('/admin/exams-set');
             toast.success("Chỉnh sửa bộ đề thi thành công!")
         } catch (error) {
+            setIsUploading(false);
             toast.error(" Bộ đề thi đã tồn tại trong hệ thống!");
         }
     }
