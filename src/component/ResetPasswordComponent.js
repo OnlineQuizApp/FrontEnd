@@ -6,7 +6,7 @@ import "../css/ResetPasswordComponent.css";
 import {toast} from "react-toastify";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
-
+const apiUrl = process.env.REACT_APP_API_URL;
 export default function ResetPasswordComponent() {
     const [newPassword, setNewPassword] = useState("");
     const [confirm, setConfirm] = useState("");
@@ -24,7 +24,7 @@ export default function ResetPasswordComponent() {
         }
 
         try {
-            await axios.post("http://localhost:8080/api/user/reset-password", {
+            await axios.post(`${apiUrl}/api/user/reset-password`, {
                 token,
                 newPassword,
             });

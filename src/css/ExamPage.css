@@ -1,0 +1,312 @@
+/* ExamPage.css */
+
+.exam-page-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    padding-right: 320px; /* Space for fixed sidebar */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #fff9f2;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-top: 60px; /* Space for fixed header */
+}
+
+/* Fixed header section */
+.exam-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to right, #e67e22, #d35400);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.exam-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.timer-container {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.timer-icon {
+    margin-right: 0.5rem;
+}
+
+/* Fixed sidebar for exam info */
+.exam-info {
+    position: fixed;
+    right: 20px;
+    width: 280px;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    background-color: #fef5e7;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #e67e22;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    z-index: 999;
+}
+
+.exam-info p {
+    margin: 0.8rem 0;
+    font-size: 0.95rem;
+    color: #5d4037;
+    line-height: 1.4;
+}
+
+.exam-info strong {
+    color: #e67e22;
+    font-weight: 600;
+}
+
+.questions-container {
+    margin-top: 2rem;
+}
+
+.question-card {
+    background-color: white;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-left: 3px solid #f39c12;
+    transition: transform 0.2s;
+}
+
+.question-card:hover {
+    transform: translateY(-2px);
+}
+
+.question-card h3 {
+    color: #d35400;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.question-image {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.answers {
+    margin-top: 1rem;
+}
+
+.answer-option {
+    display: block;
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 0;
+    background-color: #fef9e7;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid #f5d6a5;
+}
+
+.answer-option:hover {
+    background-color: #fdebd0;
+    transform: translateX(5px);
+}
+
+.answer-option input[type="radio"],
+.answer-option input[type="checkbox"] {
+    margin-right: 1rem;
+    accent-color: #e67e22;
+}
+
+.submit-button {
+    display: block;
+    width: 70%;
+    margin-left: 80px;
+    padding: 1rem;
+    background-color: #e67e22;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.submit-button:hover {
+    background-color: #d35400;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
+}
+
+.loading-container {
+    text-align: center;
+    padding: 3rem;
+}
+
+.loading-spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #e67e22;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-container {
+    text-align: center;
+    padding: 2rem;
+    background-color: #fde0dc;
+    border-radius: 8px;
+    border-left: 4px solid #e74c3c;
+}
+
+.error-message {
+    color: #c0392b;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.error-container button {
+    padding: 0.7rem 1.5rem;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.error-container button:hover {
+    background-color: #c0392b;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .exam-page-container {
+        padding-right: 300px;
+    }
+
+    .exam-info {
+        width: 260px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .exam-page-container {
+        padding-right: 2rem;
+        padding-top: 200px; /* More space for mobile info */
+    }
+
+    .exam-info {
+        position: static;
+        width: 100%;
+        max-height: none;
+        margin-bottom: 2rem;
+        top: auto;
+        right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .exam-page-container {
+        padding: 1rem;
+        padding-top: 180px;
+    }
+
+    .exam-header {
+        padding: 0.8rem 1rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .exam-title {
+        font-size: 1.2rem;
+    }
+
+    .timer-container {
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .question-card {
+        padding: 1rem;
+    }
+
+    .exam-info {
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .exam-info p {
+        font-size: 0.9rem;
+        margin: 0.6rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .exam-page-container {
+        padding: 0.5rem;
+        padding-top: 160px;
+    }
+
+    .exam-header {
+        padding: 0.6rem 0.8rem;
+    }
+
+    .exam-title {
+        font-size: 1.1rem;
+    }
+
+    .timer-container {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    .question-card {
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .question-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .answer-option {
+        padding: 0.6rem 0.8rem;
+    }
+
+    .submit-button {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+}

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
-
+const apiUrl = process.env.REACT_APP_API_URL;
 export default function ForgotPasswordComponent() {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
@@ -16,7 +16,7 @@ export default function ForgotPasswordComponent() {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const res = await axios.post("http://localhost:8080/api/user/forgot-password", { email });
+            const res = await axios.post(`${apiUrl}/api/user/forgot-password`, { email });
             toast.success("🎉 Bạn vào hòm thư check email để cập nhật lại mật khẩu!", {
                 position: "top-center",
                 autoClose: 2000,
@@ -39,7 +39,7 @@ export default function ForgotPasswordComponent() {
                 <div className="forgot-password-box">
                     <form onSubmit={handleSubmit}>
                         <h2>Quên Mật khẩu</h2>
-                        <label>Email</label><span className="text-danger">*</span>
+                        <label>Email<span className="text-danger">*</span></label>
                         <input
                             type="email"
                             placeholder="Nhập email của bạn"
