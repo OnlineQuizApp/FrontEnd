@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import '../../css/ExamList.css';
 import HeaderComponent from "../HeaderComponent";
 import FooterComponent from "../FooterComponent";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const ExamList = () => {
     const [exams, setExams] = useState([]);
@@ -14,7 +15,7 @@ const ExamList = () => {
     useEffect(() => {
         const fetchExams = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/exams/getAll');
+                const response = await axios.get(`${apiUrl}/api/exams/getAll`);
                 setExams(response.data);
                 setLoading(false);
             } catch (err) {

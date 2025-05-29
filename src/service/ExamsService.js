@@ -82,7 +82,7 @@ export async function deleteQuestionsOfExams(idExams, idQuestions) {
 }
 export const fetchExamsByUser = async (userId) => {
     try {
-        const response = await axios.get(`http://localhost:8080/api/exams/showListExam`, {
+        const response = await axios.get(`${apiUrl}/api/exams/showListExam`, {
             params: { userId }
         });
         return response.data;
@@ -93,7 +93,7 @@ export const fetchExamsByUser = async (userId) => {
 
 export const fetchExamHistory = async (userId, examId) => {
     try {
-        const response = await axios.get(`http://localhost:8080/api/exams/historyExam`, {
+        const response = await axios.get(`${apiUrl}/api/exams/historyExam`, {
             params: { userId, examId }
         });
         return response.data;

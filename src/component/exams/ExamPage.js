@@ -5,6 +5,7 @@ import '../../css/ExamPage.css';
 import HeaderComponent from "../HeaderComponent";
 import Footer from "../FooterComponent";
 import FooterComponent from "../FooterComponent";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const ExamPage = () => {
     const { id } = useParams(); // Lấy examId từ URL
@@ -36,8 +37,8 @@ const ExamPage = () => {
     useEffect(() => {
         const fetchExamData = async () => {
             try {
-                const examResponse = await axios.get(`http://localhost:8080/api/exams/1/${id}`);
-                const questionsResponse = await axios.get(`http://localhost:8080/api/exams/1/${id}/questions`);
+                const examResponse = await axios.get(`${apiUrl}/api/exams/1/${id}`);
+                const questionsResponse = await axios.get(`${apiUrl}/api/exams/1/${id}/questions`);
                 setExam(examResponse.data);
                 setQuestions(questionsResponse.data);
 
@@ -121,7 +122,7 @@ const ExamPage = () => {
                 // Nếu đã đăng nhập, gọi API authenticated
                 const token = getAuthToken();
                 response = await axios.post(
-                    'http://localhost:8080/api/exams/submit/authenticated',
+                    `${apiUrl}/api/exams/submit/authenticated`,
                     submitRequest,
                     {
                         headers: {
@@ -133,7 +134,7 @@ const ExamPage = () => {
                 console.log("Gửi bài (đã đăng nhập):", submitRequest);
             } else {
                 // Nếu chưa đăng nhập, gọi API thường
-                response = await axios.post('http://localhost:8080/api/exams/submit', submitRequest);
+                response = await axios.post(`${apiUrl}/api/exams/submit`, submitRequest);
                 console.log("Gửi bài (chưa đăng nhập):", submitRequest);
             }
 

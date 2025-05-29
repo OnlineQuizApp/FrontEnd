@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "../../css/Examstatis.css";
 import HeaderComponent from "../HeaderComponent";
 import FooterComponent from "../FooterComponent";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const ExamStatistics = () => {
     const [statistics, setStatistics] = useState([]);
@@ -11,7 +12,7 @@ const ExamStatistics = () => {
     useEffect(() => {
         const fetchStatistics = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/exams/statistics');
+                const response = await fetch(`${apiUrl}/api/exams/statistics`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch statistics');
                 }

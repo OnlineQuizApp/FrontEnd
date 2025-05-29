@@ -1,8 +1,9 @@
 .ranking-container {
+    margin-top: 80px;
+    margin-left: 180px;
+    padding-bottom: 340px;
     width: 85vw;
     max-width: 1200px;
-    margin: 60px auto;
-    padding: 40px;
     background: linear-gradient(145deg, #fffbf7, #ffffff);
     box-shadow: 0 12px 40px rgba(255, 102, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.05);
     border: 2px solid #ffcc99;

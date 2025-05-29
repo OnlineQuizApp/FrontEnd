@@ -4,6 +4,7 @@ import axios from 'axios';
 import '../../css/ExamResultDetail.css';
 import HeaderComponent from "../HeaderComponent";
 import FooterComponent from "../FooterComponent";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const ExamResultDetail = () => {
     const { resultId } = useParams();
@@ -15,7 +16,7 @@ const ExamResultDetail = () => {
     useEffect(() => {
         const fetchResultDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/results/${resultId}/details`);
+                const response = await axios.get(`${apiUrl}/api/results/${resultId}/details`);
                 setResult(response.data);
                 setLoading(false);
             } catch (err) {

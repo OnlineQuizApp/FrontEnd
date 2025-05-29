@@ -4,8 +4,9 @@ import axios from 'axios';
 import "../css/UserList.css";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
-
+const apiUrl = process.env.REACT_APP_API_URL;
 const UserList = () => {
+    const API_BASE_URL = `${apiUrl}/api/admin/users`; // Adjust to your backend URL
     const [users, setUsers] = useState([]);
     const [filters, setFilters] = useState({
         name: '',
@@ -24,7 +25,7 @@ const UserList = () => {
     // Mock token check (replace with actual auth logic, e.g., checking token in localStorage)
     const [isAuthenticated, setIsAuthenticated] = useState(true);
 
-    const API_BASE_URL = 'http://localhost:8080/api/admin/users'; // Adjust to your backend URL
+
 
     const fetchUsers = useCallback(async () => {
         setLoading(true);

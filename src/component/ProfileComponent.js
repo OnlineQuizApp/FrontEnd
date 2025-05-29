@@ -5,6 +5,9 @@ import "../css/ProfileComponent.css"
 import {toast} from "react-toastify";
 import FooterComponent from "./FooterComponent";
 import HeaderComponent from "./HeaderComponent";
+
+
+const apiUrl = process.env.REACT_APP_API_URL;
 const ProfileComponent = () => {
     const [user, setUser] = useState(null);
     const [message, setMessage] = useState("");
@@ -21,7 +24,7 @@ const ProfileComponent = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:8080/api/user/me", authHeader)
+            .get(`${apiUrl}/api/user/me`, authHeader)
             .then((res) => {
                 setUser(res.data);
             })
@@ -38,7 +41,7 @@ const ProfileComponent = () => {
     const handleUpdate = (e) => {
         e.preventDefault();
         axios
-            .put("http://localhost:8080/api/user/update", user, authHeader)
+            .put(`${apiUrl}/api/user/update`, user, authHeader)
             .then((res) => {
                 setMessage("Cập nhật thành công!");
                 toast.success("🎉 Cập nhật thành công!", {
@@ -62,14 +65,14 @@ const ProfileComponent = () => {
                 <div className="profile-box">
                     <h2>Thông tin cá nhân</h2>
                     <form onSubmit={handleUpdate}>
-                        <label>Họ và tên</label><span className="text-danger">*</span>
+                        <label>Họ và tên<span className="text-danger">*</span></label>
                         <input
                             name="name"
                             value={user.name}
                             onChange={handleChange}
                         />
                         <br/>
-                        <label>Email</label><span className="text-danger">*</span>
+                        <label>Email<span className="text-danger">*</span></label>
                         <input
                             name="email"
                             value={user.email}

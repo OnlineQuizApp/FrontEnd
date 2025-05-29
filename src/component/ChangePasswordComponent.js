@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "../css/ChangePasswordComponent.css"
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
-
+const apiUrl = process.env.REACT_APP_API_URL;
 const ChangePasswordComponent = ({token}) => {
     const navigate = useNavigate();
     const [passwordData, setPasswordData] = useState({
@@ -14,7 +14,12 @@ const ChangePasswordComponent = ({token}) => {
         confirmPassword: "",
     });
     const [message, setMessage] = useState("");
-
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/login"); // Redirect to login page if no token
+        }
+    }, [navigate]);
     const handleChange = (e) => {
         setPasswordData({...passwordData, [e.target.name]: e.target.value});
     };
@@ -41,7 +46,7 @@ const ChangePasswordComponent = ({token}) => {
 
         axios
             .post(
-                "http://localhost:8080/api/user/change-password",
+                `${apiUrl}/api/user/change-password`,
                 {
                     authHeader,
                     oldPassword: passwordData.oldPassword,
@@ -80,7 +85,7 @@ const ChangePasswordComponent = ({token}) => {
                 <div className="change-password-box">
                     <h3>Đổi mật khẩu</h3>
                     <form onSubmit={handleSubmit}>
-                        <label>Mật khẩu cũ</label><span className="text-danger">*</span>
+                        <label>Mật khẩu cũ<span className="text-danger">*</span></label>
                         <input
                             type="password"
                             name="oldPassword"
@@ -88,7 +93,7 @@ const ChangePasswordComponent = ({token}) => {
                             onChange={handleChange}
                             required
                         />
-                        <label>Mật khẩu mới</label><span className="text-danger">*</span>
+                        <label>Mật khẩu mới<span className="text-danger">*</span></label>
                         <input
                             type="password"
                             name="newPassword"
@@ -96,7 +101,7 @@ const ChangePasswordComponent = ({token}) => {
                             onChange={handleChange}
                             required
                         />
-                        <label>Nhập lại mật khẩu</label><span className="text-danger">*</span>
+                        <label>Nhập lại mật khẩu<span className="text-danger">*</span></label>
                         <input
                             type="password"
                             name="confirmPassword"

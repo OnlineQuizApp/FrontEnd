@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import '../../css/ExamList.css';
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const ExamList = () => {
     const { examSetId } = useParams();
@@ -13,7 +14,7 @@ const ExamList = () => {
     useEffect(() => {
         const fetchExams = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/exams/exam-set/${examSetId}`);
+                const response = await axios.get(`${apiUrl}/api/exams/exam-set/${examSetId}`);
                 setExams(response.data);
                 setLoading(false);
             } catch (err) {

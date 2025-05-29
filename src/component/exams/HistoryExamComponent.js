@@ -6,7 +6,7 @@ import '../../css/HistoryExam.css';
 import HeaderComponent from "../HeaderComponent";
 import Footer from "../FooterComponent";
 import FooterComponent from "../FooterComponent";
-
+const apiUrl = process.env.REACT_APP_API_URL;
 const ExamHistory = () => {
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -43,7 +43,7 @@ const ExamHistory = () => {
                 }
 
                 console.log('Fetching results for username:', username);
-                const response = await axios.get(`http://localhost:8080/api/results/user/username/${username}`, {
+                const response = await axios.get(`${apiUrl}/api/results/user/username/${username}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
