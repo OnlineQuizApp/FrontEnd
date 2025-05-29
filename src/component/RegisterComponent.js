@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../css/RegisterComponent.css";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
-
+const apiUrl = process.env.REACT_APP_API_URL;
 const RegisterComponent = () => {
     const [form, setForm] = useState({
         username: "",
@@ -70,7 +70,7 @@ const RegisterComponent = () => {
         }
 
         try {
-            await axios.post("http://localhost:8080/api/account/register", {
+            await axios.post(`${apiUrl}/api/account/register`, {
                 username: form.username,
                 password: form.password,
                 passwordConfirm: form.passwordConfirm,

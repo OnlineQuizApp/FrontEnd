@@ -135,23 +135,27 @@ const ExamsListComponent = () => {
                                                 >
                                                     👁️
                                                 </Link>
-                                                <Link
-                                                    to={`/admin/exams/update/${e.id}`}
-                                                    title="Chỉnh sửa"
-                                                    className="icon-btn edit"
-                                                >
-                                                    ✏️
-                                                </Link>
-                                                <button
-                                                    onClick={() => {
-                                                        setShowConfirmModal(true);
-                                                        setIdDelete(e.id);
-                                                    }}
-                                                    title="Xoá"
-                                                    className="icon-btn delete"
-                                                >
-                                                    🗑️
-                                                </button>
+                                                {!e.exitsExamSetExam &&(
+                                                    <>
+                                                        <Link
+                                                            to={`/admin/exams/update/${e.id}`}
+                                                            title="Chỉnh sửa"
+                                                            className="icon-btn edit"
+                                                        >
+                                                            ✏️
+                                                        </Link>
+                                                        <button
+                                                            onClick={() => {
+                                                                setShowConfirmModal(true);
+                                                                setIdDelete(e.id);
+                                                            }}
+                                                            title="Xoá"
+                                                            className="icon-btn delete"
+                                                        >
+                                                            🗑️
+                                                        </button>
+                                                    </>
+                                                )}
                                             </td>
                                         </tr>
                                     ))

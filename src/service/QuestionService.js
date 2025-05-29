@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const apiUrl = process.env.REACT_APP_API_URL;
 
 
 const token = localStorage.getItem("token");
@@ -10,7 +10,7 @@ const authHeader = token
 
 export async function getAllQuestions(page,content,category){
     try {
-        const response = await axios.get(`http://localhost:8080/api/questions?page=${page}&content=${content}&category=${category}`,authHeader);
+        const response = await axios.get(`${apiUrl}/api/questions?page=${page}&content=${content}&category=${category}`,authHeader);
         const  data = response.data.content;
         const totalPage = response.data.totalPages;
         return {data,totalPage}
@@ -22,7 +22,7 @@ export async function getAllQuestions(page,content,category){
 export async function detailQuestions(id){
 
     try {
-        const response = await axios.get(`http://localhost:8080/api/questions/${id}`,authHeader);
+        const response = await axios.get(`${apiUrl}/api/questions/${id}`,authHeader);
         console.log("detail:"+response.data);
         return  response.data
     }catch (e) {
@@ -33,7 +33,7 @@ export async function detailQuestions(id){
 export async function deleteQuestions(id){
 
     try {
-        const response = await axios.delete(`http://localhost:8080/api/questions/${id}`,authHeader);
+        const response = await axios.delete(`${apiUrl}/api/questions/${id}`,authHeader);
         console.log("delete:"+response.data);
     }catch (e) {
         console.log("Lỗi xoá câu hỏi: "+e);
@@ -41,12 +41,12 @@ export async function deleteQuestions(id){
     }
 }
 export async function createQuestions(newQuestions){
-       return  await axios.post(`http://localhost:8080/api/questions`,newQuestions,authHeader);
+       return  await axios.post(`${apiUrl}/api/questions`,newQuestions,authHeader);
 }
 export async function createQuestionsOnFileExcel(file){
 
     try {
-        const response = await axios.post(`http://localhost:8080/api/questions/upload-file-excel`,file,authHeader);
+        const response = await axios.post(`${apiUrl}/api/questions/upload-file-excel`,file,authHeader);
         console.log("creteFileExcel:"+response.data);
     }catch (e) {
         console.log("Lỗi thêm file excel: "+e);
@@ -56,7 +56,7 @@ export async function createQuestionsOnFileExcel(file){
 export async function createQuestionsOnImg(newQuestion){
 
     // try {
-        return  axios.post(`http://localhost:8080/api/questions/upload-file-img`,newQuestion,authHeader);
+        return  axios.post(`${apiUrl}/api/questions/upload-file-img`,newQuestion,authHeader);
     //     console.log("createImg:"+response.data);
     // }catch (e) {
     //     console.log("Lỗi thêm mới img: "+e);
@@ -67,7 +67,7 @@ export async function createQuestionsOnImg(newQuestion){
 export async function createQuestionsOnVideo(newQuestion){
     console.log("token: ",authHeader)
     try {
-        const response = await axios.post(`http://localhost:8080/api/questions/upload-video`,newQuestion,authHeader);
+        const response = await axios.post(`${apiUrl}/api/questions/upload-video`,newQuestion,authHeader);
         console.log("createImg:"+response.data);
     }catch (e) {
         console.log("Lỗi thêm mới img: "+e);
@@ -79,7 +79,7 @@ export async function createQuestionsOnVideo(newQuestion){
 export async function updateQuestions(id,newQuestion){
 
     try {
-        const response = await axios.put(`http://localhost:8080/api/questions/${id}`,newQuestion,authHeader);
+        const response = await axios.put(`${apiUrl}/api/questions/${id}`,newQuestion,authHeader);
         console.log("update:"+response.data);
     }catch (e) {
         console.log("Lỗi update: "+e);
